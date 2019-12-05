@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-12-04T12:54:56.643Z</updated>
+  <updated>2019-12-05T13:02:03.846Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iu</title>
+    <link href="http://yoursite.com/2019/12/05/iu/"/>
+    <id>http://yoursite.com/2019/12/05/iu/</id>
+    <published>2019-12-05T13:02:03.845Z</published>
+    <updated>2019-12-05T13:02:03.846Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>title: “Java基础-语言基础（Basic)”<br>date: (2019-12-04 20:30)<br>author: whitedofu<br>desc: 文章的描述<br>pdated: 更新日期[可选]<br>tags: 标签java<br>categories: 分类</p><h1 id="Java基础-语言基础（Basic"><a href="#Java基础-语言基础（Basic" class="headerlink" title="Java基础-语言基础（Basic)"></a>Java基础-语言基础（Basic)</h1><h2 id="一、Java基础说明"><a href="#一、Java基础说明" class="headerlink" title="一、Java基础说明"></a>一、Java基础说明</h2><h3 id="Java说明"><a href="#Java说明" class="headerlink" title="Java说明"></a>Java说明</h3><p>一个Java文件可以有多个类但提倡只有一个<br>一个java文件只能有一个public class<br>Main函数是java的主入口PSVM进行主动运行<br>Main函数不属于成员函数，只是寄居在Class中<br>Main函数的参数args是启动java时附带的参数<br>JVM默认导入java.lang.*包</p><h3 id="Java中的注释"><a href="#Java中的注释" class="headerlink" title="Java中的注释"></a>Java中的注释</h3><p><code>//</code><strong>单行注释:</strong>从//开始本行结束<br><code>/*</code> 开始<code>*/</code> 结束，<strong>多行注释</strong><br><code>/**</code> 开始 <code>*/</code>结束，<strong>文档注释：</strong>javadoc会提取生成帮助文档，类方法常量</p><h3 id="Java标示符"><a href="#Java标示符" class="headerlink" title="Java标示符"></a>Java标示符</h3><p>Java中的标示符组成：数字、字母、下划线、美元符<br>Java中的大小写敏感、没有长度限制，不可以用java关键字，不可用数字开头<br>Java命名规范：<br>规范|方式|例子  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;title: “Java基础-语言基础（Basic)”&lt;br&gt;date: (2019-12-04 20:30)&lt;br&gt;author: whitedofu&lt;br&gt;desc: 文章的描述&lt;br&gt;pdated: 更新日期[可选]&lt;br&gt;tags: 标签java&lt;br&gt;c
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Java基础-语言基础（Basic)</title>
