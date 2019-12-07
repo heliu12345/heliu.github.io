@@ -327,17 +327,1210 @@
 <td>真假的值会先统一到较大的数据类型</td>
 </tr>
 </tbody></table>
-<h5 id="使用注意事项"><a href="#使用注意事项" class="headerlink" title="使用注意事项"></a>使用注意事项</h5><pre><code>1 i++ --&gt; i自加,自加之前的值参与计算  
-2 ++i --&gt; i自加,自加之后的值参与计算  
-3 int i=0;i=i++; --&gt; i:0  
-4 += --&gt; i+=5.5相当于i=(int)(i+5.5)  
-5 &amp;&amp; --&gt; 遇到一个F,后面就不再执行(短路特性)
-6 || --&gt; 遇到一个T,后面就不再执行(短路特性)  
-7 例题：int i = 5;boolean b = i &gt; 6 &amp;&amp; i++ &gt; 7;  
-8 结果：b=false;i=5;因为执行到i&gt;6就结束了  
-9 扩展：boolean b = i &gt; 4 &amp;&amp; i++ &gt; 7;结果i=6    
-10 obj1 == obj2 判断的是对象的指针   
-11 String.equals(String) 是对比内容</code></pre>
+<h5 id="使用注意事项"><a href="#使用注意事项" class="headerlink" title="使用注意事项"></a>使用注意事项</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1 i++ --&gt; i自加,自加之前的值参与计算  </span><br><span class="line">2 ++i --&gt; i自加,自加之后的值参与计算  </span><br><span class="line">3 int i=0;i=i++; --&gt; i:0  </span><br><span class="line">4 += --&gt; i+=5.5相当于i=(int)(i+5.5)  </span><br><span class="line">5 &amp;&amp; --&gt; 遇到一个F,后面就不再执行(短路特性)</span><br><span class="line">6 || --&gt; 遇到一个T,后面就不再执行(短路特性)  </span><br><span class="line">7 例题：int i = 5;boolean b = i &gt; 6 &amp;&amp; i++ &gt; 7;  </span><br><span class="line">8 结果：b=false;i=5;因为执行到i&gt;6就结束了  </span><br><span class="line">9 扩展：boolean b = i &gt; 4 &amp;&amp; i++ &gt; 7;结果i=6    </span><br><span class="line">10 obj1 == obj2 判断的是对象的指针   </span><br><span class="line">11 String.equals(String) 是对比内容</span><br></pre></td></tr></table></figure>
+
+
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/12/02/dshc/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/">
+                Web基础-jQuery语言
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-12-02</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/语言编程/">语言编程</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="Web基础-jQuery语言"><a href="#Web基础-jQuery语言" class="headerlink" title="Web基础-jQuery语言"></a>Web基础-jQuery语言</h1><h2 id="jQuery简介"><a href="#jQuery简介" class="headerlink" title="jQuery简介"></a>jQuery简介</h2><h3 id="什么是jQuery"><a href="#什么是jQuery" class="headerlink" title="什么是jQuery"></a>什么是jQuery</h3><ul>
+<li>jQuery是一个优秀的JavaScript框架，一个轻量级的JS库</li>
+<li>它封装了JS、CSS、DOM，提供了一致的、简洁的API</li>
+<li>兼容CSS3，以及兼容各种浏览器</li>
+<li>注意：jQuery 2.x 开始不再支持IE6/7/8</li>
+</ul>
+<h3 id="如何使用jQuery"><a href="#如何使用jQuery" class="headerlink" title="如何使用jQuery"></a>如何使用jQuery</h3><ul>
+<li>引入jQuery的js文件</li>
+<li>可以通过本地文件导入，或者通过网络中jQuery的js文件地址</li>
+<li>使用jq选择器定位要操作的节点，然后调用jq方法进行操作</li>
+</ul>
+<h2 id="jQuery对象"><a href="#jQuery对象" class="headerlink" title="jQuery对象"></a>jQuery对象</h2><h3 id="jQuery对象简介"><a href="#jQuery对象简介" class="headerlink" title="jQuery对象简介"></a>jQuery对象简介</h3><ul>
+<li>jQuery为了解决浏览器的兼容问题而提供的一种统一的封装后的对象描述</li>
+<li>jQuery提供的方法都是针对jQuery对象特有的，而且大部分方法的返回值也是jQuery对象，所以方法可以连缀调用</li>
+<li>jQuery对象本质上是DOM对象数组，它在该数组上扩展了一些操作数组中元素的方法</li>
+<li>jq.length：获取数组长度、jq.get(index)：获取数组中的某一个DOM对象、jq[index]：等价于obj.get(index)</li>
+<li>jq对象与dom对象之间转换，就是选择jq对象的某个 dom = jq[0]，相反的 jq = $(dom)</li>
+</ul>
+<h3 id="jQuery遍历数组的方法"><a href="#jQuery遍历数组的方法" class="headerlink" title="jQuery遍历数组的方法"></a>jQuery遍历数组的方法</h3><ul>
+<li>$(selector).each(func) ：遍历selector选中的每个对象，每个对象执行func方法，方法体内用this表示当前对象</li>
+<li>示例：<code>$(&quot;div&quot;).each(function(){this.val=&quot;已遍历&quot;})</code></li>
+</ul>
+<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><h3 id="jQuery选择器-1"><a href="#jQuery选择器-1" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h3><ul>
+<li>jQuery选择器类似CSS选择器，包含以下种类：基本选择器、层次选择器、过滤选择器、表单选择器</li>
+<li>jQuery选择器大部分采用了CSS方式，方便的选择对象，基本选择器、层次选择器基本都为CSS格式</li>
+<li>以下详细描述了另外两种选择器的介绍和使用</li>
+<li>节点操作节点，参考下面jQuery的遍历节点操作</li>
+</ul>
+<h3 id="jQuery过滤选择器"><a href="#jQuery过滤选择器" class="headerlink" title="jQuery过滤选择器"></a>jQuery过滤选择器</h3><h4 id="基本过滤选择器"><a href="#基本过滤选择器" class="headerlink" title="基本过滤选择器"></a>基本过滤选择器</h4><ul>
+<li>:first：第一个元素</li>
+<li>:last：最后一个元素</li>
+<li>:not(jq)：把jq对象排除在外</li>
+<li>:even：挑选偶数行</li>
+<li>:odd：挑选奇数行</li>
+<li>:eq(index)：下标等于index的元素(从0开始计算)</li>
+<li>:gt(index)：下标大于index的元素</li>
+<li>:lt(index)：下标小于index的元素</li>
+</ul>
+<h4 id="子元素过滤选择器"><a href="#子元素过滤选择器" class="headerlink" title="子元素过滤选择器"></a>子元素过滤选择器</h4><ul>
+<li>:first-child ：匹配第一个子元素</li>
+<li>:last-child ：匹配最后一个子元素</li>
+<li>:nth-child(n) ：匹配第n个子元素(不是从0开始计算)</li>
+</ul>
+<h4 id="内容过滤选择器"><a href="#内容过滤选择器" class="headerlink" title="内容过滤选择器"></a>内容过滤选择器</h4><ul>
+<li>:contains(‘text’)：匹配包含给定文本的元素</li>
+<li>:empty：匹配所有不包含子元素或文本的空元素</li>
+<li>:has(jq)：匹配包含jq对象的元素</li>
+<li>:parent：匹配非空的元素</li>
+</ul>
+<h4 id="可见性过滤选择器"><a href="#可见性过滤选择器" class="headerlink" title="可见性过滤选择器"></a>可见性过滤选择器</h4><ul>
+<li>:hidden ：匹配所有不可见元素，或type为hidden的元素</li>
+<li>:visible：匹配所有可见元素</li>
+</ul>
+<h4 id="属性过滤选择器"><a href="#属性过滤选择器" class="headerlink" title="属性过滤选择器"></a>属性过滤选择器</h4><ul>
+<li>类似CSS中属性选择器</li>
+<li>例如：<code>$(&quot;input[value=&#39;你好&#39;]&quot;)</code></li>
+</ul>
+<h4 id="状态过滤选择器"><a href="#状态过滤选择器" class="headerlink" title="状态过滤选择器"></a>状态过滤选择器</h4><ul>
+<li>:enabled 匹配可用的元素</li>
+<li>:disabled 匹配不可用的元素</li>
+<li>:checked 匹配选中的checkbox、option(单选、多选、下拉选)</li>
+<li>:selected 匹配选中的option</li>
+</ul>
+<h3 id="表单选择器"><a href="#表单选择器" class="headerlink" title="表单选择器"></a>表单选择器</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>:input</td>
+<td>匹配所有表单控件</td>
+</tr>
+<tr>
+<td>:text</td>
+<td>匹配文本框</td>
+</tr>
+<tr>
+<td>:password</td>
+<td>匹配密码框</td>
+</tr>
+<tr>
+<td>:radio</td>
+<td>匹配单选框</td>
+</tr>
+<tr>
+<td>:checkbox</td>
+<td>匹配多选框</td>
+</tr>
+<tr>
+<td>:submit</td>
+<td>匹配提交按钮</td>
+</tr>
+<tr>
+<td>:reset</td>
+<td>匹配重置按钮</td>
+</tr>
+<tr>
+<td>:button</td>
+<td>匹配普通按钮</td>
+</tr>
+<tr>
+<td>:file</td>
+<td>匹配文件框</td>
+</tr>
+<tr>
+<td>:hidden</td>
+<td>匹配隐藏框</td>
+</tr>
+</tbody></table>
+<h2 id="jQuery操作DOM"><a href="#jQuery操作DOM" class="headerlink" title="jQuery操作DOM"></a>jQuery操作DOM</h2><h3 id="读写节点"><a href="#读写节点" class="headerlink" title="读写节点"></a>读写节点</h3><ul>
+<li>读写节点的HTML内容：<code>obj.html() / obj.html(&quot;&lt;span&gt;123&lt;/span&gt;&quot;)</code></li>
+<li>读写节点的文本内容：<code>obj.text() / obj.text(&quot;123&quot;)</code></li>
+<li>读写节点的value属性值：<code>obj.val() / obj.val(&quot;abc&quot;)</code></li>
+<li>读写节点的属性值：<code>obj.attr(&quot;属性名&quot;) / obj.attr(&quot;属性名&quot;,&quot;属性值&quot;)</code></li>
+</ul>
+<blockquote>
+<p>Jquery1.6之后，它将“属性”与“特性”做了区别，属性指的是“name，id”等等，特性指的是“selectedIndex, tagName, nodeName”等等。可以通过attr方法去获得属性，通过prop方法去获得特性。<br>$(“#cb”).attr(“tagName”); //undefined<br>$(“#cb”).prop(“tagName”); //INPUT<br>那么，什么时候使用attr()，什么时候使用prop()？  </p>
+<ol>
+<li>添加属性名称该属性就会生效应该使用prop();  </li>
+<li>是有true,false两个属性使用prop();  </li>
+<li>其他则使用attr();  </li>
+</ol>
+</blockquote>
+<h3 id="增删节点"><a href="#增删节点" class="headerlink" title="增删节点"></a>增删节点</h3><ul>
+<li>创建DOM节点：语法<code>$(&quot;节点内容&quot;)</code>，例如：<code>$(&quot;&lt;span&gt;你好&lt;/span&gt;&quot;)</code></li>
+<li>插入DOM节点：<ol>
+<li>element.append(obj) 作为最后一个节点添加进来</li>
+<li>element.prepend(obj) 作为第一个节点添加进来</li>
+<li>element.after(obj) 作为元素的下一个节点添加进来</li>
+<li>element.before(obj) 作为元素的上一个节点添加进来</li>
+</ol>
+</li>
+<li>删除DOM节点：<ol>
+<li>obj.remove() 删除节点</li>
+<li>obj.remove(selector) 只删除满足selector的节点</li>
+<li>obj.empty() 清空节点</li>
+</ol>
+</li>
+</ul>
+<h3 id="样式操作"><a href="#样式操作" class="headerlink" title="样式操作"></a>样式操作</h3><ul>
+<li>addClass(“”) 追加样式</li>
+<li>removeClass(“”) 移除指定样式</li>
+<li>removeClass() 移除所有样式</li>
+<li>toggleClass(“”) 切换样式</li>
+<li>hasClass(“”) 判断是否有某个样式</li>
+<li>css(“”) 读取css的值</li>
+<li>css(“”,””) 设置多个样式</li>
+<li>css(“{….}”) 设置样式</li>
+</ul>
+<h3 id="遍历节点"><a href="#遍历节点" class="headerlink" title="遍历节点"></a>遍历节点</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>siblings([selector])</td>
+<td>返回所有兄弟元素</td>
+</tr>
+<tr>
+<td>prev([selector])</td>
+<td>返回同级上一个元素</td>
+</tr>
+<tr>
+<td>prevAll([selector])</td>
+<td>返回同级上所有元素</td>
+</tr>
+<tr>
+<td>next([selector])</td>
+<td>返回同级下一个元素</td>
+</tr>
+<tr>
+<td>nextAll([selector])</td>
+<td>返回同级下所有元素</td>
+</tr>
+<tr>
+<td>chirldren([selector])</td>
+<td>返回所有子元素</td>
+</tr>
+<tr>
+<td>parent()</td>
+<td>返回父元素</td>
+</tr>
+<tr>
+<td>find(selector)</td>
+<td>查找满足选择器的所有后代</td>
+</tr>
+</tbody></table>
+<h2 id="jQuery事件"><a href="#jQuery事件" class="headerlink" title="jQuery事件"></a>jQuery事件</h2><h3 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h3><ul>
+<li>语法：$obj.bind(事件类型，事件处理函数)，如 <code>$obj.bind(&quot;click&quot;,func)</code></li>
+<li>简写形式：如 <code>$obj.click(func)</code></li>
+<li>获取事件对象event，只需要在事件函数中传入一个参数，例如：<code>$obj.click(function(e){...})</code></li>
+<li>事件对象的常用属性：<ul>
+<li>获取事件源 e.target <strong>返回DOM对象</strong></li>
+<li>获取鼠标点击坐标 e.pageX 、 e.pageY</li>
+</ul>
+</li>
+</ul>
+<h3 id="事件冒泡"><a href="#事件冒泡" class="headerlink" title="事件冒泡"></a>事件冒泡</h3><ul>
+<li>子节点产生的事件会依次向上抛给父节点</li>
+<li>为了避免事件冒泡，我们可以设置取消事件冒泡</li>
+<li>代码：<code>e.stopPropagation()</code> ，用于取消事件冒泡</li>
+</ul>
+<h3 id="合成事件"><a href="#合成事件" class="headerlink" title="合成事件"></a>合成事件</h3><ul>
+<li>hover(mouseenter,mouseleave) 用于模拟光标悬停事件</li>
+<li>toggle() 在多个事件响应中切换</li>
+</ul>
+<h3 id="模拟操作"><a href="#模拟操作" class="headerlink" title="模拟操作"></a>模拟操作</h3><ul>
+<li>语法：$obj.trigger(事件类型) 例如：<code>$obj.trigger(&quot;focus&quot;)</code></li>
+<li>简写形式：如 <code>$obj.focus()</code></li>
+</ul>
+<h2 id="jQuery动画"><a href="#jQuery动画" class="headerlink" title="jQuery动画"></a>jQuery动画</h2><h3 id="显示隐藏动画"><a href="#显示隐藏动画" class="headerlink" title="显示隐藏动画"></a>显示隐藏动画</h3><ul>
+<li>语法： show() / hide() , 通过改变元素的宽度和高度来实现显示或者隐藏</li>
+<li>用法： <code>$obj.show(执行时间,回调函数);</code><ul>
+<li>执行时间：slow,normla,fast,毫秒数</li>
+<li>回调函数：动画执行完毕后执行的函数</li>
+</ul>
+</li>
+<li>toggle();</li>
+</ul>
+<h3 id="上下滑动式"><a href="#上下滑动式" class="headerlink" title="上下滑动式"></a>上下滑动式</h3><ul>
+<li>语法： slideDown() / slideUp() , 通过改变元素的高度来实现显示或者隐藏</li>
+<li>用法同上</li>
+<li>slideToggle();</li>
+</ul>
+<h3 id="淡入淡出效果"><a href="#淡入淡出效果" class="headerlink" title="淡入淡出效果"></a>淡入淡出效果</h3><ul>
+<li>语法： fadeIn() / fadeOut() , 通过改变元素的不透明度opacity来实现显示或者隐藏</li>
+<li>用法同上</li>
+<li>fadeToggle();</li>
+</ul>
+<h3 id="自定义动画效果"><a href="#自定义动画效果" class="headerlink" title="自定义动画效果"></a>自定义动画效果</h3><ul>
+<li>语法：<code>animate(偏移位置,执行时间,回调函数)</code><ul>
+<li>偏移位置：{}描述动画执行之后元素的样式</li>
+<li>执行时间：毫秒数</li>
+<li>回调函数：动画执行结束后要执行的函数</li>
+</ul>
+</li>
+<li>使用示例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;div&quot;).click(function()&#123;</span><br><span class="line">    $(this).animate(&#123;&apos;left&apos;,&apos;500px&apos;&#125;,4000);</span><br><span class="line">    $(this).animate(&#123;&apos;top&apos;,&apos;300px&apos;&#125;,2000);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/11/29/dshc/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/">
+                Web基础-JavaScript语言
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-29</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/语言编程/">语言编程</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="Web基础-JavaScript语言"><a href="#Web基础-JavaScript语言" class="headerlink" title="Web基础-JavaScript语言"></a>Web基础-JavaScript语言</h1><h2 id="JavaScript概述"><a href="#JavaScript概述" class="headerlink" title="JavaScript概述"></a>JavaScript概述</h2><h3 id="什么是JavaScript"><a href="#什么是JavaScript" class="headerlink" title="什么是JavaScript"></a>什么是JavaScript</h3><ul>
+<li>JavaScript是嵌入HTML中的脚本语言</li>
+<li>用于向HTML页面添加交互行为</li>
+<li>不进行预编译，由浏览器解析执行</li>
+</ul>
+<h3 id="JavaScript语言特点"><a href="#JavaScript语言特点" class="headerlink" title="JavaScript语言特点"></a>JavaScript语言特点</h3><ul>
+<li>属于弱类型语言</li>
+<li>基于面向对象：内置大量线程对象</li>
+<li>安全性高：js语言智能访问浏览器内部数据，不能访问浏览器以外的数据</li>
+<li>交互性高：js语言可以直接嵌入到html页面中，可以直接和页面中的用户进行交互</li>
+</ul>
+<h3 id="导入JavaScript方法"><a href="#导入JavaScript方法" class="headerlink" title="导入JavaScript方法"></a>导入JavaScript方法</h3><ul>
+<li>总共有三种方式：事件定义式、嵌入式、文件调用式</li>
+<li>事件定义式：在标签的事件属性中添加js代码，当事件触发时执行</li>
+<li>嵌入式：定义在HTML的任意位置，标签内写js代码，通常建议写在body标签末尾<ul>
+<li>使用<code>script</code>标签，属性<code>type=&quot;text/script&quot;</code>，在标签体内书写</li>
+<li>例如：<code>&lt;script type=&quot;text/javascript&quot;&gt;js代码&lt;/script&gt;</code></li>
+</ul>
+</li>
+<li>文件调用式：定义在一个外部的js文件中，HTML页面引用<ul>
+<li>使用<code>script</code>标签，属性<code>type=&quot;text/script&quot;</code>，属性<code>src=&quot;js文件&quot;</code></li>
+<li>例如：<code>&lt;script type=&quot;text/javascript&quot; src=&quot;js文件&quot;&gt;&lt;/script&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="JavaScript基础语法"><a href="#JavaScript基础语法" class="headerlink" title="JavaScript基础语法"></a>JavaScript基础语法</h2><h3 id="JavaScript基础"><a href="#JavaScript基础" class="headerlink" title="JavaScript基础"></a>JavaScript基础</h3><ul>
+<li>Unicode字符集编写，大小写敏感，使用分号或换行结束，一般都以分号结束，代码中的空格会被忽略</li>
+<li>注释使用//或/* */</li>
+<li>不以数字开头的字母、数字、下划线、美元符号组成</li>
+<li>特定字符保留字不允许程序再定义</li>
+<li>使用var关键字声明为全局变量，使用let关键字声明为局部变量</li>
+<li>谷歌浏览器会把定义id的元素，自动获取本身对象到id名称变量中</li>
+</ul>
+<h3 id="JavaScript语法"><a href="#JavaScript语法" class="headerlink" title="JavaScript语法"></a>JavaScript语法</h3><table>
+<thead>
+<tr>
+<th>命名</th>
+<th>语法</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>变量(对象)声明</td>
+<td>var/let &lt;变量名&gt;</td>
+<td>var age;var name=’明’;<br>var person={name:”xiao”,age:”20”,id:”123456”};</td>
+</tr>
+<tr>
+<td>常量声明</td>
+<td>const &lt;变量名&gt;</td>
+<td>只对基本数据类型生效(Number、String、Boolean等)</td>
+</tr>
+<tr>
+<td>if分支</td>
+<td>if(布尔表达式){<br>}else if(布尔表达式){<br>}else{}</td>
+<td>不使用大括号默认认为下一个；前的语句属于if-true分支内,效率比switch低,switch直接进入不是挨个判断</td>
+</tr>
+<tr>
+<td>switch分支</td>
+<td>switch(表达式){<br>default:<br>&emsp;默认语句;<br>&emsp;break;<br>case 常量:<br>&emsp;语句;<br>&emsp;break;}</td>
+<td>case说明程序开始，break说明结束(退出分支),没有则case穿透,default可以不在最后面但是不要忘记break</td>
+</tr>
+<tr>
+<td>for循环</td>
+<td>for(var/let i = 0;i &lt; 9;i++){}</td>
+<td>for(;;){}默认死循环,()内多条语句用<code>,</code>但是注意第一块如果有声明只能一个类型的多声明</td>
+</tr>
+<tr>
+<td>while循环</td>
+<td>while(布尔表达式){}<br>do{}while(布尔表达式)</td>
+<td>continue跳过本次循环继续下次循环</td>
+</tr>
+</tbody></table>
+<ul>
+<li>false一切表示空的值都是：false/0/null/“”/undefined/NaN</li>
+<li>true：true/“非空”值</li>
+<li>Number字符可以用3e2赋值，为300</li>
+</ul>
+<h3 id="JavaScript数据类型"><a href="#JavaScript数据类型" class="headerlink" title="JavaScript数据类型"></a>JavaScript数据类型</h3><ul>
+<li>特殊类型：null(空)、undefined(未定义)</li>
+<li>内置对象：Number(数字:整数和小数)、Sting(字符串)、Boolean(布尔)、Function(函数)、Array(数组)</li>
+<li>外部对象：window(浏览器对象)、document(文档对象)</li>
+<li>自定义对象：Object(自定义对象)</li>
+<li>Number统一使用4字节浮点格式存储，Boolean运算时true=1,false=0</li>
+<li>null表示无值或者无对象，undefined表示声明了变量但为赋值，或者对象属性不存在</li>
+<li>使用<code>typeof()</code>方法传入对象，返回对象类型，以字符串类型显示</li>
+</ul>
+<h3 id="数据类型的隐式转换"><a href="#数据类型的隐式转换" class="headerlink" title="数据类型的隐式转换"></a>数据类型的隐式转换</h3><ul>
+<li>数字+字符串：数字转为字符串</li>
+<li>数字+布尔值：布尔转换1或0</li>
+<li>字符串+布尔值：布尔转为为字符串true或false</li>
+<li>布尔值+布尔值：布尔值转换1或0</li>
+</ul>
+<h3 id="特殊运算符规则"><a href="#特殊运算符规则" class="headerlink" title="特殊运算符规则"></a>特殊运算符规则</h3><ul>
+<li><code>==</code>与<code>===</code>的区别：前者会先统一类型再比较值，后者先比较类型再比较值</li>
+<li>进而存在<code>!=</code>与<code>!==</code>，不等、不全等</li>
+<li>JS在除法运算中，计算后的结果会根据实际值存储为整数或小数</li>
+</ul>
+<h3 id="JavaScript方法声明"><a href="#JavaScript方法声明" class="headerlink" title="JavaScript方法声明"></a>JavaScript方法声明</h3><ul>
+<li>function 方法名(参数列表){方法体}</li>
+<li>var 方法名 = function(参数列表){方法体}</li>
+<li>var 方法名 = new Function(“参数1”,”参数2”…,”方法体”)</li>
+</ul>
+<h2 id="JavaScript内置对象"><a href="#JavaScript内置对象" class="headerlink" title="JavaScript内置对象"></a>JavaScript内置对象</h2><h3 id="String对象"><a href="#String对象" class="headerlink" title="String对象"></a>String对象</h3><ul>
+<li>常见String对象创建方式：<code>var str=&quot;myString&quot;</code> 和 <code>var str=new String(&quot;myString&quot;)</code></li>
+<li>属性：length，存储字符串长度</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>toLowerCase()</td>
+<td>转换为小写</td>
+</tr>
+<tr>
+<td>toUpperCase()</td>
+<td>转换为大写</td>
+</tr>
+<tr>
+<td>charAt(index)</td>
+<td>返回指定位置的字符</td>
+</tr>
+<tr>
+<td>formCharCode(num)</td>
+<td>返回num对应的值(ASCII)，不区分大小写</td>
+</tr>
+<tr>
+<td>charCodeAt(index)</td>
+<td>返回指定位置字符的Unicode编码</td>
+</tr>
+<tr>
+<td>indexOf(findsrt[,index])</td>
+<td>从制定位置，从头开始寻找findstr出现的第一个位置</td>
+</tr>
+<tr>
+<td>lastIndexOf(findsrt[,index])</td>
+<td>从制定位置，从尾开始寻找findstr出现的第一个位置</td>
+</tr>
+<tr>
+<td>substring(start[,end])</td>
+<td>截取字符串，从start到end(不写默认到最后)</td>
+</tr>
+<tr>
+<td>replace(findstr,tostr)</td>
+<td>替换字符串内的字符</td>
+</tr>
+<tr>
+<td>split(bystr[,length])</td>
+<td>根据bystr分隔字符串，可以指定返回数组的最大长度length</td>
+</tr>
+<tr>
+<td>正则表达式相关</td>
+<td></td>
+</tr>
+<tr>
+<td>replace(regexp,tostr)</td>
+<td>将与正则相匹配的替换为tostr</td>
+</tr>
+<tr>
+<td>match(regexp)</td>
+<td>返回匹配字符串的数组</td>
+</tr>
+<tr>
+<td>search(regexp)</td>
+<td>返回匹配字符串的首字符位置索引</td>
+</tr>
+</tbody></table>
+<h3 id="Number对象"><a href="#Number对象" class="headerlink" title="Number对象"></a>Number对象</h3><ul>
+<li>Number是数值对象，储存整数和小数，都是通过32位浮点方式储存</li>
+<li>方法：toFixed(num)，转换为字符串，并保留小数点后一定位数</li>
+</ul>
+<h3 id="Array对象"><a href="#Array对象" class="headerlink" title="Array对象"></a>Array对象</h3><ul>
+<li>常见Array对象创建方式：<code>var a=new Array(1,2,3)</code>和<code>var a=[[a00,a01],[a10,a11]]</code></li>
+<li>属性：length，存储数组内元素个数</li>
+<li>特殊的：数组内可以储存不同类型元素，js的数组是<strong>可变长度</strong>的</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ar.reverse()</td>
+<td>改变数组中数值的顺序</td>
+</tr>
+<tr>
+<td>ar.sort([sortfunc])</td>
+<td>数组排序,可选使用某方法进行排序,方法返回正负零</td>
+</tr>
+<tr>
+<td>ar.push(“11”,”22”)</td>
+<td>在末尾增加元素</td>
+</tr>
+<tr>
+<td>delete ar[1]</td>
+<td>删除指定位元素</td>
+</tr>
+<tr>
+<td>ar.pop()</td>
+<td>在末尾删除元素，返回删除值</td>
+</tr>
+<tr>
+<td>ar.shift()</td>
+<td>在开始删除元素，返回删除值</td>
+</tr>
+<tr>
+<td>ar.unshift(“11”)</td>
+<td>在开始增加元素，返回元素个数</td>
+</tr>
+<tr>
+<td>ar.toString()</td>
+<td>数组转为字符串</td>
+</tr>
+<tr>
+<td>ar.join(“—”)</td>
+<td>数组转为字符串，用—连接</td>
+</tr>
+<tr>
+<td>ar1.concat(ar2)</td>
+<td>合并数组，ar2也可以直接写元素</td>
+</tr>
+<tr>
+<td>ar.splice(start,length)</td>
+<td>删除、替换、插入元素,会改变原数组</td>
+</tr>
+<tr>
+<td>ar.slice(start,end)</td>
+<td>切取数组一段,不会改变原数组,返回切取得元素</td>
+</tr>
+<tr>
+<td>for—in—</td>
+<td>遍历数组或对象for(x in obj){alert(obj[x]);}<br>这里的x表示obj.key obj[x]就是obj.key.value</td>
+</tr>
+</tbody></table>
+<h3 id="Math对象"><a href="#Math对象" class="headerlink" title="Math对象"></a>Math对象</h3><ul>
+<li>该对象常用它的方法与属性、常量</li>
+<li>无需创建对象，直接把Math作为对象使用</li>
+<li>常用属性：Math.PI 、 Math.E</li>
+<li>三角函数：sin(x)、cos(x)、tan(x) 等</li>
+<li>计算函数：sqrt(x)、log(x)、exp(x) 等</li>
+<li>数值比较函数：abs(x)、max(x,y,…)、random() 、round(x) 等等</li>
+</ul>
+<h3 id="Date对象"><a href="#Date对象" class="headerlink" title="Date对象"></a>Date对象</h3><ul>
+<li>常见Date对象创建方式：<code>var now=new Date()</code>和<code>var date=new Date(&quot;2018/8/8 08:00&quot;)</code></li>
+<li>读写毫秒数：getTime() 、 setTime(ms)</li>
+<li>读写毫秒数：getDate() 、 getDay() 、 getFullYear() ，set…</li>
+<li>转换为字符串：toString() 、 toLocaleTimeString() 、 toLocaleDateString()</li>
+</ul>
+<h3 id="RegExp对象"><a href="#RegExp对象" class="headerlink" title="RegExp对象"></a>RegExp对象</h3><ul>
+<li>常见Date对象创建方式：<code>var reExp=/pattern/flags</code>和<code>var reExp=new RegExp(&quot;pattern&quot;[,&quot;flags&quot;])</code></li>
+<li>flags表示有以下几个：<ul>
+<li>g：设定当前匹配为全局模式</li>
+<li>i：忽略匹配中的大小写检测</li>
+</ul>
+</li>
+<li>创建对象示例：<code>var reg=/^\d{3,6}$/</code>或者<code>var reg=new RgeExp(&quot;^\d{3,6}$&quot;)</code></li>
+<li>方法：RegExpObject.test(string)，检测string是否含有与RegExpObject匹配的文本，返回布尔</li>
+<li>方法：RegExpObject.exec(string)，如果string中有与RegExpObject匹配的文本，将该文本返回</li>
+</ul>
+<h3 id="Function对象"><a href="#Function对象" class="headerlink" title="Function对象"></a>Function对象</h3><ul>
+<li>方法对象，具体创建与使用可以参考上方，方法的创建方式</li>
+<li>内置arguments对象，是一种特殊的对象，表示函数的参数数组，用于访问参数</li>
+<li>arguments.length：函数的参数个数</li>
+<li>arguments[i]：第i个参数</li>
+<li>可以利用arguments实现可变参数的函数</li>
+<li>可以通过<code>func.apply([thisObj [,argArray]])</code>方法或<code>call([thisObject[,arg1 [,arg2 [,...,argn]]]])</code>方法调用函数</li>
+<li>以上参数1是函数运行的作用域，另一个是参数数组/参数罗列</li>
+</ul>
+<h3 id="Object自定对象"><a href="#Object自定对象" class="headerlink" title="Object自定对象"></a>Object自定对象</h3><ul>
+<li>语法：<code>var obj = new object()</code> 或 <code>var obj = {}</code> 或 <code>var obj = {key:”value”,key2:”value”}</code></li>
+<li>使用属性：<code>obj.key</code> 和 <code>obj[&quot;key&quot;]</code></li>
+<li>删除属性：<code>delete obj.key</code></li>
+<li>增设方法：<code>obj.key = fun();</code> 、 <code>obj.key();</code></li>
+</ul>
+<h2 id="JavaScript外部对象概述"><a href="#JavaScript外部对象概述" class="headerlink" title="JavaScript外部对象概述"></a>JavaScript外部对象概述</h2><h3 id="外部对象结构"><a href="#外部对象结构" class="headerlink" title="外部对象结构"></a>外部对象结构</h3><p><img src="/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/bomdom" alt=""></p>
+<h3 id="BOM对象"><a href="#BOM对象" class="headerlink" title="BOM对象"></a>BOM对象</h3><ul>
+<li>BOM(Browser Object Model)：浏览器对象模型，用来访问和操作浏览器窗口，使JavaScript有能力与浏览器”对话”</li>
+<li>通过使用BOM，可移动窗口、更改状态栏文本、执行其他不与页面内容发生直接联系的操作</li>
+<li>没有相关标准，但被广泛支持</li>
+<li>BOM对象包含整个浏览器中的所有对象，其中根对象为window</li>
+<li>window对象，window的属性称为全局属性，方法称为全局方法，访问时可以省略掉window</li>
+<li>window对象包含：document、frames[]、history、location、navigator、screen</li>
+<li>其中document对象整体视为DOM对象</li>
+</ul>
+<h3 id="DOM对象"><a href="#DOM对象" class="headerlink" title="DOM对象"></a>DOM对象</h3><ul>
+<li>DOM(Document Object Model)：文档对象模型，用来操作文档</li>
+<li>定义了访问和操作HTML文档的标准方法</li>
+<li>应用程序通过对DOM树的操作，来实现对HTML文档数据的操作</li>
+</ul>
+<h2 id="浏览器对象BOM"><a href="#浏览器对象BOM" class="headerlink" title="浏览器对象BOM"></a>浏览器对象BOM</h2><h3 id="window对象"><a href="#window对象" class="headerlink" title="window对象"></a>window对象</h3><table>
+<thead>
+<tr>
+<th>对象内容</th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>方法</td>
+<td>alert(内容)</td>
+<td>弹窗</td>
+</tr>
+<tr>
+<td></td>
+<td>parseInt()/parseFloat()</td>
+<td>都懂</td>
+</tr>
+<tr>
+<td></td>
+<td>isNaN()</td>
+<td>判断是否是NaN(Not a Number)，返回T/F</td>
+</tr>
+<tr>
+<td></td>
+<td>eval(code)</td>
+<td>将code字符串视为js代码，并执行</td>
+</tr>
+<tr>
+<td></td>
+<td>confirm(内容)</td>
+<td>弹窗是否返回T/F</td>
+</tr>
+<tr>
+<td></td>
+<td>prompt(内容，默认值)</td>
+<td>弹窗返回输入值，取消返回null</td>
+</tr>
+<tr>
+<td></td>
+<td>Open(URL,Name,features)</td>
+<td>目标地址，新窗口名称或窗口目标，新窗口标准<br>窗口目标：_blanck新建窗口,_parent当前窗口<br>窗口标准：width,height,top,left</td>
+</tr>
+<tr>
+<td></td>
+<td>Close()</td>
+<td>关闭当前窗口</td>
+</tr>
+<tr>
+<td></td>
+<td>setInterval(fun,ms)</td>
+<td>定时器(循环执行)，返回定时器ID</td>
+</tr>
+<tr>
+<td></td>
+<td>setTimeout(fun,ms)</td>
+<td>定时器(只执行一次)，返回定时器ID</td>
+</tr>
+<tr>
+<td></td>
+<td>clearInterval(id)</td>
+<td>定时器-清除</td>
+</tr>
+<tr>
+<td></td>
+<td>clearTimeout(id)</td>
+<td>定时器-清除</td>
+</tr>
+<tr>
+<td>属性</td>
+<td>innerWidth</td>
+<td>文档显示区宽度</td>
+</tr>
+<tr>
+<td></td>
+<td>innerHeight</td>
+<td>文档显示区高度</td>
+</tr>
+<tr>
+<td></td>
+<td>prompt(内容，默认值)</td>
+<td>弹窗返回输入值，取消返回null</td>
+</tr>
+</tbody></table>
+<h3 id="history对象"><a href="#history对象" class="headerlink" title="history对象"></a>history对象</h3><ul>
+<li>浏览过窗口的历史记录对象</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对象内容</th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>方法</td>
+<td>back()</td>
+<td>回到上一个页面</td>
+</tr>
+<tr>
+<td></td>
+<td>forward()</td>
+<td>进入下一个页面</td>
+</tr>
+<tr>
+<td></td>
+<td>go(Num)</td>
+<td>进入相对当前页面的第N个(Num=-1上一个)l</td>
+</tr>
+<tr>
+<td>属性</td>
+<td>length</td>
+<td>当前窗口所打开的页面数</td>
+</tr>
+</tbody></table>
+<h3 id="location对象"><a href="#location对象" class="headerlink" title="location对象"></a>location对象</h3><ul>
+<li>窗口文件地址对象</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对象内容</th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>方法</td>
+<td>assign(URL)</td>
+<td>加载新的文档—一般用于跳转</td>
+</tr>
+<tr>
+<td></td>
+<td>reload()</td>
+<td>重新加载当前文档</td>
+</tr>
+<tr>
+<td></td>
+<td>replace(URL)</td>
+<td>加载新的文档，与第一个类似，区别是不会产生history</td>
+</tr>
+<tr>
+<td>属性</td>
+<td>href</td>
+<td>设置或返回完整的URL</td>
+</tr>
+<tr>
+<td></td>
+<td>host</td>
+<td>主机名和当前端口号</td>
+</tr>
+</tbody></table>
+<h3 id="screen对象"><a href="#screen对象" class="headerlink" title="screen对象"></a>screen对象</h3><ul>
+<li>当前屏幕对象</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对象内容</th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>属性</td>
+<td>availHeight</td>
+<td>返回屏幕高度，除Windows任务栏外</td>
+</tr>
+<tr>
+<td></td>
+<td>availWidth</td>
+<td>返回屏幕宽度，除Windows任务栏外</td>
+</tr>
+<tr>
+<td></td>
+<td>Height</td>
+<td>返回屏幕高度</td>
+</tr>
+<tr>
+<td></td>
+<td>Width</td>
+<td>返回屏幕宽度</td>
+</tr>
+</tbody></table>
+<h3 id="navigator对象"><a href="#navigator对象" class="headerlink" title="navigator对象"></a>navigator对象</h3><ul>
+<li>浏览器相关信息</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对象内容</th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>属性</td>
+<td>appCodeName</td>
+<td>返回浏览器名称</td>
+</tr>
+<tr>
+<td></td>
+<td>uerAgent</td>
+<td>获取浏览器版本信息</td>
+</tr>
+</tbody></table>
+<h2 id="HTML对象DOM"><a href="#HTML对象DOM" class="headerlink" title="HTML对象DOM"></a>HTML对象DOM</h2><h3 id="DOM选择元素方法"><a href="#DOM选择元素方法" class="headerlink" title="DOM选择元素方法"></a>DOM选择元素方法</h3><ul>
+<li>属性readyState(加载状态)：uninitialized还未开始载入 loading载入中 interactive已加载 complete载入完成</li>
+<li>通过document打点使用方法查询</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getElementById()</td>
+<td>获取元素对象，ID</td>
+</tr>
+<tr>
+<td>getElementsByName()</td>
+<td>获取元素对象组，Name</td>
+</tr>
+<tr>
+<td>getElementsByClassName()</td>
+<td>获取元素对象组，Class</td>
+</tr>
+<tr>
+<td>getElementsByTagName()</td>
+<td>获取元素对象组，TagName标签名称div,input,h1,a</td>
+</tr>
+<tr>
+<td>querySelector(“selectors”)</td>
+<td>查找元素、第一个selectors为css选择器</td>
+</tr>
+<tr>
+<td>querySelectorAll(“selectors”)</td>
+<td>查找元素集合selectors为css选择器</td>
+</tr>
+</tbody></table>
+<h3 id="更改使用元素"><a href="#更改使用元素" class="headerlink" title="更改使用元素"></a>更改使用元素</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>document.write()</td>
+<td>向文档写HTML或JavaScript，注意加载完后使用会覆盖原文档</td>
+</tr>
+<tr>
+<td>element.innerHTML</td>
+<td>设置或返回元素的内容</td>
+</tr>
+<tr>
+<td>element.tagName</td>
+<td>返回元素标签名</td>
+</tr>
+<tr>
+<td>element.id/className/title/value</td>
+<td>设置或返回元素的各种属性</td>
+</tr>
+<tr>
+<td>element.style.color/…</td>
+<td>设置或返回元素style的各种属性，原下划线去掉将第二个单词首字母大写</td>
+</tr>
+<tr>
+<td>===元素属性操作===</td>
+<td></td>
+</tr>
+<tr>
+<td>element.getAttribute(“key”)</td>
+<td>返回元素的key属性的值</td>
+</tr>
+<tr>
+<td>element.setAttribute(“key”,”value”)</td>
+<td>设置元素的key属性为value</td>
+</tr>
+<tr>
+<td>element.removeAttribute(“key”)</td>
+<td>删除元素的key属性的值</td>
+</tr>
+</tbody></table>
+<h3 id="元素操作其他元素"><a href="#元素操作其他元素" class="headerlink" title="元素操作其他元素"></a>元素操作其他元素</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>createElement()</td>
+<td>创建元素节点</td>
+</tr>
+<tr>
+<td>element.appendChild()</td>
+<td>向元素添加新的子节点作为最后一个子节点</td>
+</tr>
+<tr>
+<td>element.removeChild()</td>
+<td>从元素中移出子节点</td>
+</tr>
+<tr>
+<td>element.nodeName</td>
+<td>返回节点名称</td>
+</tr>
+<tr>
+<td>===元素选择元素===</td>
+<td></td>
+</tr>
+<tr>
+<td>element.nodeType</td>
+<td>返回节点类型—元素节点1、属性节点2、文本节点3</td>
+</tr>
+<tr>
+<td>element.nodeValue</td>
+<td>返回元素值—元素节点没有value</td>
+</tr>
+<tr>
+<td>element.parentNode</td>
+<td>返回元素的父节点</td>
+</tr>
+<tr>
+<td>element.childNodes</td>
+<td>返回元素子节点的NodeList（包含空格文本节点）</td>
+</tr>
+<tr>
+<td>element.children</td>
+<td>返回元素的子元素节点（只有元素节点）</td>
+</tr>
+<tr>
+<td>element.firstChild</td>
+<td>返回元素的第一个子节点（包含空格文本节点）</td>
+</tr>
+<tr>
+<td>element.firstElementChild</td>
+<td>返回元素的第一个子元素节点（只有元素节点）</td>
+</tr>
+<tr>
+<td>element.lastChild</td>
+<td>返回元素的最后一个子节点（包含空格文本节点）</td>
+</tr>
+<tr>
+<td>element.lastElementChild</td>
+<td>返回元素的最后一个子元素节点（只有元素节点）</td>
+</tr>
+<tr>
+<td>element.previousSibling</td>
+<td>返回元素上一个节点</td>
+</tr>
+<tr>
+<td>element.previousElementSibling</td>
+<td>返回元素上一个元素节点</td>
+</tr>
+<tr>
+<td>element.nextSibling</td>
+<td>返回元素下一个节点</td>
+</tr>
+<tr>
+<td>element.nextElementSibling</td>
+<td>返回元素下一个元素节点</td>
+</tr>
+<tr>
+<td>element.attributes</td>
+<td>返回元素的属性节点名集合NamedNodeMap</td>
+</tr>
+<tr>
+<td>element.insertBefore(new,old)</td>
+<td>在指定的子节点前插入新节点(新节点，某节点前)</td>
+</tr>
+<tr>
+<td>element.replaceChild(new,old)</td>
+<td>替换元素中的子节点(新节点，旧节点)</td>
+</tr>
+</tbody></table>
+<h2 id="JavaScrip事件"><a href="#JavaScrip事件" class="headerlink" title="JavaScrip事件"></a>JavaScrip事件</h2><h3 id="键鼠事件"><a href="#键鼠事件" class="headerlink" title="键鼠事件"></a>键鼠事件</h3><ul>
+<li>鼠标事件：click、dblclick、contextmenu点击右键、mousedown、mousemove、mouseout、mouseover、mouseup</li>
+<li>键盘事件：keydowm、keypress、keyup，keypress不适用系统按键</li>
+</ul>
+<h3 id="其他事件"><a href="#其他事件" class="headerlink" title="其他事件"></a>其他事件</h3><ul>
+<li>load、unload、abort图像加载被中断、blur失去焦点、change、error、fouces、select文本被选择、scroll</li>
+<li>通过选择器选择后，onclick=func，或其他各种事件进行绑定</li>
+</ul>
+<h3 id="事件对象event"><a href="#事件对象event" class="headerlink" title="事件对象event"></a>事件对象event</h3><ul>
+<li>事件发生后会将事件的现场传入到event对象中，可以通过event的属性与子对象获取事件的现场信息</li>
+<li>子对象target/srcElement：获取事件目标，两种写法是因为浏览器是否兼容，都可，相同</li>
+<li>子对象事件目标对象：常用属性，nodeName存储事件目标的标签名称</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>event属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>clientX</td>
+<td>鼠标指针的水平坐标</td>
+</tr>
+<tr>
+<td>screenX</td>
+<td>鼠标指针的水平坐标</td>
+</tr>
+<tr>
+<td>clientY</td>
+<td>鼠标指针的垂直坐标</td>
+</tr>
+<tr>
+<td>screenY</td>
+<td>鼠标指针的垂直坐标</td>
+</tr>
+<tr>
+<td>ctrlKey</td>
+<td>CTRL键是否被按下</td>
+</tr>
+<tr>
+<td>altKey</td>
+<td>ALT键是否被按下</td>
+</tr>
+<tr>
+<td>shiftKey</td>
+<td>SHIFT键是否被按下</td>
+</tr>
+<tr>
+<td>code</td>
+<td>按键的预定名称</td>
+</tr>
+<tr>
+<td>keyCode</td>
+<td>按键的ASCII值</td>
+</tr>
+<tr>
+<td>key</td>
+<td>按下的具体哪个键</td>
+</tr>
+</tbody></table>
+<h3 id="JavaScrip事件的触发"><a href="#JavaScrip事件的触发" class="headerlink" title="JavaScrip事件的触发"></a>JavaScrip事件的触发</h3><ul>
+<li><p>常规触发方式：element.click() 、 element.dblclick()</p>
+</li>
+<li><p>通用主动触发(非谷歌)：element.fireEvent(“onchange”);</p>
+</li>
+<li><p>谷歌浏览器则是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var evt = document.createEvent(&quot;HTMLEvents&quot;);</span><br><span class="line">evt.initEvent(&quot;click&quot;, false, true);</span><br><span class="line">element.dispatchEvent(evt);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>事件的传递-冒泡(从内向外)，可以通过目标对象判断是谁</p>
+</li>
+</ul>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/11/28/dshc/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/">
+                线性代数笔记
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-28</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/结构算法/">结构算法</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="线性代数笔记"><a href="#线性代数笔记" class="headerlink" title="线性代数笔记"></a>线性代数笔记</h1><h2 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h2><h3 id="什么是线性代数"><a href="#什么是线性代数" class="headerlink" title="什么是线性代数"></a>什么是线性代数</h3><ul>
+<li>线性代数就是<strong>高维</strong>的解析几何</li>
+<li>线性代数用到的工具：矩阵、行列式</li>
+<li>本笔记学习主要学习记录矩阵与行列式的定义与使用</li>
+<li>暂不考虑解析几何的计算</li>
+</ul>
+<h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><h3 id="行列式-1"><a href="#行列式-1" class="headerlink" title="行列式"></a>行列式</h3><ul>
+<li>等行等列的式子称为<strong>行列式</strong></li>
+<li>二行二列的式子称为 二阶行列式、三行三列的式子称为 三阶行列式、以此类推</li>
+<li>每个行(r)列(c)式都可以计算出一个数(D)</li>
+</ul>
+<h3 id="二元线性方程组与二阶行列式"><a href="#二元线性方程组与二阶行列式" class="headerlink" title="二元线性方程组与二阶行列式"></a>二元线性方程组与二阶行列式</h3><ul>
+<li>计算 a[11]x1 + a[12]x2 = b1</li>
+<li>还有 a[21]x1 + a[22]x2 = b2</li>
+<li>计算消除x2，为 <code>式子① * a[22] - 式子② * a[12]</code> 可以得到，同理可得</li>
+<li>(a[11]a[22] - a[12]a[21]) * x1 = b1 * a[22] - b2 * a[12]</li>
+<li>(a[11]a[22] - a[12]a[21]) * x1 = b2 * a[11] - b2 * a[21]</li>
+<li>如果 <code>a[11]a[22] - a[12]a[21]</code> 不等于零，则可以除过去</li>
+<li>x1 = (b1 * a[22] - b2 * a[12]) / (a[11]a[22] - a[12]a[21])</li>
+<li>x2 = (b2 * a[11] - b2 * a[21]) / (a[11]a[22] - a[12]a[21])</li>
+<li>两个不同的分子，一个相同的分母，可以用三个矩阵表示</li>
+<li>| a[11] a[12] | - - | b1 a[12] | - - | a[12] b1 |</li>
+<li>| a[21] a[22] | - - | b2 a[22] | - - | a[22] b2 |</li>
+<li>三个矩阵分别是 D D1 D2 ， D1 D2 分别是 b1 b2 替换掉 D 的第一列第二列实现的</li>
+<li>则二元线性方程组的两个解为 x1 = D1 / D ; x2 = D2 / D</li>
+<li></li>
+<li>二阶行列式的值 = 主对角线各元素乘积 - 负对角线各元素乘积</li>
+</ul>
+<h3 id="n阶行列式的基本推算"><a href="#n阶行列式的基本推算" class="headerlink" title="n阶行列式的基本推算"></a>n阶行列式的基本推算</h3><ul>
+<li>排列：由正整数 1,2，…，n 按一定次序排成一列，叫做这n各元素的全排列</li>
+<li>逆序对：该元素与之后的各元素对比，如果小于某元素，则两个元素称为一个逆序对</li>
+<li>逆序数：逆序对的个数称为逆序数，表示如下：</li>
+<li>τ(i1,i2…in) = τ(i1)+τ(i2)+…+τ(in)</li>
+<li>例如：τ(3,4,2)=τ(3)+τ(4)+τ(2)=1+1+0=2 –&gt; [32]、[42]</li>
+<li>相邻对换：排列中，两个元素对调，其余元素不变，会改变排列的奇偶性</li>
+<li>特殊行列式：下三角行列式(主对角线上方都是0)、上三角行列式(主对角线下方都是0)、对角行列式(主对角线上下方都是0) 计算方式为主对角线各元素的乘积</li>
+<li>M = (-1)^τ(i1,i2…in) * a[1i]a[2i]…a[ni]</li>
+</ul>
+<h3 id="行列式性质推论"><a href="#行列式性质推论" class="headerlink" title="行列式性质推论"></a>行列式性质推论</h3><ol>
+<li>行列式中，如果每行、每列进行转置，行列式的值不变：D = D^T ； 通过基本公式可以拆分获得</li>
+<li>行列式中的两行(列)进行交换，行列式变号 ； 根据 τ 次序变化获得<ul>
+<li>推论：行列式中，如果有两行(列)相同，则行列式的值 D = 0 ；两行(列)相同的进行互换，行列式变号，D=-D，则D为0</li>
+</ul>
+</li>
+<li>行列式中某一行(列)有公因子k，则k可以提到行列式前面。也就是说，k乘行列式，等于用k乘行列式的某一行 ； 根据基本公式拆分，提取公共项k可得<ul>
+<li>推论：若行列式存在某一行(列)的元素都为零，则行列式的值D = 0 ； 提取此行公因数0,0*D=0</li>
+</ul>
+</li>
+<li>如果行列式有两行(列)成比例，则行列式D = 0 ； 提取比例公因数k，两行相同M=0，答案为：K*M = K*0 = 0</li>
+<li>行列式的拆分定理，如果某行每个可以拆为a+b，可以直接分为两个 此行为a的行列式 + 此行为b的行列式</li>
+<li>行列式某行(列)的倍数加到另一行(列)，值不变 ； 根据定理5，原式+某行倍数(D+Dk)，其中某行倍数根据定理4，Dk=0，所以D+Dk=D</li>
+</ol>
+<h3 id="行列式的特殊式子"><a href="#行列式的特殊式子" class="headerlink" title="行列式的特殊式子"></a>行列式的特殊式子</h3><ul>
+<li>余子式M ：a[ij]的余子式，就是行列式删去i行，j列的所有元素，剩余元素组成的行列式，记做 M[ij]</li>
+<li>代数余子式A ：元素a[ij]的代数余子式就是 A[ij] = (-1)^(i+j) M[ij]</li>
+<li>行列式中，第i行，除了a[ji]以外其他元素都为0，则 D=a[ij]*A[ij]</li>
+<li>D = a[i1]A[i1] + a[i2]A[i2] +…+ a[in]A[in] ； 拆分可得，证明上述计算</li>
+</ul>
+<h3 id="行列式的计算技巧"><a href="#行列式的计算技巧" class="headerlink" title="行列式的计算技巧"></a>行列式的计算技巧</h3><ul>
+<li>根据基础公式进行计算</li>
+<li>根据上下三角进行计算 ： 凑三角</li>
+<li>根据余子式进行计算 ： a[ij]所在行(列)其他元素凑0</li>
+</ul>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><h3 id="线性方程组与矩阵"><a href="#线性方程组与矩阵" class="headerlink" title="线性方程组与矩阵"></a>线性方程组与矩阵</h3><ul>
+<li>计算 a[11]x1 + a[12]x2 +…+ a[1n]xn = b1</li>
+<li>还有 a[21]x1 + a[22]x2 +…+ a[2n]xn = b2</li>
+<li>等等</li>
+<li>最后 a[m1]x1 + a[m2]x2 +…+ a[mn]xn = bm</li>
+<li>计算这样的式子，去除x和计算符，剩下的矩阵与方程组息息相关，所以我们定义了矩阵</li>
+<li>称为：m*n矩阵，矩阵常用A、B、C来表示，记做 A = (a[ij])m*n</li>
+<li><strong>矩阵定义</strong>：矩阵是由m*n个数，排成m行n列的<strong>表格</strong>；而行列式是n行n列的<strong>数</strong></li>
+<li>复矩阵：由复数构成的矩阵</li>
+<li>实矩阵：由实数构成的矩阵(常使用)</li>
+<li>同型矩阵：两个矩阵的行数相等、列数也相等，则称为同型矩阵</li>
+<li>矩阵相等：如果两个同型矩阵，他们对应的每个元素都相等，则这两个矩阵相等</li>
+<li><strong>矩阵与行列式的区别</strong>：矩阵是表，行列式是数；他们的计算法则不同；表示不同，矩阵是大括弧，行列式是两个直线</li>
+</ul>
+<h3 id="特殊矩阵"><a href="#特殊矩阵" class="headerlink" title="特殊矩阵"></a>特殊矩阵</h3><ul>
+<li>零矩阵：矩阵中每个元素都为0，常记做0</li>
+<li>行矩阵(行向量α)：行数为1的矩阵</li>
+<li>列矩阵(列向量β)：列数为1的矩阵</li>
+<li>方阵：行数与列数相等的矩阵</li>
+</ul>
+<h4 id="特殊方阵"><a href="#特殊方阵" class="headerlink" title="特殊方阵"></a>特殊方阵</h4><ul>
+<li>上三角阵：主对角线下方都是零元素</li>
+<li>下三角阵：主对角线上方都是零元素</li>
+<li>对角阵：主对角线以外元素都为零</li>
+<li>单位阵：主对角线元素都为1，其余元素都为0，常记做E[n] (n*n的方阵)</li>
+</ul>
+<h3 id="矩阵的基本计算"><a href="#矩阵的基本计算" class="headerlink" title="矩阵的基本计算"></a>矩阵的基本计算</h3><ul>
+<li>同型矩阵的加法：两个矩阵的对应元素相加，记做A+B</li>
+<li>矩阵与常数乘法：kA = ka[ij] k乘以矩阵 等于 每个元素都乘以k</li>
+<li>负矩阵：-A=(-1)A=(-a[ij])</li>
+<li>矩阵与矩阵乘法：A=(a[ij])m*n ,B=(b[ij])n*p ,结果为 C=(a[ij])m*p，记做C=AB<ul>
+<li>要求：前式的列数 等于 后式的行数，才可以使用矩阵乘法</li>
+<li>计算：前者的元素与后者的列元素相乘的和</li>
+<li>结果：结果矩阵的大小是 前式的行数 乘 后式的列数</li>
+</ul>
+</li>
+<li>矩阵乘法的注意特点：<ol>
+<li>注意：不满足乘法交换律：AB≠BC</li>
+<li>注意：两个非零矩阵乘积可能是零矩阵，由AB=0不可以得到A=0或B=0</li>
+<li>注意：不满足消去率，若AB=AC=0且A≠0，不可以得到B=C</li>
+</ol>
+</li>
+<li>A^k = A*A*…*A 记做 A的k次幂，幂公式通用</li>
+<li>转置矩阵：AT，其运算规律：<code>(AT)T=A</code>、<code>(A+B)T=AT+BT</code>、<code>(λA)T=λAT</code>、<code>(AB)T=BTAT</code> (注意顺序AB变BA)</li>
+<li>设A是n阶方针，如果AT=A，则乘A为对称矩阵，简称对称阵；它的元素以主对角线为对称轴对应相等</li>
+<li>设A是n阶方针，如果AT=-A，则乘A为反对称矩阵，简称反对称阵；它的元素关于主对角线异号，并且主对角线上元素全为零</li>
+</ul>
+<h3 id="向量矩阵的计算"><a href="#向量矩阵的计算" class="headerlink" title="向量矩阵的计算"></a>向量矩阵的计算</h3><ul>
+<li>列向量 * 行向量 = <strong>方阵</strong></li>
+<li>行向量 * 列向量 = <strong>数</strong>(上述方阵的<strong>迹</strong>(主对角元素之和))</li>
+</ul>
+<h3 id="矩阵的性质推论"><a href="#矩阵的性质推论" class="headerlink" title="矩阵的性质推论"></a>矩阵的性质推论</h3><h3 id="矩阵的行列式"><a href="#矩阵的行列式" class="headerlink" title="矩阵的行列式"></a>矩阵的行列式</h3><ul>
+<li>由n阶方阵A的元素所构成的行列式(各元素的位置不变)，称为方阵A的行列式，记为detA 或 |A|</li>
+<li>矩阵的行列式的性质：<ol>
+<li><code>|AT| = |A|</code></li>
+<li><code>|kA| = K^n|A|</code></li>
+<li><code>|AB| = |A|*|B|</code></li>
+</ol>
+</li>
+</ul>
+<h2 id="线性代数进一步学习"><a href="#线性代数进一步学习" class="headerlink" title="线性代数进一步学习"></a>线性代数进一步学习</h2><h3 id="伴随矩阵"><a href="#伴随矩阵" class="headerlink" title="伴随矩阵"></a>伴随矩阵</h3><h3 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h3><h3 id="分块矩阵"><a href="#分块矩阵" class="headerlink" title="分块矩阵"></a>分块矩阵</h3><h3 id="初等变换与初等矩阵"><a href="#初等变换与初等矩阵" class="headerlink" title="初等变换与初等矩阵"></a>初等变换与初等矩阵</h3><h3 id="…"><a href="#…" class="headerlink" title="…"></a>…</h3>
         </div>
     
 
@@ -382,11 +1575,437 @@
 
 </div>
             
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/11/23/dshc/Java%E5%AE%9E%E8%B7%B5-WebServer(%E4%BB%BFTomcat)/">
+                Java实践-WebServer(仿Tomcat)
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-23</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/语言编程/">语言编程</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="Java实践-WebServer-仿Tomcat"><a href="#Java实践-WebServer-仿Tomcat" class="headerlink" title="Java实践-WebServer(仿Tomcat)"></a>Java实践-WebServer(仿Tomcat)</h1><h2 id="项目解析"><a href="#项目解析" class="headerlink" title="项目解析"></a>项目解析</h2><h3 id="什么是WebServer"><a href="#什么是WebServer" class="headerlink" title="什么是WebServer"></a>什么是WebServer</h3><ul>
+<li>WebServer也称Web容器，用于存放WebApp，一个WebServer可以存放多个WebApp</li>
+<li>Server服务器，WebServer就是Web服务器，就是支持HTTP应用协议的服务器</li>
+<li>其工作流程一般三部分：解析请求、处理请求、发送响应</li>
+<li>注意浏览器(客户端)在连接到服务端后会立即发送一个请求到服务端确认</li>
+<li>WebApp储存：网页，其他素材，程序代码等</li>
+</ul>
+<h3 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h3><ul>
+<li>做到类似 Tomcat 可以响应浏览器的各种请求，并做到应答处理</li>
+<li>在业务方面，完成注册和登录的实现（用户名、密码、昵称、年龄）</li>
+</ul>
+<h3 id="需求分析-方向"><a href="#需求分析-方向" class="headerlink" title="需求分析(方向)"></a>需求分析(方向)</h3><ul>
+<li>通过HTTP协议建立浏览器客户端与服务器之间的连接，完成WebServer任务</li>
+<li>主要事务有两种，一个是资源请求，一个是业务处理</li>
+<li>资源请求的两种情况：资源存在–&gt;发送资源；资源不存在–&gt;响应404页面</li>
+<li>业务处理有多种，这里暂时实现注册和登录两个业务</li>
+</ul>
+<h3 id="需求分析-细节"><a href="#需求分析-细节" class="headerlink" title="需求分析(细节)"></a>需求分析(细节)</h3><ul>
+<li>熟悉HTTP协议，在C/S沟通过程中，正确解析消息信息，正确响应响应信息</li>
+<li>熟悉XML的使用，尤其是 MimeMapping 必须XML导入</li>
+<li>使用线程池、超类、封装等，优化项目性能，增强其可扩展性</li>
+<li>在构建此项目时，最重要的是学习该编程思想</li>
+</ul>
+<h2 id="项目搭建-准备"><a href="#项目搭建-准备" class="headerlink" title="项目搭建 - 准备"></a>项目搭建 - 准备</h2><h3 id="项目准备工作"><a href="#项目准备工作" class="headerlink" title="项目准备工作"></a>项目准备工作</h3><ul>
+<li>创建 Maven Project ，设置好项目参数</li>
+<li>导入后期会用到的 dom4j Jar包</li>
+<li>创建三个包：<code>core</code> 核心代码包、<code>http</code> HTTP相关代码包、<code>servlet</code> 存放各servlet的包</li>
+<li>项目根目录创建两个文件夹：<code>conf</code> 存放各配置文件、<code>webapps</code> 存放Web资源</li>
+<li>向 <code>conf</code> 文件夹中导入所需的 MimeMapping XML配置文件</li>
+<li>在 <code>webapps</code> 文件夹下创建 <code>myweb</code>和<code>root</code> 文件夹，前者创建各网页资源，后者创建一个公用的404页面</li>
+<li>目录<code>myweb</code>文件：index主页、注册/注册成功/注册失败页面、登录/登录成功/登录失败页面</li>
+</ul>
+<h3 id="核心代码：实现连接"><a href="#核心代码：实现连接" class="headerlink" title="核心代码：实现连接"></a>核心代码：实现连接</h3><ul>
+<li>创建 <code>WebServer</code> 类作为主类，定义线程池，申请8088端口，并且循环等待连接获取Socket，传入 ‘ClientHandler’ 类生成线程任务，放入线程池</li>
+<li>创建 ‘ClientHandler’ 类作为处理事务类，通过主类传过来的Socket进行工作，注意Socket的关闭(写在finally中)</li>
+</ul>
+<h3 id="创建HTTP相关类"><a href="#创建HTTP相关类" class="headerlink" title="创建HTTP相关类"></a>创建HTTP相关类</h3><ul>
+<li><code>HttpContext</code>工具类、<code>EmptyRequestException</code>空请求类、<code>HttpRequst</code>请求类、<code>HttpResponse</code>响应类</li>
+<li>创建 <code>HttpContext</code> 类，主要用作工具类，存储查询MimeMapping，静态块中初始化MimeMapping，并提供公用方法 根据后缀 查询 Mime-Type</li>
+<li>web.xml 文件结构说明：每个二级标签<code>&lt;mime-mapping&gt;</code>下存有：<code>&lt;extension&gt;</code>中的文本作为文件后缀，<code>&lt;mime-type&gt;</code>中的文本作为MimeType</li>
+<li>创建 <code>EmptyRequestException</code> 类，自定义的空请求类，因为浏览器会时不时发送空请求</li>
+<li>创建 <code>HttpRequst</code> 类，完成请求的解析，并储存到成员变量中</li>
+<li>注意空请求情况的处理，以及业务参数的解析</li>
+<li>创建 <code>HttpResponse</code> 类，构造方法初始化参数，编写get/set方法，提供一个 flush() 方法暂不编写</li>
+</ul>
+<h3 id="创建Server-Context类"><a href="#创建Server-Context类" class="headerlink" title="创建Server Context类"></a>创建Server Context类</h3><ul>
+<li>创建’ServerContext’类，主要用作工具类，存储查询ServletMapping，静态块中初始化ServletMapping，并提供公用方法 根据请求方式 查询对应Servlet</li>
+<li>注意前提先创建 <code>HttpServlet</code>类 <code>RegServlet</code>类 <code>LoginServlet</code>类，内容可以为空，为了配合ServletMapping中的value类型</li>
+<li>注意前提先创建一个servlet.xml文件，存放uri对应业务的servlet类全名，储存好这次需求两个业务的值</li>
+</ul>
+<h2 id="项目搭建-事务"><a href="#项目搭建-事务" class="headerlink" title="项目搭建 - 事务"></a>项目搭建 - 事务</h2><h3 id="响应请求资源"><a href="#响应请求资源" class="headerlink" title="响应请求资源"></a>响应请求资源</h3><ul>
+<li><code>ClientHandler</code> 类中的 run() 方法开始编写事务，初始化请求类、响应类，根据获取的servlet判定(是否为null)是什么事务</li>
+<li>先处理资源事务：判断是否存在资源，决定返回什么资源，最后进行 flush() 响应资源</li>
+<li>进一步编写 <code>Response</code> 类中的 setEntity() 方法 和 flush() 方法</li>
+</ul>
+<h3 id="响应请求业务"><a href="#响应请求业务" class="headerlink" title="响应请求业务"></a>响应请求业务</h3><ul>
+<li>创建对应业务处理，完善 <code>HttpServlet</code> 抽象超类</li>
+<li>完善 <code>RegServlet</code> 注册类</li>
+<li>完善 <code>LoginServlet</code> 登录类</li>
+<li>优化代码</li>
+</ul>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/11/23/dshc/Java%E5%AE%9E%E8%B7%B5-%E8%81%8A%E5%A4%A9%E5%AE%A4(C-S%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B)/">
+                Java实践-聊天室(C/S网络编程)
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-23</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/项目练习/">项目练习</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="Java实践-聊天室-C-S网络编程"><a href="#Java实践-聊天室-C-S网络编程" class="headerlink" title="Java实践-聊天室(C/S网络编程)"></a>Java实践-聊天室(C/S网络编程)</h1><h2 id="待更新"><a href="#待更新" class="headerlink" title="待更新"></a>待更新</h2>
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/11/22/dshc/Java%E7%BB%83%E4%B9%A0-%E9%9A%8F%E6%9C%BA%E8%AF%BB%E5%86%99-%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%86%99/">
+                Java练习-随机读写/顺序读写
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-22</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/项目练习/">项目练习</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="Java练习-随机读写-顺序读写"><a href="#Java练习-随机读写-顺序读写" class="headerlink" title="Java练习-随机读写/顺序读写"></a>Java练习-随机读写/顺序读写</h1><h2 id="随机读写复制文件"><a href="#随机读写复制文件" class="headerlink" title="随机读写复制文件"></a>随机读写复制文件</h2><h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>随机读写使用 java.io.RandomAccessFile 类实现</li>
+<li>随机打开两个文件，一个读取，一个写入</li>
+<li>由于读写是字节读写，效率不高，所以通过定义数组来提高读写性能</li>
+</ul>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">RandomAccessFile src = new RandomAccessFile(&quot;./demo.zip&quot;,&quot;r&quot;);  //通过随机读写打开源文件，定义权限只读即可</span><br><span class="line">RandomAccessFile desc = new RandomAccessFile(&quot;./demo_cp.zip&quot;,&quot;rw&quot;);  //通过随机读写打开目标文件，定义权限读写</span><br><span class="line"></span><br><span class="line">byte[] buf = new byte[1024*10];  //为了提高速率使用字节数组</span><br><span class="line">int len = -1;  //定义每次实际读取到的字节</span><br><span class="line">		</span><br><span class="line">while((len = src.read(buf))!=-1) &#123;</span><br><span class="line">	desc.write(buf,0,len);  //只要读取到数据，就往目标文件中写入读取到长度的数据</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;复制完毕!&quot;);</span><br><span class="line">src.close();  //记得关闭文件</span><br><span class="line">desc.close();  //记得关闭文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="顺序读写复制文件"><a href="#顺序读写复制文件" class="headerlink" title="顺序读写复制文件"></a>顺序读写复制文件</h2><h3 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>顺序读写是通过 IO 流实现的，java.io.InputStream , java.io.OutputStream</li>
+<li>通过IO连接到两个文件，一个使用输入流，一个使用输出流</li>
+<li>由于读写是字节读写，效率不高，所以通过缓冲流的高级流来提高效率</li>
+</ul>
+<h3 id="代码分析-1"><a href="#代码分析-1" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">FileInputStream fis = new FileInputStream(&quot;demo.zip&quot;);  //定义输入流，连接到源文件</span><br><span class="line">BufferedInputStream bis = new BufferedInputStream(fis);  //定义缓冲流，连接到输入流上，提高效率</span><br><span class="line">		</span><br><span class="line">FileOutputStream fos = new FileOutputStream(&quot;demo_cp.zip&quot;);  //定义输出流，连接到目标文件</span><br><span class="line">BufferedOutputStream bos = new BufferedOutputStream(fos);  //定义缓冲流，连接到输出流上，提高效率</span><br><span class="line">		</span><br><span class="line">int d = -1;  //定义每次实际读取到的字节</span><br><span class="line"></span><br><span class="line">while((d=bis.read())!=-1) &#123;</span><br><span class="line">	bos.write(d);  //将读到的字节存储到缓冲流中</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;复制完毕!&quot;);		</span><br><span class="line">bis.close();  //只需要关闭最高层高级流即可，连接到后面的流会逐级关闭</span><br><span class="line">bos.close();  //执行缓冲流的flush()方法 或 缓冲区满了 或 缓冲流关闭时，缓冲流会向文件按缓冲大小写数据</span><br></pre></td></tr></table></figure>
+
+<h2 id="随机读写存取用户信息"><a href="#随机读写存取用户信息" class="headerlink" title="随机读写存取用户信息"></a>随机读写存取用户信息</h2><h3 id="练习需求"><a href="#练习需求" class="headerlink" title="练习需求"></a>练习需求</h3><ul>
+<li>实现1：完成用户注册功能，程序启动后顺序输入：用户名，密码，昵称，年龄，然后将其写入文件user.dat中保存</li>
+<li>实现2：修改昵称功能，程序启动后要求用户输入用户名和新昵称，然后将user.dat文件中对应的记录进行修改，如果输入的用户名在user.dat文件中不存在，则输出：查无此人</li>
+</ul>
+<h3 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>分析：设置用户名、密码、昵称为String类型，年龄为int类型</li>
+<li>定义格式：每条记录占用100字节，其中用户名，密码，昵称各占32字节，年龄占4字节</li>
+<li>操作：通过随机读写的指针对文件进行增改查操作</li>
+</ul>
+<h3 id="代码分析-2"><a href="#代码分析-2" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//通过控制台输入，获取注册信息</span><br><span class="line">System.out.println(&quot;欢迎注册&quot;);</span><br><span class="line">Scanner scan = new Scanner(System.in);</span><br><span class="line">System.out.println(&quot;请输入用户名&quot;);</span><br><span class="line">String user = scan.next();</span><br><span class="line">System.out.println(&quot;请输入密码&quot;);</span><br><span class="line">String pwd = scan.next();</span><br><span class="line">System.out.println(&quot;请输入昵称&quot;);</span><br><span class="line">String nick = scan.next();</span><br><span class="line">System.out.println(&quot;请输入年龄&quot;);</span><br><span class="line">int age = scan.nextInt();</span><br><span class="line">scan.close();</span><br><span class="line">//随机打开用户文件，并将文件指针指向最后</span><br><span class="line">RandomAccessFile raf = new RandomAccessFile(&quot;user.dat&quot;,&quot;rw&quot;);</span><br><span class="line">raf.seek(raf.length());</span><br><span class="line">//定义字节数组存放数据</span><br><span class="line">byte[] data;</span><br><span class="line">//储存用户信息</span><br><span class="line">data= user.getBytes(&quot;utf-8&quot;);  //将用户信息根据utf-8拆为字节数组</span><br><span class="line">data = Arrays.copyOf(data, 32);  //将该数组扩容到32字节</span><br><span class="line">raf.write(data);  //写入该数组</span><br><span class="line">//同上</span><br><span class="line">data = pwd.getBytes(&quot;utf-8&quot;);</span><br><span class="line">data = Arrays.copyOf(data, 32);</span><br><span class="line">raf.write(data);</span><br><span class="line">//同上</span><br><span class="line">data = nick.getBytes(&quot;utf-8&quot;);</span><br><span class="line">data = Arrays.copyOf(data, 32);</span><br><span class="line">raf.write(data);</span><br><span class="line">//直接通过 writeInt() 方法将int值存入到文件中</span><br><span class="line">raf.writeInt(age);</span><br><span class="line">raf.close();  //关闭文件</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//通过控制台输入，获取修改信息</span><br><span class="line">System.out.println(&quot;**修改昵称**&quot;);</span><br><span class="line">Scanner scan = new Scanner(System.in);</span><br><span class="line">System.out.println(&quot;请输入用户名：&quot;);</span><br><span class="line">String name = scan.nextLine();</span><br><span class="line">System.out.println(&quot;请输入新昵称：&quot;);</span><br><span class="line">String nick = scan.nextLine();</span><br><span class="line">scan.close();</span><br><span class="line">//随机打开用户文件</span><br><span class="line">RandomAccessFile raf = new RandomAccessFile(&quot;user.dat&quot;,&quot;rw&quot;);</span><br><span class="line">for(int i=0;i&lt;raf.length()/100;i++) &#123;  //通过遍历查找用户，循环条件为条数</span><br><span class="line">	raf.seek(i*100);  //确定指针位置</span><br><span class="line">    //定义并读取32字节数据，返回字符串并清除空白</span><br><span class="line">	byte[] data = new byte[32];  </span><br><span class="line">	raf.read(data);</span><br><span class="line">	String user = new String(data).trim();</span><br><span class="line">	//判断是否为本条信息中的用户</span><br><span class="line">	if(user.equals(name)) &#123;</span><br><span class="line">		raf.seek(raf.getFilePointer()+32);  //指针指向本条信息昵称位置</span><br><span class="line">        //同上的写入操作</span><br><span class="line">		data = nick.getBytes();</span><br><span class="line">		data = Arrays.copyOf(data, 32);</span><br><span class="line">		raf.write(data);</span><br><span class="line">		System.out.println(&quot;修改完成&quot;);</span><br><span class="line">		break;  //完成任务，退出循环</span><br><span class="line">	&#125;</span><br><span class="line">    //如果指针到了最后一条还是找到用户</span><br><span class="line">	if(raf.getFilePointer()==raf.length()-100+32) &#123;</span><br><span class="line">		System.out.println(&quot;查无此人&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">raf.close();  //关闭文件</span><br></pre></td></tr></table></figure>
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/11/22/dshc/Java%E5%AE%9E%E8%B7%B5-%E9%A3%9E%E6%9C%BA%E5%A4%A7%E6%88%98/">
+                Java实践-飞机大战
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-22</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/项目练习/">项目练习</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="Java实践-飞机大战"><a href="#Java实践-飞机大战" class="headerlink" title="Java实践-飞机大战"></a>Java实践-飞机大战</h1><h2 id="待更新"><a href="#待更新" class="headerlink" title="待更新"></a>待更新</h2>
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2019/11/15/dshc/XML%E5%8F%AF%E6%89%A9%E5%B1%95%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/">
+                XML可扩展标记语言
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-15</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/语言编程/">语言编程</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="XML可扩展标记语言"><a href="#XML可扩展标记语言" class="headerlink" title="XML可扩展标记语言"></a>XML可扩展标记语言</h1><h2 id="XML基本名词"><a href="#XML基本名词" class="headerlink" title="XML基本名词"></a>XML基本名词</h2><ul>
+<li>XML(Extensible Markup Language)主要用于web开发的许多方面，常用语简化数据的存储和共享</li>
+<li>XML文档包含XML元素，元素拥有属性，通过属性名=属性值实现，属性值可以用单引号包裹，但是常用双引号</li>
+<li>XML元素内可包含其他元素、文本或两者的混合物</li>
+<li>XML大小写敏感，标签必须有开始标签对应结束标签，特殊的：标签缩写<code>&lt;Letter /&gt;</code></li>
+<li>XML要求必须只有一个根标签</li>
+</ul>
+<h2 id="XML的语法"><a href="#XML的语法" class="headerlink" title="XML的语法"></a>XML的语法</h2><h3 id="XML文档声明"><a href="#XML文档声明" class="headerlink" title="XML文档声明"></a>XML文档声明</h3><ul>
+<li>XML文档声明如：<code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</code></li>
+<li>语法以<code>&lt;?</code>开始，以<code>?&gt;</code>结束，内容包含version encoding standalone</li>
+<li>standalone表示是否允许外部声明(是否是独立存在的XML文档),yes|no,yes表示不使用外部声明，自己是一个独立的XML文档</li>
+</ul>
+<h3 id="XML实体引用、CDATA段"><a href="#XML实体引用、CDATA段" class="headerlink" title="XML实体引用、CDATA段"></a>XML实体引用、CDATA段</h3><ul>
+<li>由于XML中有很多字符有特殊含义，在XML中有时实体内包含一些字符，如<code>&gt; &lt; &quot; 等</code>，这些字符需要进行转义才可以正常显示</li>
+<li>有时可能实体内特殊字符特别多，这时候可以使用CDATA段，无论在段内写什么，都会被当做一个文本</li>
+<li><code>&lt;![CDATA[----段内文本----]]&gt;</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>实体引用</th>
+<th>字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;</td>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>&amp;</td>
+<td>And</td>
+</tr>
+<tr>
+<td>&apos;</td>
+<td>‘</td>
+<td>单引号</td>
+</tr>
+<tr>
+<td>&quot;</td>
+<td>“</td>
+<td>双引号</td>
+</tr>
+</tbody></table>
+<h3 id="特殊指令"><a href="#特殊指令" class="headerlink" title="特殊指令"></a>特殊指令</h3><ul>
+<li>XML处理指令，简称PI(processing instruction)，用来指挥解析引擎如何解析XML文档内容</li>
+<li>例如在XML文档中可以使用xml-stylesheet指令，通知XML解析引擎，应用css文件显示xml文档内容</li>
+<li><code>&lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;1.css&quot;?&gt;</code></li>
+<li>语法以<code>&lt;?</code>开始，以<code>?&gt;</code>结束，XML文档声明就是最常见的一种处理指令</li>
+</ul>
+<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><ul>
+<li>属性 子标签 的区别使用</li>
+<li>标签与标签之间有从属关系</li>
+<li>属性特指的是该标签的属性</li>
+</ul>
+<h2 id="XML：DTD约束文档：简单约束文档"><a href="#XML：DTD约束文档：简单约束文档" class="headerlink" title="XML：DTD约束文档：简单约束文档"></a>XML：DTD约束文档：简单约束文档</h2><h3 id="DTD约束文档"><a href="#DTD约束文档" class="headerlink" title="DTD约束文档"></a>DTD约束文档</h3><ul>
+<li>DTD主要用来约束xml文件，本身也是XML语法书写的，后缀名为dtd</li>
+<li>DTD可以单独写在文件中，也可以直接定义在xml中，可以在xml中引入第三方的公共DTD</li>
+</ul>
+<h3 id="DTD导入方式"><a href="#DTD导入方式" class="headerlink" title="DTD导入方式"></a>DTD导入方式</h3><ol>
+<li>本地引入方式：<code>&lt;!DOCTYPE 文档根结点名称 SYSTEM &quot;DTD文件路径&quot;&gt;</code></li>
+<li>公共文档引入方式：<code>&lt;!DOCTYPE 文档根结点名称 PUBLIC &quot;DTD名称&quot; &quot;DTD文件的URL&quot;&gt;</code></li>
+<li>在XML中直接书写DTD方式：<code>&lt;!DOCTYPE 文档根结点名称 [具体的标签的约束]&gt;</code></li>
+</ol>
+<h3 id="DTD语法"><a href="#DTD语法" class="headerlink" title="DTD语法"></a>DTD语法</h3><ul>
+<li><code>&lt;!ELEMENT 标签类型名&gt;</code>：声明可以在XML中出现的标签类型名</li>
+<li><code>&lt;!ATTLIST 标签类型名 属性名&gt;</code>：声明可以在当前标签内部使用的属性名</li>
+<li><code>&lt;!ELEMENT 标签类型名 (子标签名?)&gt;</code>：子标签出现在父标签内0-1次</li>
+<li><code>&lt;!ELEMENT 标签类型名 (子标签名+)&gt;</code>：子标签出现在父标签内至少1次</li>
+<li><code>&lt;!ELEMENT 标签类型名 (#PCDATA)&gt;</code>：当前标签没有子标签</li>
+<li><code>&lt;!ELEMENT 标签类型名 (子标签名*)&gt;</code>：子标签出现在父标签内任意次0-∞</li>
+<li><code>&lt;!ELEMENT 标签类型名 (子标签名)&gt;</code>：子标签必须出现在父标签内，且只能出现一次，并且有顺序问题</li>
+<li><code>&lt;!ELEMENT 标签类型名 (子标签名1|子标签名2)+&gt;</code>：两个必须有一个出现在父标签至少一次，且不能同时出现</li>
+<li>子标签与子标签之间使用<code>,</code>分隔</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!ELEMENT users (user+) &gt;</span><br><span class="line">&lt;!ELEMENT user (name,age,addr) &gt;</span><br><span class="line">&lt;!ELEMENT name (#PCDATA) &gt;    #PCDATA：本节点可包含任何字符数据，但不能在其中包含任何子元素</span><br><span class="line">&lt;!ELEMENT age EMPTY &gt;    EMPTY：本结点不包含任何结点和文本，仅可使用属性</span><br><span class="line">&lt;!ELEMENT addr (#PCDATA) &gt;</span><br><span class="line">&lt;!ATTLIST user id ID #REQUIRED &gt;    ID：表示必须使用唯一值；#REQUIRED：属性值是必需的</span><br></pre></td></tr></table></figure>
+
+<h2 id="XML：Schema约束文档：高级约束文档"><a href="#XML：Schema约束文档：高级约束文档" class="headerlink" title="XML：Schema约束文档：高级约束文档"></a>XML：Schema约束文档：高级约束文档</h2><h3 id="Schema约束文档"><a href="#Schema约束文档" class="headerlink" title="Schema约束文档"></a>Schema约束文档</h3><ul>
+<li>Schema是用来代替DTD来约束xml文档的，本身也是XML语法书写的，后缀名为xsd，根元素必须是[前缀名:]schema</li>
+<li>相比之下，DTD在约束xml的时候一个xml中只能引入一个DTD，同时DTD它无法对属性以及标签中的数据做数据类型的限定</li>
+<li>因为不同的Schema可以有不同的前缀名，所以可以多个文件共同约束一个XML(XML中的标签使用：前缀名:标签名 来区分使用哪个schema规则)</li>
+<li>学习Schema主要来学习W3C组织定义的如何在Schema中去约束xml的<strong>标签以及属性</strong>，还有<strong>属性的数据类型</strong>，以及标签中<strong>子标签的顺序</strong></li>
+</ul>
+<h3 id="Schema导入方式"><a href="#Schema导入方式" class="headerlink" title="Schema导入方式"></a>Schema导入方式</h3><ul>
+<li>导入方式及书写语法并非每个掌握，只需要读懂约束内容即可</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;[Schema前缀名:]根标签名称 xmlns=&quot;http://www.itcast.org/book&quot;   它是schema文件中的targetNamespace 属性后面的值</span><br><span class="line">        xsi:schemaLocation=&quot;http://xxxx/xxxx my.xsd&quot;   这个是在引入当前的schema文件的真实路径</span><br><span class="line">        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;   说明当前的xml是schema一个实例文档</span><br><span class="line">        version=&quot;2.5&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>由于Schema文档也是受W3C约束的，所以Schema文档也要引入W3C约束</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;[Schema前缀名:]schema  xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;   引入W3C定义的schema书写的规范</span><br><span class="line">targetNamespace=&quot;http://xxxx/xxxx&quot; 给当前的Schema文件起名字（命名空间）</span><br></pre></td></tr></table></figure>
+
+<h3 id="Schema语法"><a href="#Schema语法" class="headerlink" title="Schema语法"></a>Schema语法</h3><ul>
+<li><code>element</code>标签：name代表当前的xml中可以书写标签名称  type数据类型  maxOccurs最多出现次数</li>
+<li><code>complexType</code>标签：[element子标签]当前的element声明的标签是复杂标签时，需要使用complexType来声明子标签</li>
+<li><code>complexType</code>标签：mixed属性值为true，元素间就可以出现字符文本数据了</li>
+<li><code>sequence</code>标签：[element子标签]复杂标签是指有属性，或者有子标签，或者有属性有子标签的标签，简单标签是指只有文本内容的标签</li>
+</ul>
+<h2 id="解析XML"><a href="#解析XML" class="headerlink" title="解析XML"></a>解析XML</h2><ul>
+<li>解析XML的底层接口：DOM、SAX</li>
+<li>jdom和dom4j是基于底层api的更高级封装</li>
+<li>DOM是通用的，jdom和dom4j则是面向java语言的</li>
+</ul>
+<h3 id="DOM解析方式"><a href="#DOM解析方式" class="headerlink" title="DOM解析方式"></a>DOM解析方式</h3><ul>
+<li>DOM(Document Object Model，文档对象模型)：是W3C组织推荐的处理XML的一种方式。DOM解析器在解析XML文档时，会把文档中的所有元素按照其出现的层次关系，解析成一个个Node对象(结点)</li>
+<li>优点：把xml文件在内存中构造树结构，可以遍历和修改结点</li>
+<li>缺点：先读取完毕后再解析，如果文件过大，会有内存压力，解析的时间较长(尤其是大网络文件)</li>
+</ul>
+<h3 id="SAX解析方式"><a href="#SAX解析方式" class="headerlink" title="SAX解析方式"></a>SAX解析方式</h3><ul>
+<li>SAX(Simple API for XML)：是一种XML解析的代替方法。相比DOM其速度更快，它逐行扫描，逐行解析。而且相比DOM，SAX可以在解析文档的任意时刻(当解析中寻找到需要的数据时)停止解析</li>
+<li>优点：解析可以立即开始，速度快，无内存压力，相比DOM对于大文件更有优势</li>
+<li>缺点：无法掌控结构，不能对结点做修改</li>
+</ul>
+<h3 id="DOM4J解析XML文档"><a href="#DOM4J解析XML文档" class="headerlink" title="DOM4J解析XML文档"></a>DOM4J解析XML文档</h3><ul>
+<li>使用DOM4J需要导入<code>dom4j-full.jar</code>包</li>
+<li>dom4j(dom for java)：是一个Java的XML API，类似于jdom，用来读取XML文件的</li>
+<li>SAXReader类：常用其无参构造进行实例化对象</li>
+<li>SAXReader类：常用方法<code>Document read(File file)</code>返回一个Document树文件对象</li>
+<li>Document类：常用方法<code>Element getRootElement()</code>用于获取根元素</li>
+<li>Element类：类的一个实例用于表示XML文档中的一个元素(一对标签)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String getName()</td>
+<td>获取标签的名字</td>
+</tr>
+<tr>
+<td>String getText()</td>
+<td>获取标签中间的文本</td>
+</tr>
+<tr>
+<td>Element element(String name)</td>
+<td>获取标签中指定名字的子标签</td>
+</tr>
+<tr>
+<td>Attribute attribute(String name)</td>
+<td>返回指定名字的属性对象，该对象有两个常用方法<br><code>String getName()</code>和<code>String getValue()</code></td>
+</tr>
+<tr>
+<td>List elements()</td>
+<td>获取当前标签中所有子标签</td>
+</tr>
+<tr>
+<td>List elements(String name)</td>
+<td>获取所有同名子标签</td>
+</tr>
+<tr>
+<td>String getText()</td>
+<td>获取标签中间的去除两边空白的文本</td>
+</tr>
+<tr>
+<td>String elementText(String name)</td>
+<td>获取指定名字的子标签的中间文本</td>
+</tr>
+<tr>
+<td>String elementTextTrim(String name)</td>
+<td>获取指定名字的子标签的中间文本并trim</td>
+</tr>
+<tr>
+<td>String attributeValue(String name)</td>
+<td>获取属性中指定名字属性的值</td>
+</tr>
+</tbody></table>
+
+        </div>
+    
+
+</div>
+            
         </section>
     </div>
 </div>
 
 
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="wrap-pagination">
+                <a class="disabled" href="/">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </a>
+                <a class="" href="/page/2/">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -415,7 +2034,15 @@
             </li>
             
             <li>
-                <a class="footer-post" href="/2019/11/26/hello-world/">Hello World</a>
+                <a class="footer-post" href="/2019/12/02/dshc/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/">Web基础-jQuery语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/29/dshc/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/">Web基础-JavaScript语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/28/dshc/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/">线性代数笔记</a>
             </li>
             
         </ul>
@@ -430,6 +2057,18 @@
         
         <li>
             <a class="footer-post" href="/categories/Java/">Java</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">生活记录</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/">结构算法</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%B7%A5%E5%85%B7%E7%8E%AF%E5%A2%83/">工具环境</a>
         </li>
         
     </ul>

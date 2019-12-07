@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Maven入门与认识Maven有什么用
+Maven可以管理jar包，解决jar包之间冲突，版本冲突，解决人工手动导jar包等麻烦问题
+Maven可以像Eclipse、IDEA等，实现Java文件的实时编译
+Maven可以替开发者做各种单元测试，直接找出bug所在，快速测试检验代码
+maven可以快速">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Maven入门与认识"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="hello-world"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Maven入门与认识 - hello-world</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+<link rel="alternate" href="/atom.xml" title="hello-world" type="application/atom+xml">
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/11/11/dshc/Maven%E5%85%A5%E9%97%A8%E4%B8%8E%E8%AE%A4%E8%AF%86/">
+                Maven入门与认识
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-11</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/工具环境/">工具环境</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="Maven入门与认识"><a href="#Maven入门与认识" class="headerlink" title="Maven入门与认识"></a>Maven入门与认识</h1><h2 id="Maven有什么用"><a href="#Maven有什么用" class="headerlink" title="Maven有什么用"></a>Maven有什么用</h2><ol>
+<li>Maven可以管理jar包，解决jar包之间冲突，版本冲突，解决人工手动导jar包等麻烦问题</li>
+<li>Maven可以像Eclipse、IDEA等，实现Java文件的实时编译</li>
+<li>Maven可以替开发者做各种单元测试，直接找出bug所在，快速测试检验代码</li>
+<li>maven可以快速整合打包项目资源</li>
+</ol>
+<h2 id="Maven核心功能"><a href="#Maven核心功能" class="headerlink" title="Maven核心功能"></a>Maven核心功能</h2><h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><ul>
+<li>依赖管理就是Maven工程对jar包的管理过程</li>
+<li>由于多个项目，每个项目都会导入多个Jar包，会产生每个项目可能会有重复Jar包，所以Maven具有一个Jar包仓库，用于管理所有项目会用到的Jar包，Maven工程中只需要储存jar包坐标即可(pom.xml)</li>
+<li>Maven通过Jar包的坐标在Jar包仓库中寻找对应的Jar包</li>
+</ul>
+<h3 id="一键构建"><a href="#一键构建" class="headerlink" title="一键构建"></a>一键构建</h3><ul>
+<li>使用自身集成的Tomcat插件，完成编译、测试、运行、打包、安装、部署等一系列过程</li>
+<li>CMD进入Maven工程根目录下使用命令<code>mvn tomcat:run</code>即可运行本项目</li>
+</ul>
+<h2 id="Maven环境配置"><a href="#Maven环境配置" class="headerlink" title="Maven环境配置"></a>Maven环境配置</h2><ol>
+<li><p>登录 <a href="http://maven.apache.org/" target="_blank" rel="noopener">http://maven.apache.org/</a> 下载并解压安装Apache Maven，<a href="http://doc.tedu.cn/resource/apache-maven-3.5.2-bin.zip" target="_blank" rel="noopener">达内内网立即下载</a></p>
+</li>
+<li><p>解压Maven到没有空格、没有中文的目录下</p>
+</li>
+<li><p>【可选】打开<code>maven目录/conf/settings.xml</code>配置文件，配置阿里镜像地址(配置到<code>&lt;mirrors&gt;</code>标签里)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirror&gt;</span><br><span class="line">    &lt;id&gt;aliyun&lt;/id&gt;</span><br><span class="line">    &lt;name&gt;aliyun Maven&lt;/name&gt;</span><br><span class="line">    &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">    &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</span><br><span class="line">&lt;/mirror&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置环境变量：新建<code>MAVEN_HOME:Maven根目录</code>，修改Path添加<code>5MAVEN_HOME%\bin</code>(注意：Maven依赖环境变量中有JAVA_HOME)，CMD输入<code>mvn -v</code>验证</p>
+</li>
+<li><p>【Eclipse】配置Maven，<code>Preferences--&gt;Maven--&gt;User Setting--&gt;Global Setting</code>中选择Maven/conf下的setting.xml文件</p>
+</li>
+<li><p>【Eclipse】接着点击下方按钮<code>Update Settings</code>，进行更新Maven设置</p>
+</li>
+<li><p>【Eclipse】验证镜像地址可以通过<code>Window--&gt;Show View--&gt;Other...--&gt;Maven视图</code></p>
+</li>
+<li><p>【Eclipse】项目强制更新程序依赖jar包，项目右键<code>Maven--&gt;Update Project</code>，勾选Force Update of Snapshots/Releases选项确定</p>
+</li>
+<li><p>【IDEA】配置Maven，<code>Settings--&gt;Maven--&gt;Maven home directory</code>中设置Maven根目录</p>
+</li>
+<li><p>【IDEA】接着下面<code>User Setting file</code>选择Maven/conf下的setting.xml文件，下方本地仓库路径会自动更新</p>
+</li>
+<li><p>【IDEA】进入<code>Settings--&gt;Maven--&gt;Runner--&gt;VM Options</code>添加参数<code>-DarchetypeCatalog=internal</code></p>
+</li>
+</ol>
+<h2 id="Maven仓库"><a href="#Maven仓库" class="headerlink" title="Maven仓库"></a>Maven仓库</h2><ul>
+<li>Maven中有三种仓库：本地仓库、中央仓库、远程仓库(私服)</li>
+<li>Maven默认在系统用户目录下<code>\.m2\repository</code>设置本地仓库，在网络中存在中央仓库</li>
+<li>Maven项目默认在本地仓库寻找jar包，如果本地仓库没有的话，就会去中央仓库寻找</li>
+<li>公司中一般会配置远程仓库(也叫私服)，寻找jar包如果本地仓库不存在，则会去远程仓库(私服)寻找</li>
+<li>远程仓库(私服)如果也没有，私服就会去中央仓库下载，或者通过本地上传</li>
+</ul>
+<h2 id="Maven项目标准目录结构"><a href="#Maven项目标准目录结构" class="headerlink" title="Maven项目标准目录结构"></a>Maven项目标准目录结构</h2><ul>
+<li>传统的项目在创建和测试过程中，一定会产生四种文件部分：核心代码部分、配置文件部分、测试代码部分、测试配置文件</li>
+<li>但是传统的目录结构仅仅是<code>项目名\src\</code>，如果需要另外储存其他文件，自己创建文件夹名称差异化特别大，所以Maven规范化了项目目录结构</li>
+<li>Maven项目标准目录结构：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>src/main/java</td>
+<td>核心代码部分</td>
+</tr>
+<tr>
+<td>src/main/resources</td>
+<td>配置文件部分</td>
+</tr>
+<tr>
+<td>src/test/java</td>
+<td>测试代码部分</td>
+</tr>
+<tr>
+<td>src/test/resources</td>
+<td>测试配置文件</td>
+</tr>
+<tr>
+<td>src/main/webapp</td>
+<td>页面资源,js,css,图片等</td>
+</tr>
+</tbody></table>
+<h2 id="Maven常用命令"><a href="#Maven常用命令" class="headerlink" title="Maven常用命令"></a>Maven常用命令</h2><ul>
+<li>mvn clean ：把已经编译好的项目的所有信息</li>
+<li>mvn compile ：把核心代码部分编译后，放置在target目录下</li>
+<li>mvn test ：把测试代码部分编译后，放置在target目录下(同时执行了compile)</li>
+<li>mvn package ：将Maven项目进行打包，放置在target目录下(同时执行了test)</li>
+<li>mvn install ：将刚刚项目打完的包安装到本地仓库(同时执行了package)</li>
+</ul>
+<h2 id="Maven生命周期"><a href="#Maven生命周期" class="headerlink" title="Maven生命周期"></a>Maven生命周期</h2><ul>
+<li>清理生命周期：清楚项目编译信息(clean)</li>
+<li>默认生命周期：编译(compile)、测试(test)、打包(package)、安装(install)、发布(deploy)</li>
+<li>站点生命周期：—</li>
+</ul>
+<h2 id="Maven概念模型图"><a href="#Maven概念模型图" class="headerlink" title="Maven概念模型图"></a>Maven概念模型图</h2><ul>
+<li>项目对象模型(POM)：储存了三类信息<ol>
+<li>项目自身信息</li>
+<li>项目运行所依赖的jar包信息</li>
+<li>项目运行环境信息，如jdk,tomcat等</li>
+</ol>
+</li>
+<li>依赖管理模型(Dependency)：Jar包坐标信息<ol>
+<li>公司组织名称–groupId</li>
+<li>项目名–artifactId</li>
+<li>版本号–version</li>
+</ol>
+</li>
+<li>Build lifecycle &amp; phases ：默认生命周期命令对应的各种插件</li>
+</ul>
+<h2 id="Maven导入jar包"><a href="#Maven导入jar包" class="headerlink" title="Maven导入jar包"></a>Maven导入jar包</h2><ul>
+<li>阿里在线搜索添加Jar组件”坐标”网址： <a href="https://maven.aliyun.com/mvn/search" target="_blank" rel="noopener">https://maven.aliyun.com/mvn/search</a></li>
+<li>在pom.xml文件中添加Jar组件：在<code>&lt;dependencies&gt;</code>标签内添加Jar坐标</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/tools/">#tools</a> <a href="/tags/Environment/">#Environment</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo" target="_blank" rel="noopener">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/12/02/Java%E5%9F%BA%E7%A1%80-%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%88Basic)/">Java基础-语言基础（Basic)</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/12/02/dshc/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/">Web基础-jQuery语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/29/dshc/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/">Web基础-JavaScript语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/28/dshc/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/">线性代数笔记</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Java/">Java</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">生活记录</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/">结构算法</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%B7%A5%E5%85%B7%E7%8E%AF%E5%A2%83/">工具环境</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/" target="_blank" rel="noopener">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

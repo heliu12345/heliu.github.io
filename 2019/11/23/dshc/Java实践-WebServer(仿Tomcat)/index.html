@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Java实践-WebServer(仿Tomcat)项目解析什么是WebServer
+WebServer也称Web容器，用于存放WebApp，一个WebServer可以存放多个WebApp
+Server服务器，WebServer就是Web服务器，就是支持HTTP应用协议的服务器
+其工作流程一般三部分：">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Java实践-WebServer(仿Tomcat)"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="hello-world"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Java实践-WebServer(仿Tomcat) - hello-world</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+<link rel="alternate" href="/atom.xml" title="hello-world" type="application/atom+xml">
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/11/23/dshc/Java%E5%AE%9E%E8%B7%B5-WebServer(%E4%BB%BFTomcat)/">
+                Java实践-WebServer(仿Tomcat)
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-11-23</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/语言编程/">语言编程</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="Java实践-WebServer-仿Tomcat"><a href="#Java实践-WebServer-仿Tomcat" class="headerlink" title="Java实践-WebServer(仿Tomcat)"></a>Java实践-WebServer(仿Tomcat)</h1><h2 id="项目解析"><a href="#项目解析" class="headerlink" title="项目解析"></a>项目解析</h2><h3 id="什么是WebServer"><a href="#什么是WebServer" class="headerlink" title="什么是WebServer"></a>什么是WebServer</h3><ul>
+<li>WebServer也称Web容器，用于存放WebApp，一个WebServer可以存放多个WebApp</li>
+<li>Server服务器，WebServer就是Web服务器，就是支持HTTP应用协议的服务器</li>
+<li>其工作流程一般三部分：解析请求、处理请求、发送响应</li>
+<li>注意浏览器(客户端)在连接到服务端后会立即发送一个请求到服务端确认</li>
+<li>WebApp储存：网页，其他素材，程序代码等</li>
+</ul>
+<h3 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h3><ul>
+<li>做到类似 Tomcat 可以响应浏览器的各种请求，并做到应答处理</li>
+<li>在业务方面，完成注册和登录的实现（用户名、密码、昵称、年龄）</li>
+</ul>
+<h3 id="需求分析-方向"><a href="#需求分析-方向" class="headerlink" title="需求分析(方向)"></a>需求分析(方向)</h3><ul>
+<li>通过HTTP协议建立浏览器客户端与服务器之间的连接，完成WebServer任务</li>
+<li>主要事务有两种，一个是资源请求，一个是业务处理</li>
+<li>资源请求的两种情况：资源存在–&gt;发送资源；资源不存在–&gt;响应404页面</li>
+<li>业务处理有多种，这里暂时实现注册和登录两个业务</li>
+</ul>
+<h3 id="需求分析-细节"><a href="#需求分析-细节" class="headerlink" title="需求分析(细节)"></a>需求分析(细节)</h3><ul>
+<li>熟悉HTTP协议，在C/S沟通过程中，正确解析消息信息，正确响应响应信息</li>
+<li>熟悉XML的使用，尤其是 MimeMapping 必须XML导入</li>
+<li>使用线程池、超类、封装等，优化项目性能，增强其可扩展性</li>
+<li>在构建此项目时，最重要的是学习该编程思想</li>
+</ul>
+<h2 id="项目搭建-准备"><a href="#项目搭建-准备" class="headerlink" title="项目搭建 - 准备"></a>项目搭建 - 准备</h2><h3 id="项目准备工作"><a href="#项目准备工作" class="headerlink" title="项目准备工作"></a>项目准备工作</h3><ul>
+<li>创建 Maven Project ，设置好项目参数</li>
+<li>导入后期会用到的 dom4j Jar包</li>
+<li>创建三个包：<code>core</code> 核心代码包、<code>http</code> HTTP相关代码包、<code>servlet</code> 存放各servlet的包</li>
+<li>项目根目录创建两个文件夹：<code>conf</code> 存放各配置文件、<code>webapps</code> 存放Web资源</li>
+<li>向 <code>conf</code> 文件夹中导入所需的 MimeMapping XML配置文件</li>
+<li>在 <code>webapps</code> 文件夹下创建 <code>myweb</code>和<code>root</code> 文件夹，前者创建各网页资源，后者创建一个公用的404页面</li>
+<li>目录<code>myweb</code>文件：index主页、注册/注册成功/注册失败页面、登录/登录成功/登录失败页面</li>
+</ul>
+<h3 id="核心代码：实现连接"><a href="#核心代码：实现连接" class="headerlink" title="核心代码：实现连接"></a>核心代码：实现连接</h3><ul>
+<li>创建 <code>WebServer</code> 类作为主类，定义线程池，申请8088端口，并且循环等待连接获取Socket，传入 ‘ClientHandler’ 类生成线程任务，放入线程池</li>
+<li>创建 ‘ClientHandler’ 类作为处理事务类，通过主类传过来的Socket进行工作，注意Socket的关闭(写在finally中)</li>
+</ul>
+<h3 id="创建HTTP相关类"><a href="#创建HTTP相关类" class="headerlink" title="创建HTTP相关类"></a>创建HTTP相关类</h3><ul>
+<li><code>HttpContext</code>工具类、<code>EmptyRequestException</code>空请求类、<code>HttpRequst</code>请求类、<code>HttpResponse</code>响应类</li>
+<li>创建 <code>HttpContext</code> 类，主要用作工具类，存储查询MimeMapping，静态块中初始化MimeMapping，并提供公用方法 根据后缀 查询 Mime-Type</li>
+<li>web.xml 文件结构说明：每个二级标签<code>&lt;mime-mapping&gt;</code>下存有：<code>&lt;extension&gt;</code>中的文本作为文件后缀，<code>&lt;mime-type&gt;</code>中的文本作为MimeType</li>
+<li>创建 <code>EmptyRequestException</code> 类，自定义的空请求类，因为浏览器会时不时发送空请求</li>
+<li>创建 <code>HttpRequst</code> 类，完成请求的解析，并储存到成员变量中</li>
+<li>注意空请求情况的处理，以及业务参数的解析</li>
+<li>创建 <code>HttpResponse</code> 类，构造方法初始化参数，编写get/set方法，提供一个 flush() 方法暂不编写</li>
+</ul>
+<h3 id="创建Server-Context类"><a href="#创建Server-Context类" class="headerlink" title="创建Server Context类"></a>创建Server Context类</h3><ul>
+<li>创建’ServerContext’类，主要用作工具类，存储查询ServletMapping，静态块中初始化ServletMapping，并提供公用方法 根据请求方式 查询对应Servlet</li>
+<li>注意前提先创建 <code>HttpServlet</code>类 <code>RegServlet</code>类 <code>LoginServlet</code>类，内容可以为空，为了配合ServletMapping中的value类型</li>
+<li>注意前提先创建一个servlet.xml文件，存放uri对应业务的servlet类全名，储存好这次需求两个业务的值</li>
+</ul>
+<h2 id="项目搭建-事务"><a href="#项目搭建-事务" class="headerlink" title="项目搭建 - 事务"></a>项目搭建 - 事务</h2><h3 id="响应请求资源"><a href="#响应请求资源" class="headerlink" title="响应请求资源"></a>响应请求资源</h3><ul>
+<li><code>ClientHandler</code> 类中的 run() 方法开始编写事务，初始化请求类、响应类，根据获取的servlet判定(是否为null)是什么事务</li>
+<li>先处理资源事务：判断是否存在资源，决定返回什么资源，最后进行 flush() 响应资源</li>
+<li>进一步编写 <code>Response</code> 类中的 setEntity() 方法 和 flush() 方法</li>
+</ul>
+<h3 id="响应请求业务"><a href="#响应请求业务" class="headerlink" title="响应请求业务"></a>响应请求业务</h3><ul>
+<li>创建对应业务处理，完善 <code>HttpServlet</code> 抽象超类</li>
+<li>完善 <code>RegServlet</code> 注册类</li>
+<li>完善 <code>LoginServlet</code> 登录类</li>
+<li>优化代码</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Java/">#Java</a> <a href="/tags/Web/">#Web</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo" target="_blank" rel="noopener">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/12/02/Java%E5%9F%BA%E7%A1%80-%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%88Basic)/">Java基础-语言基础（Basic)</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/12/02/dshc/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/">Web基础-jQuery语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/29/dshc/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/">Web基础-JavaScript语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/28/dshc/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/">线性代数笔记</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Java/">Java</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">生活记录</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/">结构算法</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%B7%A5%E5%85%B7%E7%8E%AF%E5%A2%83/">工具环境</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/" target="_blank" rel="noopener">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

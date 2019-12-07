@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="浮点数的储存与运算过程浮点数的储存浮点数在计算机底层的存储方式浮点数的存储方式都是遵从IEEE 754的规范，根据国际标准IEEE 754，任意一个二进制浮点数V可以表示成
+1234V=(-1)^S * M * 2^EＳ(Sign)表示符号位：当Ｓ=0，Ｖ为正数；当Ｓ=1，Ｖ为负数。E(Expone">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="浮点数的储存与运算过程"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="hello-world"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>浮点数的储存与运算过程 - hello-world</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+<link rel="alternate" href="/atom.xml" title="hello-world" type="application/atom+xml">
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/10/16/dshc/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E5%82%A8%E5%AD%98%E4%B8%8E%E8%BF%90%E7%AE%97%E8%BF%87%E7%A8%8B/">
+                浮点数的储存与运算过程
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-10-16</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/计算机知识/">计算机知识</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="浮点数的储存与运算过程"><a href="#浮点数的储存与运算过程" class="headerlink" title="浮点数的储存与运算过程"></a>浮点数的储存与运算过程</h1><h2 id="浮点数的储存"><a href="#浮点数的储存" class="headerlink" title="浮点数的储存"></a>浮点数的储存</h2><h3 id="浮点数在计算机底层的存储方式"><a href="#浮点数在计算机底层的存储方式" class="headerlink" title="浮点数在计算机底层的存储方式"></a>浮点数在计算机底层的存储方式</h3><p>浮点数的存储方式都是遵从IEEE 754的规范，根据国际标准IEEE 754，任意一个二进制浮点数V可以表示成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">V=(-1)^S * M * 2^E</span><br><span class="line">Ｓ(Sign)表示符号位：当Ｓ=0，Ｖ为正数；当Ｓ=1，Ｖ为负数。</span><br><span class="line">E(Exponent)表示指数位（2进制）。 </span><br><span class="line">M(Mantissa)表示尾数（2进制）：M&gt;=１ &amp;&amp; M&lt;２。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单精度浮点数float遵从IEEE R32.24，共32位1-8-23（S-E-M）</li>
+<li>双精度浮点数double遵从R64.53，共64位1-11-52（S-E-M）</li>
+</ul>
+<h3 id="十进制与二进制的基本转换"><a href="#十进制与二进制的基本转换" class="headerlink" title="十进制与二进制的基本转换"></a>十进制与二进制的基本转换</h3><ol>
+<li>十进制—&gt;二进制：整数部分，除二留余；小数部分，乘二留整。  </li>
+<li>125(10)=0.001(2)  </li>
+<li>42(10)=0.011010111000….(2)</li>
+<li>二进制—&gt;十进制：0000.0000 = 8 4 2 1 . 1/2 1/4 1/8 1/16</li>
+</ol>
+<h3 id="十进制浮点数在内存中存储实例"><a href="#十进制浮点数在内存中存储实例" class="headerlink" title="十进制浮点数在内存中存储实例"></a>十进制浮点数在内存中存储实例</h3><p>10.F = (-1)^0 * 2^0 * 0<br>0.42F = (-1)^0 * 2^0111 1101 * 1010 1110 0….  </p>
+<blockquote>
+<p>0.01 1010 1110 0…. &lt;– 指数位-2(10)，尾数位[1] 1010 1110 0….(2)其中尾数的第一个1被省略</p>
+</blockquote>
+<ul>
+<li><strong>符号位</strong>：正数为0，负数为1</li>
+<li><strong>指数位</strong>：Float中的E为0～256(8bit)，为了表现出正负值，IEEE 754规定，计算机中存储的E为实际值加上中位数，Float的中位数为127，0～126表示-128～-1，127～256表示0～127</li>
+<li><strong>尾数位</strong>：将整数部分跟小数部分转化为二进制，IEEE 754规定，在计算机内部保存M时，因为M总是1开头，所以可以舍去第一位1，只保存后面的小数部分。所以float的23位的M可以表示24位二进制数。</li>
+</ul>
+<p>0.42F在内存中储存计算会出现精度损失，0.4199999868869781494140625，但只是储存并不会出现精度损失，为什么呢？</p>
+<h2 id="浮点数的加减运算"><a href="#浮点数的加减运算" class="headerlink" title="浮点数的加减运算"></a>浮点数的加减运算</h2><h3 id="实例：1-0F-0-42F在计算机底层的运算过程："><a href="#实例：1-0F-0-42F在计算机底层的运算过程：" class="headerlink" title="实例：1.0F-0.42F在计算机底层的运算过程："></a>实例：1.0F-0.42F在计算机底层的运算过程：</h3><blockquote>
+<p>0(S)011 1111 1(E)000 0000 0000 0000 0000 0000(M)<br>0(S)011 1110 1(E)101 0111 0000 1010 0011 1101(M)</p>
+</blockquote>
+<h3 id="第一步：指数低的数向指数高的数转换"><a href="#第一步：指数低的数向指数高的数转换" class="headerlink" title="第一步：指数低的数向指数高的数转换"></a>第一步：指数低的数向指数高的数转换</h3><p>这里的0.42F指数比1.0F指数底，所以指数位-2转换成0(指数位+2，尾数位向右移动两位)转化前后如下  </p>
+<blockquote>
+<p>0(S)011 1110 1(E)101 0111 0000 1010 0011 1101(M)<br>0(S)011 1111 1(E)01 101 0111 0000 1010 0011 11<strong><em>01</em></strong>(M)  </p>
+</blockquote>
+<p>指数+2，对应的尾数位向右移动两位，一定集的默认省略的1，所以两位为前面默认的1以及用0填充，变为了01….<font color="red"><strong>位移过程中最后两位被挤出，产生了精度损失</strong></font></p>
+<h3 id="第二步：结果的M值进行加减运算"><a href="#第二步：结果的M值进行加减运算" class="headerlink" title="第二步：结果的M值进行加减运算"></a>第二步：结果的M值进行加减运算</h3><blockquote>
+<p>1.00F的：1-000 0000 0000 0000 0000 0000(M)<br>0.42F的：0-011 0101 1100 0010 1000 1111(M)<br>结 果 是：0-100 1010 0011 1101 0111 0001(M)</p>
+</blockquote>
+<p>这里注意默认省略的首位1，1.0F因为没有被特殊处理，所以M省略的首位还是1；0.42F因为第一步进行了处理，M被0填充，所以省略首位变成了0</p>
+<h3 id="第三步：将第二步的结果转换为IEEE-754标准"><a href="#第三步：将第二步的结果转换为IEEE-754标准" class="headerlink" title="第三步：将第二步的结果转换为IEEE 754标准"></a>第三步：将第二步的结果转换为IEEE 754标准</h3><p>因为向指数高的数转换过，所以指数位E为指数高的指数位0111 1111(E)<br>刚刚的结果M拿过来，再加上结果是正数，S为0得到</p>
+<blockquote>
+<p>0(S) 011 1111 1(E) 0-100 1010 0011 1101 0111 0001(M)</p>
+</blockquote>
+<p>M需要进行转换，需要得到一个1开头的值，并准备省略，这里应该向左移动一位，低位用0填充</p>
+<blockquote>
+<p>0-100 1010 0011 1101 0111 0001(M)<br>1-001 0100 0111 1010 1110 001<strong><em>0</em></strong>(M)</p>
+</blockquote>
+<p>首位1省略，末位0填充，得到：001 0100 0111 1010 1110 0010(M)<br>与之前的S、E拼接起来得到：</p>
+<blockquote>
+<p>0(S) 011 1111 1(E) 0-100 1010 0011 1101 0111 0001(M) - 原来的<br>0(S) 011 1111 0(E) 001 0100 0111 1010 1110 0010(M) - 得到的</p>
+</blockquote>
+<p><font color="red"><strong>位移过程中最后一位填充0，产生了精度损失</strong></font></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>在计算机底层存储浮点数时会产生精度损失。</li>
+<li>在计算第一步更改指数的时候会产生精度损失。</li>
+<li>在计算第三部尾数位按照IEEE 754标准转换时会产生精度损失。</li>
+</ol>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Bin/">#Bin</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo" target="_blank" rel="noopener">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/12/02/Java%E5%9F%BA%E7%A1%80-%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%88Basic)/">Java基础-语言基础（Basic)</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/12/02/dshc/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/">Web基础-jQuery语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/29/dshc/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/">Web基础-JavaScript语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/11/28/dshc/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/">线性代数笔记</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Java/">Java</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">生活记录</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/">结构算法</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%B7%A5%E5%85%B7%E7%8E%AF%E5%A2%83/">工具环境</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/" target="_blank" rel="noopener">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
