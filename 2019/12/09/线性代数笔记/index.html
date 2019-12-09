@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>线性代数笔记 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">线性代数笔记</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="学习笔记"> 学习笔记</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="线性代数笔记"><a href="#线性代数笔记" class="headerlink" title="线性代数笔记"></a>线性代数笔记</h1><h2 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h2><h3 id="什么是线性代数"><a href="#什么是线性代数" class="headerlink" title="什么是线性代数"></a>什么是线性代数</h3><ul>
+<li>线性代数就是<strong>高维</strong>的解析几何</li>
+<li>线性代数用到的工具：矩阵、行列式</li>
+<li>本笔记学习主要学习记录矩阵与行列式的定义与使用</li>
+<li>暂不考虑解析几何的计算</li>
+</ul>
+<h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><h3 id="行列式-1"><a href="#行列式-1" class="headerlink" title="行列式"></a>行列式</h3><ul>
+<li>等行等列的式子称为<strong>行列式</strong></li>
+<li>二行二列的式子称为 二阶行列式、三行三列的式子称为 三阶行列式、以此类推</li>
+<li>每个行(r)列(c)式都可以计算出一个数(D)</li>
+</ul>
+<h3 id="二元线性方程组与二阶行列式"><a href="#二元线性方程组与二阶行列式" class="headerlink" title="二元线性方程组与二阶行列式"></a>二元线性方程组与二阶行列式</h3><ul>
+<li>计算 a[11]x1 + a[12]x2 = b1</li>
+<li>还有 a[21]x1 + a[22]x2 = b2</li>
+<li>计算消除x2，为 <code>式子① * a[22] - 式子② * a[12]</code> 可以得到，同理可得</li>
+<li>(a[11]a[22] - a[12]a[21]) * x1 = b1 * a[22] - b2 * a[12]</li>
+<li>(a[11]a[22] - a[12]a[21]) * x1 = b2 * a[11] - b2 * a[21]</li>
+<li>如果 <code>a[11]a[22] - a[12]a[21]</code> 不等于零，则可以除过去</li>
+<li>x1 = (b1 * a[22] - b2 * a[12]) / (a[11]a[22] - a[12]a[21])</li>
+<li>x2 = (b2 * a[11] - b2 * a[21]) / (a[11]a[22] - a[12]a[21])</li>
+<li>两个不同的分子，一个相同的分母，可以用三个矩阵表示</li>
+<li>| a[11] a[12] | - - | b1 a[12] | - - | a[12] b1 |</li>
+<li>| a[21] a[22] | - - | b2 a[22] | - - | a[22] b2 |</li>
+<li>三个矩阵分别是 D D1 D2 ， D1 D2 分别是 b1 b2 替换掉 D 的第一列第二列实现的</li>
+<li>则二元线性方程组的两个解为 x1 = D1 / D ; x2 = D2 / D</li>
+<li></li>
+<li>二阶行列式的值 = 主对角线各元素乘积 - 负对角线各元素乘积</li>
+</ul>
+<h3 id="n阶行列式的基本推算"><a href="#n阶行列式的基本推算" class="headerlink" title="n阶行列式的基本推算"></a>n阶行列式的基本推算</h3><ul>
+<li>排列：由正整数 1,2，…，n 按一定次序排成一列，叫做这n各元素的全排列</li>
+<li>逆序对：该元素与之后的各元素对比，如果小于某元素，则两个元素称为一个逆序对</li>
+<li>逆序数：逆序对的个数称为逆序数，表示如下：</li>
+<li>τ(i1,i2…in) = τ(i1)+τ(i2)+…+τ(in)</li>
+<li>例如：τ(3,4,2)=τ(3)+τ(4)+τ(2)=1+1+0=2 –&gt; [32]、[42]</li>
+<li>相邻对换：排列中，两个元素对调，其余元素不变，会改变排列的奇偶性</li>
+<li>特殊行列式：下三角行列式(主对角线上方都是0)、上三角行列式(主对角线下方都是0)、对角行列式(主对角线上下方都是0) 计算方式为主对角线各元素的乘积</li>
+<li>M = (-1)^τ(i1,i2…in) * a[1i]a[2i]…a[ni]</li>
+</ul>
+<h3 id="行列式性质推论"><a href="#行列式性质推论" class="headerlink" title="行列式性质推论"></a>行列式性质推论</h3><ol>
+<li>行列式中，如果每行、每列进行转置，行列式的值不变：D = D^T ； 通过基本公式可以拆分获得</li>
+<li>行列式中的两行(列)进行交换，行列式变号 ； 根据 τ 次序变化获得<ul>
+<li>推论：行列式中，如果有两行(列)相同，则行列式的值 D = 0 ；两行(列)相同的进行互换，行列式变号，D=-D，则D为0</li>
+</ul>
+</li>
+<li>行列式中某一行(列)有公因子k，则k可以提到行列式前面。也就是说，k乘行列式，等于用k乘行列式的某一行 ； 根据基本公式拆分，提取公共项k可得<ul>
+<li>推论：若行列式存在某一行(列)的元素都为零，则行列式的值D = 0 ； 提取此行公因数0,0*D=0</li>
+</ul>
+</li>
+<li>如果行列式有两行(列)成比例，则行列式D = 0 ； 提取比例公因数k，两行相同M=0，答案为：K*M = K*0 = 0</li>
+<li>行列式的拆分定理，如果某行每个可以拆为a+b，可以直接分为两个 此行为a的行列式 + 此行为b的行列式</li>
+<li>行列式某行(列)的倍数加到另一行(列)，值不变 ； 根据定理5，原式+某行倍数(D+Dk)，其中某行倍数根据定理4，Dk=0，所以D+Dk=D</li>
+</ol>
+<h3 id="行列式的特殊式子"><a href="#行列式的特殊式子" class="headerlink" title="行列式的特殊式子"></a>行列式的特殊式子</h3><ul>
+<li>余子式M ：a[ij]的余子式，就是行列式删去i行，j列的所有元素，剩余元素组成的行列式，记做 M[ij]</li>
+<li>代数余子式A ：元素a[ij]的代数余子式就是 A[ij] = (-1)^(i+j) M[ij]</li>
+<li>行列式中，第i行，除了a[ji]以外其他元素都为0，则 D=a[ij]*A[ij]</li>
+<li>D = a[i1]A[i1] + a[i2]A[i2] +…+ a[in]A[in] ； 拆分可得，证明上述计算</li>
+</ul>
+<h3 id="行列式的计算技巧"><a href="#行列式的计算技巧" class="headerlink" title="行列式的计算技巧"></a>行列式的计算技巧</h3><ul>
+<li>根据基础公式进行计算</li>
+<li>根据上下三角进行计算 ： 凑三角</li>
+<li>根据余子式进行计算 ： a[ij]所在行(列)其他元素凑0</li>
+</ul>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><h3 id="线性方程组与矩阵"><a href="#线性方程组与矩阵" class="headerlink" title="线性方程组与矩阵"></a>线性方程组与矩阵</h3><ul>
+<li>计算 a[11]x1 + a[12]x2 +…+ a[1n]xn = b1</li>
+<li>还有 a[21]x1 + a[22]x2 +…+ a[2n]xn = b2</li>
+<li>等等</li>
+<li>最后 a[m1]x1 + a[m2]x2 +…+ a[mn]xn = bm</li>
+<li>计算这样的式子，去除x和计算符，剩下的矩阵与方程组息息相关，所以我们定义了矩阵</li>
+<li>称为：m*n矩阵，矩阵常用A、B、C来表示，记做 A = (a[ij])m*n</li>
+<li><strong>矩阵定义</strong>：矩阵是由m*n个数，排成m行n列的<strong>表格</strong>；而行列式是n行n列的<strong>数</strong></li>
+<li>复矩阵：由复数构成的矩阵</li>
+<li>实矩阵：由实数构成的矩阵(常使用)</li>
+<li>同型矩阵：两个矩阵的行数相等、列数也相等，则称为同型矩阵</li>
+<li>矩阵相等：如果两个同型矩阵，他们对应的每个元素都相等，则这两个矩阵相等</li>
+<li><strong>矩阵与行列式的区别</strong>：矩阵是表，行列式是数；他们的计算法则不同；表示不同，矩阵是大括弧，行列式是两个直线</li>
+</ul>
+<h3 id="特殊矩阵"><a href="#特殊矩阵" class="headerlink" title="特殊矩阵"></a>特殊矩阵</h3><ul>
+<li>零矩阵：矩阵中每个元素都为0，常记做0</li>
+<li>行矩阵(行向量α)：行数为1的矩阵</li>
+<li>列矩阵(列向量β)：列数为1的矩阵</li>
+<li>方阵：行数与列数相等的矩阵</li>
+</ul>
+<h4 id="特殊方阵"><a href="#特殊方阵" class="headerlink" title="特殊方阵"></a>特殊方阵</h4><ul>
+<li>上三角阵：主对角线下方都是零元素</li>
+<li>下三角阵：主对角线上方都是零元素</li>
+<li>对角阵：主对角线以外元素都为零</li>
+<li>单位阵：主对角线元素都为1，其余元素都为0，常记做E[n] (n*n的方阵)</li>
+</ul>
+<h3 id="矩阵的基本计算"><a href="#矩阵的基本计算" class="headerlink" title="矩阵的基本计算"></a>矩阵的基本计算</h3><ul>
+<li>同型矩阵的加法：两个矩阵的对应元素相加，记做A+B</li>
+<li>矩阵与常数乘法：kA = ka[ij] k乘以矩阵 等于 每个元素都乘以k</li>
+<li>负矩阵：-A=(-1)A=(-a[ij])</li>
+<li>矩阵与矩阵乘法：A=(a[ij])m*n ,B=(b[ij])n*p ,结果为 C=(a[ij])m*p，记做C=AB<ul>
+<li>要求：前式的列数 等于 后式的行数，才可以使用矩阵乘法</li>
+<li>计算：前者的元素与后者的列元素相乘的和</li>
+<li>结果：结果矩阵的大小是 前式的行数 乘 后式的列数</li>
+</ul>
+</li>
+<li>矩阵乘法的注意特点：<ol>
+<li>注意：不满足乘法交换律：AB≠BC</li>
+<li>注意：两个非零矩阵乘积可能是零矩阵，由AB=0不可以得到A=0或B=0</li>
+<li>注意：不满足消去率，若AB=AC=0且A≠0，不可以得到B=C</li>
+</ol>
+</li>
+<li>A^k = A*A*…*A 记做 A的k次幂，幂公式通用</li>
+<li>转置矩阵：AT，其运算规律：<code>(AT)T=A</code>、<code>(A+B)T=AT+BT</code>、<code>(λA)T=λAT</code>、<code>(AB)T=BTAT</code> (注意顺序AB变BA)</li>
+<li>设A是n阶方针，如果AT=A，则乘A为对称矩阵，简称对称阵；它的元素以主对角线为对称轴对应相等</li>
+<li>设A是n阶方针，如果AT=-A，则乘A为反对称矩阵，简称反对称阵；它的元素关于主对角线异号，并且主对角线上元素全为零</li>
+</ul>
+<h3 id="向量矩阵的计算"><a href="#向量矩阵的计算" class="headerlink" title="向量矩阵的计算"></a>向量矩阵的计算</h3><ul>
+<li>列向量 * 行向量 = <strong>方阵</strong></li>
+<li>行向量 * 列向量 = <strong>数</strong>(上述方阵的<strong>迹</strong>(主对角元素之和))</li>
+</ul>
+<h3 id="矩阵的性质推论"><a href="#矩阵的性质推论" class="headerlink" title="矩阵的性质推论"></a>矩阵的性质推论</h3><h3 id="矩阵的行列式"><a href="#矩阵的行列式" class="headerlink" title="矩阵的行列式"></a>矩阵的行列式</h3><ul>
+<li>由n阶方阵A的元素所构成的行列式(各元素的位置不变)，称为方阵A的行列式，记为detA 或 |A|</li>
+<li>矩阵的行列式的性质：<ol>
+<li><code>|AT| = |A|</code></li>
+<li><code>|kA| = K^n|A|</code></li>
+<li><code>|AB| = |A|*|B|</code></li>
+</ol>
+</li>
+</ul>
+<h2 id="线性代数进一步学习"><a href="#线性代数进一步学习" class="headerlink" title="线性代数进一步学习"></a>线性代数进一步学习</h2><h3 id="伴随矩阵"><a href="#伴随矩阵" class="headerlink" title="伴随矩阵"></a>伴随矩阵</h3><h3 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h3><h3 id="分块矩阵"><a href="#分块矩阵" class="headerlink" title="分块矩阵"></a>分块矩阵</h3><h3 id="初等变换与初等矩阵"><a href="#初等变换与初等矩阵" class="headerlink" title="初等变换与初等矩阵"></a>初等变换与初等矩阵</h3><h3 id="…"><a href="#…" class="headerlink" title="…"></a>…</h3></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/">http://yoursite.com/2019/12/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/09/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/" title="Web基础-JavaScript语言"><span>< PreviousPost</span><br><span class="prevTitle">Web基础-JavaScript语言</span></a><a class="nextSlogan" href="/2019/12/09/Java%E5%AE%9E%E8%B7%B5-WebServer(%E4%BB%BFTomcat)/" title="Java实践-WebServer(仿Tomcat)"><span>NextPost ></span><br><span class="nextTitle">Java实践-WebServer(仿Tomcat)</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性代数笔记"><span class="toc-number">1.</span> <span class="toc-text">线性代数笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性代数"><span class="toc-number">1.1.</span> <span class="toc-text">线性代数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线性代数"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是线性代数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行列式"><span class="toc-number">1.2.</span> <span class="toc-text">行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行列式-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">行列式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二元线性方程组与二阶行列式"><span class="toc-number">1.2.2.</span> <span class="toc-text">二元线性方程组与二阶行列式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#n阶行列式的基本推算"><span class="toc-number">1.2.3.</span> <span class="toc-text">n阶行列式的基本推算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行列式性质推论"><span class="toc-number">1.2.4.</span> <span class="toc-text">行列式性质推论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行列式的特殊式子"><span class="toc-number">1.2.5.</span> <span class="toc-text">行列式的特殊式子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行列式的计算技巧"><span class="toc-number">1.2.6.</span> <span class="toc-text">行列式的计算技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵"><span class="toc-number">1.3.</span> <span class="toc-text">矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性方程组与矩阵"><span class="toc-number">1.3.1.</span> <span class="toc-text">线性方程组与矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊矩阵"><span class="toc-number">1.3.2.</span> <span class="toc-text">特殊矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特殊方阵"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">特殊方阵</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的基本计算"><span class="toc-number">1.3.3.</span> <span class="toc-text">矩阵的基本计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向量矩阵的计算"><span class="toc-number">1.3.4.</span> <span class="toc-text">向量矩阵的计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的性质推论"><span class="toc-number">1.3.5.</span> <span class="toc-text">矩阵的性质推论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的行列式"><span class="toc-number">1.3.6.</span> <span class="toc-text">矩阵的行列式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性代数进一步学习"><span class="toc-number">1.4.</span> <span class="toc-text">线性代数进一步学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#伴随矩阵"><span class="toc-number">1.4.1.</span> <span class="toc-text">伴随矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#逆矩阵"><span class="toc-number">1.4.2.</span> <span class="toc-text">逆矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分块矩阵"><span class="toc-number">1.4.3.</span> <span class="toc-text">分块矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初等变换与初等矩阵"><span class="toc-number">1.4.4.</span> <span class="toc-text">初等变换与初等矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#…"><span class="toc-number">1.4.5.</span> <span class="toc-text">…</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

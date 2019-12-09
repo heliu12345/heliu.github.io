@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Java练习-随机读写/顺序读写 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Java练习-随机读写/顺序读写</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Java"> Java</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Java练习-随机读写-顺序读写"><a href="#Java练习-随机读写-顺序读写" class="headerlink" title="Java练习-随机读写/顺序读写"></a>Java练习-随机读写/顺序读写</h1><h2 id="随机读写复制文件"><a href="#随机读写复制文件" class="headerlink" title="随机读写复制文件"></a>随机读写复制文件</h2><h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>随机读写使用 java.io.RandomAccessFile 类实现</li>
+<li>随机打开两个文件，一个读取，一个写入</li>
+<li>由于读写是字节读写，效率不高，所以通过定义数组来提高读写性能</li>
+</ul>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">RandomAccessFile src = new RandomAccessFile(&quot;./demo.zip&quot;,&quot;r&quot;);  //通过随机读写打开源文件，定义权限只读即可</span><br><span class="line">RandomAccessFile desc = new RandomAccessFile(&quot;./demo_cp.zip&quot;,&quot;rw&quot;);  //通过随机读写打开目标文件，定义权限读写</span><br><span class="line"></span><br><span class="line">byte[] buf = new byte[1024*10];  //为了提高速率使用字节数组</span><br><span class="line">int len = -1;  //定义每次实际读取到的字节</span><br><span class="line">		</span><br><span class="line">while((len = src.read(buf))!=-1) &#123;</span><br><span class="line">	desc.write(buf,0,len);  //只要读取到数据，就往目标文件中写入读取到长度的数据</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;复制完毕!&quot;);</span><br><span class="line">src.close();  //记得关闭文件</span><br><span class="line">desc.close();  //记得关闭文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="顺序读写复制文件"><a href="#顺序读写复制文件" class="headerlink" title="顺序读写复制文件"></a>顺序读写复制文件</h2><h3 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>顺序读写是通过 IO 流实现的，java.io.InputStream , java.io.OutputStream</li>
+<li>通过IO连接到两个文件，一个使用输入流，一个使用输出流</li>
+<li>由于读写是字节读写，效率不高，所以通过缓冲流的高级流来提高效率</li>
+</ul>
+<h3 id="代码分析-1"><a href="#代码分析-1" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">FileInputStream fis = new FileInputStream(&quot;demo.zip&quot;);  //定义输入流，连接到源文件</span><br><span class="line">BufferedInputStream bis = new BufferedInputStream(fis);  //定义缓冲流，连接到输入流上，提高效率</span><br><span class="line">		</span><br><span class="line">FileOutputStream fos = new FileOutputStream(&quot;demo_cp.zip&quot;);  //定义输出流，连接到目标文件</span><br><span class="line">BufferedOutputStream bos = new BufferedOutputStream(fos);  //定义缓冲流，连接到输出流上，提高效率</span><br><span class="line">		</span><br><span class="line">int d = -1;  //定义每次实际读取到的字节</span><br><span class="line"></span><br><span class="line">while((d=bis.read())!=-1) &#123;</span><br><span class="line">	bos.write(d);  //将读到的字节存储到缓冲流中</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;复制完毕!&quot;);		</span><br><span class="line">bis.close();  //只需要关闭最高层高级流即可，连接到后面的流会逐级关闭</span><br><span class="line">bos.close();  //执行缓冲流的flush()方法 或 缓冲区满了 或 缓冲流关闭时，缓冲流会向文件按缓冲大小写数据</span><br></pre></td></tr></table></figure>
+
+<h2 id="随机读写存取用户信息"><a href="#随机读写存取用户信息" class="headerlink" title="随机读写存取用户信息"></a>随机读写存取用户信息</h2><h3 id="练习需求"><a href="#练习需求" class="headerlink" title="练习需求"></a>练习需求</h3><ul>
+<li>实现1：完成用户注册功能，程序启动后顺序输入：用户名，密码，昵称，年龄，然后将其写入文件user.dat中保存</li>
+<li>实现2：修改昵称功能，程序启动后要求用户输入用户名和新昵称，然后将user.dat文件中对应的记录进行修改，如果输入的用户名在user.dat文件中不存在，则输出：查无此人</li>
+</ul>
+<h3 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>分析：设置用户名、密码、昵称为String类型，年龄为int类型</li>
+<li>定义格式：每条记录占用100字节，其中用户名，密码，昵称各占32字节，年龄占4字节</li>
+<li>操作：通过随机读写的指针对文件进行增改查操作</li>
+</ul>
+<h3 id="代码分析-2"><a href="#代码分析-2" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//通过控制台输入，获取注册信息</span><br><span class="line">System.out.println(&quot;欢迎注册&quot;);</span><br><span class="line">Scanner scan = new Scanner(System.in);</span><br><span class="line">System.out.println(&quot;请输入用户名&quot;);</span><br><span class="line">String user = scan.next();</span><br><span class="line">System.out.println(&quot;请输入密码&quot;);</span><br><span class="line">String pwd = scan.next();</span><br><span class="line">System.out.println(&quot;请输入昵称&quot;);</span><br><span class="line">String nick = scan.next();</span><br><span class="line">System.out.println(&quot;请输入年龄&quot;);</span><br><span class="line">int age = scan.nextInt();</span><br><span class="line">scan.close();</span><br><span class="line">//随机打开用户文件，并将文件指针指向最后</span><br><span class="line">RandomAccessFile raf = new RandomAccessFile(&quot;user.dat&quot;,&quot;rw&quot;);</span><br><span class="line">raf.seek(raf.length());</span><br><span class="line">//定义字节数组存放数据</span><br><span class="line">byte[] data;</span><br><span class="line">//储存用户信息</span><br><span class="line">data= user.getBytes(&quot;utf-8&quot;);  //将用户信息根据utf-8拆为字节数组</span><br><span class="line">data = Arrays.copyOf(data, 32);  //将该数组扩容到32字节</span><br><span class="line">raf.write(data);  //写入该数组</span><br><span class="line">//同上</span><br><span class="line">data = pwd.getBytes(&quot;utf-8&quot;);</span><br><span class="line">data = Arrays.copyOf(data, 32);</span><br><span class="line">raf.write(data);</span><br><span class="line">//同上</span><br><span class="line">data = nick.getBytes(&quot;utf-8&quot;);</span><br><span class="line">data = Arrays.copyOf(data, 32);</span><br><span class="line">raf.write(data);</span><br><span class="line">//直接通过 writeInt() 方法将int值存入到文件中</span><br><span class="line">raf.writeInt(age);</span><br><span class="line">raf.close();  //关闭文件</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//通过控制台输入，获取修改信息</span><br><span class="line">System.out.println(&quot;**修改昵称**&quot;);</span><br><span class="line">Scanner scan = new Scanner(System.in);</span><br><span class="line">System.out.println(&quot;请输入用户名：&quot;);</span><br><span class="line">String name = scan.nextLine();</span><br><span class="line">System.out.println(&quot;请输入新昵称：&quot;);</span><br><span class="line">String nick = scan.nextLine();</span><br><span class="line">scan.close();</span><br><span class="line">//随机打开用户文件</span><br><span class="line">RandomAccessFile raf = new RandomAccessFile(&quot;user.dat&quot;,&quot;rw&quot;);</span><br><span class="line">for(int i=0;i&lt;raf.length()/100;i++) &#123;  //通过遍历查找用户，循环条件为条数</span><br><span class="line">	raf.seek(i*100);  //确定指针位置</span><br><span class="line">    //定义并读取32字节数据，返回字符串并清除空白</span><br><span class="line">	byte[] data = new byte[32];  </span><br><span class="line">	raf.read(data);</span><br><span class="line">	String user = new String(data).trim();</span><br><span class="line">	//判断是否为本条信息中的用户</span><br><span class="line">	if(user.equals(name)) &#123;</span><br><span class="line">		raf.seek(raf.getFilePointer()+32);  //指针指向本条信息昵称位置</span><br><span class="line">        //同上的写入操作</span><br><span class="line">		data = nick.getBytes();</span><br><span class="line">		data = Arrays.copyOf(data, 32);</span><br><span class="line">		raf.write(data);</span><br><span class="line">		System.out.println(&quot;修改完成&quot;);</span><br><span class="line">		break;  //完成任务，退出循环</span><br><span class="line">	&#125;</span><br><span class="line">    //如果指针到了最后一条还是找到用户</span><br><span class="line">	if(raf.getFilePointer()==raf.length()-100+32) &#123;</span><br><span class="line">		System.out.println(&quot;查无此人&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">raf.close();  //关闭文件</span><br></pre></td></tr></table></figure></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/09/Java%E7%BB%83%E4%B9%A0-%E9%9A%8F%E6%9C%BA%E8%AF%BB%E5%86%99-%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%86%99/">http://yoursite.com/2019/12/09/Java%E7%BB%83%E4%B9%A0-%E9%9A%8F%E6%9C%BA%E8%AF%BB%E5%86%99-%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%86%99/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/09/Java%E5%AE%9E%E8%B7%B5-%E8%81%8A%E5%A4%A9%E5%AE%A4(C-S%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B)/" title="Java实践-聊天室(C/S网络编程)"><span>< PreviousPost</span><br><span class="prevTitle">Java实践-聊天室(C/S网络编程)</span></a><a class="nextSlogan" href="/2019/12/09/Java%E5%AE%9E%E8%B7%B5-%E9%A3%9E%E6%9C%BA%E5%A4%A7%E6%88%98/" title="Java实践-飞机大战"><span>NextPost ></span><br><span class="nextTitle">Java实践-飞机大战</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java练习-随机读写-顺序读写"><span class="toc-number">1.</span> <span class="toc-text">Java练习-随机读写/顺序读写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#随机读写复制文件"><span class="toc-number">1.1.</span> <span class="toc-text">随机读写复制文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现思路"><span class="toc-number">1.1.1.</span> <span class="toc-text">实现思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码分析"><span class="toc-number">1.1.2.</span> <span class="toc-text">代码分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顺序读写复制文件"><span class="toc-number">1.2.</span> <span class="toc-text">顺序读写复制文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现思路-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">实现思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码分析-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">代码分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机读写存取用户信息"><span class="toc-number">1.3.</span> <span class="toc-text">随机读写存取用户信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#练习需求"><span class="toc-number">1.3.1.</span> <span class="toc-text">练习需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现思路-2"><span class="toc-number">1.3.2.</span> <span class="toc-text">实现思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码分析-2"><span class="toc-number">1.3.3.</span> <span class="toc-text">代码分析</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

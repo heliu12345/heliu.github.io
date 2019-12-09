@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Java基础-面向对象(OOP) · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Java基础-面向对象(OOP)</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Java"> Java</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Java基础-面向对象-OOP"><a href="#Java基础-面向对象-OOP" class="headerlink" title="Java基础-面向对象(OOP)"></a>Java基础-面向对象(OOP)</h1><h2 id="对象和类"><a href="#对象和类" class="headerlink" title="对象和类"></a>对象和类</h2><h3 id="基本概念："><a href="#基本概念：" class="headerlink" title="基本概念："></a>基本概念：</h3><ol>
+<li>对象：软件中存在的单个个体</li>
+<li>类：对象的抽象、总结，对象的模板</li>
+<li>成员变量、成员方法</li>
+</ol>
+<h3 id="定义类："><a href="#定义类：" class="headerlink" title="定义类："></a>定义类：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;修饰词&gt; class 类名&#123;</span><br><span class="line">    &lt;成员变量;&gt;</span><br><span class="line">    &lt;成员方法/类函数&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>方法的签名：就是方法名+参数列表；SendMsg(“Hello”);</p>
+</li>
+<li><p>方法重载Overload：<strong>方法名</strong>相同，<strong>参数列</strong>表必须不同(个数、类型)，但<font color="red"><strong>与修饰词、返回值无关</strong></font>，重载选择是编译器编译时决定的</p>
+</li>
+<li><p>构造函数：(可以重载)无返回值,名字和类名相同 一般用于初始化成员变量的值<br><code>&lt;访问修饰符&gt; 类名 (&lt;参数列表&gt;){构造方法体}</code></p>
+<blockquote>
+<p>没写构造函数，编译时会自动添加一个无参的构造函数。但是注意如果写了构造函数，编译时就<font color="red"><strong>不会再自动添加</strong></font>无参的构造函数！！</p>
+</blockquote>
+</li>
+<li><p>this：代表自己本身这个对象，可用于：成员变量 成员函数 构造函数</p>
+<blockquote>
+<p>用this调用构造函数必须放在第一句,且只能放在构造函数中<br>如果子类变量与父类变量重名，this优先本类变量，如果子类没有重名变量，this指向父类变量</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>注意内存分配问题，对象的引用与实体，堆栈问题</p>
+</blockquote>
+<h3 id="实例化对象"><a href="#实例化对象" class="headerlink" title="实例化对象"></a>实例化对象</h3><p>类 –&gt; 对象<br><code>&lt;类名&gt; &lt;对象名&gt; = new &lt;类名&gt;(构造函数参数);</code></p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h3 id="继承的基础概念"><a href="#继承的基础概念" class="headerlink" title="继承的基础概念"></a>继承的基础概念</h3><ul>
+<li>继承其他包中的类,需要先导入此类/包含此类的包，is-a原则</li>
+<li>不写extends默认继承java.lang.Object类，也就是说所有类都时Object类的子类，都拥有Object类的变量及方法</li>
+<li>一个类只能extends一个类，可以implements多个接口</li>
+</ul>
+<h3 id="如何继承类"><a href="#如何继承类" class="headerlink" title="如何继承类"></a>如何继承类</h3><ul>
+<li>使用关键子<code>extends</code>进行继承，例：<code>class son extends farther{}</code></li>
+<li>继承就是继承父类的所有成员函数和成员变量(注意权限问题,private不能直接访问)</li>
+<li><font color="red">子类的<strong><em>属性、方法</em></strong>与父类的属性/方法重名是被Java允许的</font>，但注意区分，用this或super区别调用(如果子类变量与父类变量重名，this优先本类变量，如果子类没有重名变量，this指向父类变量)</li>
+<li>内存结构：子类内存对象中存有父类内存对象的引用(new生成子类对象和父类对象两个)<blockquote>
+<p>super：用法与this相同，在继承中常用在方法重写与构造函数中<br>相同的，用super调用构造函数时，也必须放在第一句,且只能放在构造函数中</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="继承中的构造函数"><a href="#继承中的构造函数" class="headerlink" title="继承中的构造函数"></a>继承中的构造函数</h3><ul>
+<li>子类的构造函数不写super编译器会自动添加super()无参的父类构造函数</li>
+<li>子类的构造函数可以调用父类的其他构造函数，使用super()，但注意super()必须放在子类构造函数的第一句(根据参数列表确定调用的哪个构造函数)</li>
+</ul>
+<blockquote>
+<p><font color="red"><strong>父类没写无参构造</strong></font>，且写了其他有参构造函数，编译器不会再自动添加无参构造函数，会导致<strong>子类构造函数中自动添加的super()报错</strong></p>
+</blockquote>
+<h3 id="继承中的方法重写"><a href="#继承中的方法重写" class="headerlink" title="继承中的方法重写"></a>继承中的方法重写</h3><ul>
+<li><p><strong>方法重写</strong>：子类方法名与父类方法名相同，且形参列表相同，返回值与访问修饰符如下</p>
+<ul>
+<li><strong>返回值</strong>：也要相同，除非返回值类型为引用数据类型时，子类的返回值类型可以是父类返回值类型的子类</li>
+<li><strong>访问修饰符</strong>：子类的访问修饰符 <strong>不能</strong> 比父类访问修饰符更严格</li>
+<li><strong>异常处理</strong>：子类的异常类型要与父类相同，或者是父类异常类型的子类</li>
+</ul>
+</li>
+<li><p>private方法不能被重写成功（不报错但是重写不成功，自我调用还是父类方法）</p>
+</li>
+<li><p>可以使用<code>super.方法名</code>，调用原方法，再另行添加自己的代码</p>
+<blockquote>
+<p>这里的super可以不必第一行，只有构造函数时super/this必须第一行</p>
+</blockquote>
+</li>
+<li><p>@override，表明明确复写父类函数，编译器可检查错误</p>
+</li>
+<li><p>子类重写的内容覆盖父类内存对象中的原方法内容，所以向上转型后的调用是重写后的方法。注意：子类中与父类重名的成员变量不属于重写，在子类内存对象与父类内存对象分别储存着。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>重载与重写区别</th>
+<th>位置</th>
+<th>方法名</th>
+<th>参数</th>
+<th>返回值</th>
+<th>修饰符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>重载&emsp;Overload</td>
+<td>同类*</td>
+<td>相同</td>
+<td>不同</td>
+<td><font color="red">无关</font></td>
+<td><font color="red">无关</font></td>
+</tr>
+<tr>
+<td>重写&emsp;Override</td>
+<td>子类</td>
+<td>相同</td>
+<td>相同</td>
+<td>相同*</td>
+<td>相同*</td>
+</tr>
+</tbody></table>
+<h2 id="抽象类、接口、内部类"><a href="#抽象类、接口、内部类" class="headerlink" title="抽象类、接口、内部类"></a>抽象类、接口、内部类</h2><h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><ul>
+<li>用<code>abstract</code>关键字定义<code>public/默认 abstract class 类名{};</code></li>
+<li>抽象类不能生成对象(只能当父类)</li>
+<li>抽象类被继承后需要重写抽象类中所有的抽象方法，如果子类是也抽象类则可以不全部重写父类抽象方法</li>
+<li>抽象方法：用<code>abstract</code>修饰的方法，特点是没有函数体无大括号<code>public abstract void 函数名();</code></li>
+<li>抽象类其他特性与普通类一样，但是注意不可以抽象构造方法。</li>
+</ul>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><h4 id="使用方式："><a href="#使用方式：" class="headerlink" title="使用方式："></a>使用方式：</h4><ul>
+<li>用<code>interface</code>关键字定义<code>public/默认 interface 接口名{};</code></li>
+<li>在类的声明后面使用<code>implements</code>加接口名逗号分隔实现</li>
+</ul>
+<h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h4><ul>
+<li>所有属性只能是公有静态常量,不写/不写全则编译器自动增为<code>public static final</code></li>
+<li>所有方法只能是公有抽象方法,不写/不写全则编译器自动增为<code>public abstract</code></li>
+<li>没有静态块，构造函数(不能实例化)。静态方法和默认方法很少使用，暂时忽略</li>
+</ul>
+<blockquote>
+<p>接口没有构造函数不能实例化对象，has-a原则<br>接口一般是某种功能的总结，接口可以继承多个接口<br>更容易实现程序架构的搭建-面向接口编程</p>
+</blockquote>
+<h3 id="内部类-Inner-！Outer"><a href="#内部类-Inner-！Outer" class="headerlink" title="内部类(Inner)！Outer"></a>内部类(Inner)！Outer</h3><h4 id="成员内部类"><a href="#成员内部类" class="headerlink" title="成员内部类"></a>成员内部类</h4><ul>
+<li>在成员变量的位置声明的内部类，可以使用4种<strong>全部的访问修饰符</strong></li>
+<li>实例化内部类对象需要外部类的支持，<code>&lt;内部类&gt; x = &lt;外部类对象&gt;.new &lt;内部类&gt;</code></li>
+<li>当前类如果需要多个方法中使用这个类且只有自己的类使用，定义内部类<hr></li>
+<li>外部类和内部类的私有成员可以相互调用，外部类实例化对象访问，内部类直接访问</li>
+<li>允许内部类和外部类定义同名成员，内部类调用外部类成员时<code>&lt;外部类&gt;.this.&lt;成员&gt;</code></li>
+<li>内部类编译时产生独立的<strong>class文件</strong><code>外类名$内类名.class</code></li>
+</ul>
+<h4 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h4><ul>
+<li>继承或实现接口时直接使用：<code>&lt;父类&gt; name = new &lt;父类&gt;{子类代码块}</code></li>
+<li>一个类的某方法临时使用时，更有针对性</li>
+<li>匿名内部类访问定义该匿名内部类的方法的局部变量(参数/变量)时，如果局部变量没有另外修改值则可访问，但一直不可修改(视为final只可访问不可修改)。</li>
+<li>如果方法中/内部类中修改了局部变量值，内部类不可访问该值，所以一般如果这样使用，通称在需要调用的变量声明前使用final(参数变量也可以哦)</li>
+<li>JAR1.8以前如果上方使用，必须添加final否则报错<hr></li>
+<li>外部类和内部类的私有成员可以相互调用，外部类实例化对象访问，内部类直接访问</li>
+<li>允许内部类和外部类定义同名成员，内部类调用外部类成员时<code>&lt;外部类&gt;.this.&lt;成员&gt;</code></li>
+<li>内部类编译时产生独立的<strong>class文件</strong><code>外类名$数字.class</code></li>
+</ul>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><h3 id="多态的使用"><a href="#多态的使用" class="headerlink" title="多态的使用"></a>多态的使用</h3><ol>
+<li>向上造型数组储存</li>
+<li>向上造型方法重写</li>
+<li>向下造型调用私有方法<blockquote>
+<p>强制类型转换<code>(需要类型)实例化对象</code>，容易产生ClassCastException错误<br>关键字<code>对象instanceof类型</code>返回布尔判断类型，尽量避免，并不是面向对象思想做法</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="对象转型"><a href="#对象转型" class="headerlink" title="对象转型"></a>对象转型</h3><ul>
+<li><p><strong>向上造型</strong>：f和s指向堆中同一个对象,但f只能调用自己类的变量和方法  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">farther f = new son();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>向下造型</strong>：（官方没承认的民间说法）一般不可以，例外：前提先向上转型再向下转型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">farther f = new son();</span><br><span class="line">son s = (son)f;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="关键字-访问控制-static-final"><a href="#关键字-访问控制-static-final" class="headerlink" title="关键字-访问控制/static/final"></a>关键字-访问控制/static/final</h2><h3 id="访问控制修饰词"><a href="#访问控制修饰词" class="headerlink" title="访问控制修饰词"></a>访问控制修饰词</h3><table>
+<thead>
+<tr>
+<th>权限修饰词</th>
+<th>作用范围</th>
+<th>类内部</th>
+<th>同包</th>
+<th>不同包<br>子类</th>
+<th>其他</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public(共有)</td>
+<td>其他包可以通过全名调用(导入后可以不写包名)</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>其他包作为子类可以调用,不过只能修饰变量和函数<br>主要用于可以被子类继承使用(只有子类)</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>default(默认不写)</td>
+<td>同一个包才可以使用</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>private(私有)</td>
+<td>同一个类才可以使用</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>class只有两种修饰方式：默认/public</li>
+<li>通过访问修饰符封装类属性：<ol>
+<li>变量设为pravate私有的</li>
+<li>编写public公有的get/set方法进行判断赋值</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<h3 id="static静态修饰词"><a href="#static静态修饰词" class="headerlink" title="static静态修饰词"></a>static静态修饰词</h3><table>
+<thead>
+<tr>
+<th>static的使用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Static 变量</td>
+<td>推荐直接<code>类名.静态变量</code>进行访问,等同于<code>实例化.静态变量</code><br>因为静态变量是共享的，是指向同一块内存的</td>
+</tr>
+<tr>
+<td>Static 方法</td>
+<td>推荐直接<code>类名.静态方法</code>进行调用,等同于<code>实例化.静态方法</code><br><strong>静态方法中无法使用实例成员：</strong><br>&emsp;静态方法只能访问静态变量，静态方法只能调用静态方法<br>&emsp;普通方法可以访问所有变量，普通方法可以调用所有方法</td>
+</tr>
+<tr>
+<td>Static 类</td>
+<td>很少使用，暂时忽略</td>
+</tr>
+<tr>
+<td>Static 代码块</td>
+<td>静态代码块 static{} 匿名代码块 {}<br>在类载入内存时执行它,且只运行一次,一般很少用<br>当类被实例化,执行顺序:静态块(1次)&gt;匿名块&gt;构造函数</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>static修饰的变量和方法不可以用this或super<br>静态方法中无法使用实例成员的<strong>根本原因</strong>是无法this<br>静态方法重写不成功（不报错，但是调用还是父类方法）<br>在类载入内存时：1实例化对象2使用类中静态成员<br>final+static定义的常量声明时赋值被使用，<font color="red"><strong>在编译时调用常量位置会被常量值替换</strong></font>，所以运行时不会加载常量所在类，提高运行效率</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static final MY_COUNT = 1;</span><br><span class="line">System.out.println(MyClass.MY_COUNT);</span><br><span class="line">System.out.println(1);</span><br></pre></td></tr></table></figure>
+
+<p>以上代码编译后，第二行代码会被编译成第三行代码编译的样子。(运行时MyClass类不会被加在)<br>注意final static定义的常量，无法在构造中赋值，只能声明直接赋值 或 在静态代码块中赋值，这样的常量被调用时依然先加载类后使用，并非上述</p>
+<h3 id="final修饰词"><a href="#final修饰词" class="headerlink" title="final修饰词"></a>final修饰词</h3><table>
+<thead>
+<tr>
+<th>final的使用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>final 类</td>
+<td>该类不可以被继承,public final class (){}</td>
+</tr>
+<tr>
+<td>final 方法</td>
+<td>该方法不可以被重写,public final static void fuc(){}</td>
+</tr>
+<tr>
+<td>final 变量</td>
+<td>该变量不可以被重新赋值,final int a = 0;</td>
+</tr>
+<tr>
+<td>final 对象</td>
+<td>不能修改其引用(指针),final class obj1 = new class();obj1 = obj2不可以;但可以改变引用(指针)指向的对象的值</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>final 变量：声明时直接赋值 或 声明后在<strong>每个</strong>构造中赋值。final也可以修饰形参变量</p>
+</blockquote>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/09/Java%E5%9F%BA%E7%A1%80-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1(OOP)/">http://yoursite.com/2019/12/09/Java%E5%9F%BA%E7%A1%80-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1(OOP)/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/09/Java%E5%9F%BA%E7%A1%80-JavaSE(%E4%B8%8A)/" title="Java基础-JavaSE(上)"><span>< PreviousPost</span><br><span class="prevTitle">Java基础-JavaSE(上)</span></a><a class="nextSlogan" href="/2019/11/26/hello-world/" title="Hello World"><span>NextPost ></span><br><span class="nextTitle">Hello World</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java基础-面向对象-OOP"><span class="toc-number">1.</span> <span class="toc-text">Java基础-面向对象(OOP)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象和类"><span class="toc-number">1.1.</span> <span class="toc-text">对象和类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念："><span class="toc-number">1.1.1.</span> <span class="toc-text">基本概念：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义类："><span class="toc-number">1.1.2.</span> <span class="toc-text">定义类：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例化对象"><span class="toc-number">1.1.3.</span> <span class="toc-text">实例化对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承"><span class="toc-number">1.2.</span> <span class="toc-text">继承</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#继承的基础概念"><span class="toc-number">1.2.1.</span> <span class="toc-text">继承的基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何继承类"><span class="toc-number">1.2.2.</span> <span class="toc-text">如何继承类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承中的构造函数"><span class="toc-number">1.2.3.</span> <span class="toc-text">继承中的构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承中的方法重写"><span class="toc-number">1.2.4.</span> <span class="toc-text">继承中的方法重写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽象类、接口、内部类"><span class="toc-number">1.3.</span> <span class="toc-text">抽象类、接口、内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象类"><span class="toc-number">1.3.1.</span> <span class="toc-text">抽象类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口"><span class="toc-number">1.3.2.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用方式："><span class="toc-number">1.3.2.1.</span> <span class="toc-text">使用方式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特点："><span class="toc-number">1.3.2.2.</span> <span class="toc-text">特点：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部类-Inner-！Outer"><span class="toc-number">1.3.3.</span> <span class="toc-text">内部类(Inner)！Outer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#成员内部类"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">成员内部类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匿名内部类"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">匿名内部类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多态"><span class="toc-number">1.4.</span> <span class="toc-text">多态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多态的使用"><span class="toc-number">1.4.1.</span> <span class="toc-text">多态的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象转型"><span class="toc-number">1.4.2.</span> <span class="toc-text">对象转型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键字-访问控制-static-final"><span class="toc-number">1.5.</span> <span class="toc-text">关键字-访问控制/static/final</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#访问控制修饰词"><span class="toc-number">1.5.1.</span> <span class="toc-text">访问控制修饰词</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static静态修饰词"><span class="toc-number">1.5.2.</span> <span class="toc-text">static静态修饰词</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#final修饰词"><span class="toc-number">1.5.3.</span> <span class="toc-text">final修饰词</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
