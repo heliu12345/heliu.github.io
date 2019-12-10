@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>数据库 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">数据库</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-10</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h3 id="模糊查询like"><a href="#模糊查询like" class="headerlink" title="模糊查询like"></a>模糊查询like</h3><ul>
+<li>%:代表0或多个未知字符</li>
+<li>_ ：代表1个未知字符</li>
+<li>举例：   <pre><code>1.以x开头   x%  
+2.以x结尾   %x  
+3.包含x     %x%  
+4.第二个字符是x   _x%
+5.倒数第三个是x    %x_
+6.以x开头倒数第二个是y   x%y_</code></pre></li>
+</ul>
+<h3 id="排序-order-by"><a href="#排序-order-by" class="headerlink" title="排序 order by"></a>排序 order by</h3><ul>
+<li>格式： order by 字段名 asc/desc(升序/降序)  </li>
+<li>多字段排序 order by 字段名 asc/desc ,字段名 asc/desc</li>
+</ul>
+<h3 id="分页查询-limit"><a href="#分页查询-limit" class="headerlink" title="分页查询 limit"></a>分页查询 limit</h3><ul>
+<li>格式： limit 跳过的条数，请求的条数(每页的条数）<br><code>select ename ,sal from emp order by sal desc limit 0,3;</code></li>
+</ul>
+<h3 id="数值计算"><a href="#数值计算" class="headerlink" title="数值计算 + - * /  %"></a>数值计算 + - * /  %</h3><ul>
+<li>查询每一个员工的姓名，工资和年终奖（5个月的月工资）<br><code>select ename ,sal ,5*sal from emp;</code>    </li>
+</ul>
+<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>   <code>select ename as &#39;姓名&#39; from emp;</code><br>    <code>select ename &#39;姓名&#39; from emp;</code><br>    <code>select ename 姓名 from emp;</code></p>
+<h3 id="聚合查询"><a href="#聚合查询" class="headerlink" title="聚合查询"></a>聚合查询</h3><ul>
+<li>对查询的多条数据进行统计  比如：平均值 最大值 最小值  求和  计数<br>1.平均值avg（字段名)<br><code>select avg(sal) from emp where deptno=1;</code><br>2.最大值max(字段名)<br><code>select max(sal) from emp where deptno=2;</code><br>3.最小min(字段名)<br><code>select min(sal) from  emp where job=&#39;销售&#39;；</code><br>4.求和sum(字段名)<br><code>select sum(sal) from emp where deptno=3;</code>   </li>
+</ul>
+<p>5.计数 count( * )</p>
+<p>  <code>select count(*) from emp;</code> </p>
+<h3 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h3><ul>
+<li>以某一个字段相同值为一组 进行统计查询  group by</li>
+</ul>
+<p>1.查询每个部门的平均工资<br> <code>select deptno,avg(sal) from emp group by deptno;</code><br>2.查询每种工作的最低工资<br><code>select job , min(sal) from  emp group by job;</code></p>
+<h3 id="having"><a href="#having" class="headerlink" title="having"></a>having</h3><ul>
+<li>需要和group by结合使用</li>
+<li>where后面只写普通字段的条件</li>
+<li>having后面只写聚合函数的条件</li>
+</ul>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/">http://yoursite.com/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2019/12/09/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/" title="Web基础-jQuery语言"><span>NextPost ></span><br><span class="nextTitle">Web基础-jQuery语言</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#模糊查询like"><span class="toc-number">1.</span> <span class="toc-text">模糊查询like</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序-order-by"><span class="toc-number">2.</span> <span class="toc-text">排序 order by</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分页查询-limit"><span class="toc-number">3.</span> <span class="toc-text">分页查询 limit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数值计算"><span class="toc-number">4.</span> <span class="toc-text">数值计算 + - * /  %</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#别名"><span class="toc-number">5.</span> <span class="toc-text">别名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚合查询"><span class="toc-number">6.</span> <span class="toc-text">聚合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分组查询"><span class="toc-number">7.</span> <span class="toc-text">分组查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#having"><span class="toc-number">8.</span> <span class="toc-text">having</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
