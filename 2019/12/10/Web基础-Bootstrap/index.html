@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Web基础-Bootstrap · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Web基础-Bootstrap</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-10</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Bootstrap"> Bootstrap</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Web基础-Bootstrap"><a href="#Web基础-Bootstrap" class="headerlink" title="Web基础-Bootstrap"></a>Web基础-Bootstrap</h1><h2 id="Bootstrap概述"><a href="#Bootstrap概述" class="headerlink" title="Bootstrap概述"></a>Bootstrap概述</h2><h3 id="什么是Bootstrap"><a href="#什么是Bootstrap" class="headerlink" title="什么是Bootstrap"></a>什么是Bootstrap</h3><ul>
+<li>Bootstrap，来自 Twitter，是目前最受欢迎的前端框架</li>
+<li>Bootstrap 是基于 HTML、CSS、JavaScript 的，它简洁灵活，使得 Web 开发更加快捷，采用了动态css技术<code>sass less</code></li>
+<li>Bootstrap一旦引用，就修改了很多html默认样式，设置html元素的class属性就可以复用大量的CSS或jQuery代码</li>
+<li>Bootstrap特别适合于不同大小设备显示网页的情况，可以根据显示屏大小相应出不同的页面布局</li>
+<li>Bootstrap是基于jQuery开发的，所以支持大部分jQuery插件，有良好的扩展性</li>
+</ul>
+<h3 id="Bootstrap工作原理"><a href="#Bootstrap工作原理" class="headerlink" title="Bootstrap工作原理"></a>Bootstrap工作原理</h3><ul>
+<li>Bootstrap其实就是一些CSS和jQuery代码的集合，引用它就是应用了其中已经编写好的CSS和jQuery代码</li>
+<li>若设置class属性既使用了Bootstrap已经编写好的样式，所以减少了大量重复CSS代码的编写</li>
+<li>若设置class属性，使得jQuery可以通过选择器选中，从而使Bootstrap中已经编写好的jQuery代码在该元素上生效</li>
+</ul>
+<h2 id="使用Bootstrap"><a href="#使用Bootstrap" class="headerlink" title="使用Bootstrap"></a>使用Bootstrap</h2><h3 id="引入Bootstrap"><a href="#引入Bootstrap" class="headerlink" title="引入Bootstrap"></a>引入Bootstrap</h3><ul>
+<li>注意：Bootstrap是基于jQuery的，在引入Bootstrap的js之前，引入jQuery</li>
+<li><a href="https://v3.bootcss.com/" target="_blank" rel="noopener">下载Bootstrap</a>，可以直接下载预编译压缩版本，或者直接使用CDN加速库</li>
+<li>Bootstrap预编译文件(夹)结构：css(样式)、js、fonts(字体图标)</li>
+<li>引入Bootstrap，本地或者网络</li>
+<li>Bootstrap核心css文件：<code>/css/bootstrap.css</code></li>
+<li>Bootstrap核心js文件：<code>/js/bootstrap.js</code></li>
+<li>Bootstrap其他css文件：<code>/css/bootstrap-theme.css</code></li>
+<li>国内推荐Staticfile CDN的库，CDN导入：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 新 Bootstrap 核心 CSS 文件 --&gt;</span><br><span class="line">&lt;link href=&quot;https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</span><br><span class="line">&lt;!-- jQuery文件。务必在bootstrap.min.js 之前引入 --&gt;</span><br><span class="line">&lt;script src=&quot;https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;!-- 最新的 Bootstrap 核心 JavaScript 文件 --&gt;</span><br><span class="line">&lt;script src=&quot;https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Bootstrap扩展使用"><a href="#Bootstrap扩展使用" class="headerlink" title="Bootstrap扩展使用"></a>Bootstrap扩展使用</h3><h4 id="视口-视觉窗口标签：mate"><a href="#视口-视觉窗口标签：mate" class="headerlink" title="视口/视觉窗口标签：mate"></a>视口/视觉窗口标签：mate</h4><ul>
+<li>为了让 Bootstrap 开发的网站对移动设备友好，确保适当的绘制和触屏缩放，需要在网页的 head 之中添加 viewport meta 标签：</li>
+<li><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</code></li>
+<li>width 属性控制设备的宽度。假设您的网站将被带有不同屏幕分辨率的设备浏览，那么将它设置为 device-width 可以确保它能正确呈现在不同设备上</li>
+<li>initial-scale=1.0 确保网页加载时，以 1:1 的比例呈现，不会有任何的缩放</li>
+<li>在移动设备浏览器上，通过为 viewport meta 标签添加 user-scalable=no 可以禁用其缩放（zooming）功能</li>
+<li>通常情况下，maximum-scale=1.0 与 user-scalable=no 一起使用。这样禁用缩放功能后，用户只能滚动屏幕，就能让您的网站看上去更像原生应用的感觉</li>
+<li><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no&quot;&gt;</code></li>
+</ul>
+<h4 id="常用扩展的文字图标库-Font-Awesome"><a href="#常用扩展的文字图标库-Font-Awesome" class="headerlink" title="常用扩展的文字图标库 Font Awesome"></a>常用扩展的文字图标库 Font Awesome</h4><ul>
+<li><a href="http://www.fontawesome.com.cn/" target="_blank" rel="noopener">下载Font Awesome</a></li>
+<li>在本地解压引入，使用</li>
+<li>也可在Font Awesome主页的搜索去寻找对应图标</li>
+<li>国内推荐Staticfile CDN的库，CDN导入：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 新 Font Awesome 图标 CSS 文件 --&gt;</span><br><span class="line">&lt;link href=&quot;https://cdn.staticfile.org/font-awesome/5.11.2/css/fontawesome.min.css&quot; rel=&quot;stylesheet&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="关于对低版本IE支持：mate"><a href="#关于对低版本IE支持：mate" class="headerlink" title="关于对低版本IE支持：mate"></a>关于对低版本IE支持：mate</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 扩展对低版本IE支持,开启IE兼容模式--&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关于解决兼容问题的扩展脚本"><a href="#关于解决兼容问题的扩展脚本" class="headerlink" title="关于解决兼容问题的扩展脚本"></a>关于解决兼容问题的扩展脚本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 图片占位，解决低版本IE不支持圆角的问题--&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../bootstrap3/js/holder.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;!-- 引入T5和C3的js函数库，支持旧版浏览器--&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../bootstrap3/js/html5shiv.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../bootstrap3/js/css3-mediaqueries.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../bootstrap3/js/respond.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bootstrap的应用"><a href="#Bootstrap的应用" class="headerlink" title="Bootstrap的应用"></a>Bootstrap的应用</h2><h3 id="Bootstrap主页"><a href="#Bootstrap主页" class="headerlink" title="Bootstrap主页"></a>Bootstrap主页</h3><h4 id="Bootstrap3在线文档"><a href="#Bootstrap3在线文档" class="headerlink" title="Bootstrap3在线文档"></a><strong><a href="https://v3.bootcss.com/" target="_blank" rel="noopener">Bootstrap3在线文档</a></strong></h4><h4 id="Bootstrap-CSS"><a href="#Bootstrap-CSS" class="headerlink" title="Bootstrap CSS"></a>Bootstrap CSS</h4><ul>
+<li>Bootstrap 自带以下特性：全局的 CSS 设置、定义基本的 HTML 元素样式、可扩展的 class，以及一个先进的网格系统</li>
+</ul>
+<h4 id="Bootstrap-布局组件"><a href="#Bootstrap-布局组件" class="headerlink" title="Bootstrap 布局组件"></a>Bootstrap 布局组件</h4><ul>
+<li>Bootstrap 包含了十几个可重用的组件，用于创建图像、下拉菜单、导航、警告框、弹出框等等</li>
+</ul>
+<h4 id="Bootstrap-插件-JavaScript-插件"><a href="#Bootstrap-插件-JavaScript-插件" class="headerlink" title="Bootstrap 插件(JavaScript 插件)"></a>Bootstrap 插件(JavaScript 插件)</h4><ul>
+<li>Bootstrap 包含了十几个自定义的 jQuery 插件。您可以直接包含所有的插件，也可以逐个包含这些插件</li>
+</ul>
+<h4 id="Bootstrap-定制"><a href="#Bootstrap-定制" class="headerlink" title="Bootstrap 定制"></a>Bootstrap 定制</h4><ul>
+<li>您可以定制 Bootstrap 的组件、LESS 变量和 jQuery 插件来得到您自己的版本</li>
+</ul>
+<h3 id="栅格系统"><a href="#栅格系统" class="headerlink" title="栅格系统"></a>栅格系统</h3><ul>
+<li>Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。它包含了易于使用的预定义类，还有强大的mixin 用于生成更具语义的布局</li>
+<li>多个DIV定义的栅格系统中，最外层<code>.cntainer</code>内嵌套多个<code>.row</code>，每行内添加列，若3列，3列的属性都为<code>.col-md-4</code></li>
+<li>上述最外层可选：<code>.cntainer</code>（固定宽度）或<code>.cntainer-fluid</code>（100% 宽度），列默认分为12列</li>
+<li>定义盒子模型：<ul>
+<li>通过为“列（column）”设置 <code>padding</code> 属性，从而创建列与列之间的间隔（gutter）</li>
+<li>通过为 <code>.row</code> 元素设置负值 <code>margin</code> 从而抵消掉为 <code>.container</code> 元素设置的 <code>padding</code>，也就间接为“行（row）”所包含的“列（column）”抵消掉了<code>padding</code></li>
+</ul>
+</li>
+<li>当超过了设定的栅格列数，则超出部分会作为整体另起一行</li>
+<li>栅格可以嵌套栅格，如：行(row) 内的元素，可以嵌套另一个 行(row)</li>
+</ul>
+<h3 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h3><ul>
+<li>会根据媒体实际分辨率定义不同的样式，格式如下，例如下下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@media (max-width: @screen-xs-max) &#123; ... &#125;</span><br><span class="line">@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) &#123; ... &#125;</span><br><span class="line">@media (min-width: @screen-md-min) and (max-width: @screen-md-max) &#123; ... &#125;</span><br><span class="line">@media (min-width: @screen-lg-min) &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@media (max-width: 768px) &#123; CSS代码 &#125;</span><br><span class="line">@media (min-width: 768px) and (max-width: 992px) &#123; CSS代码 &#125;</span><br><span class="line">@media (min-width: 992px) and (max-width: 1200px) &#123; CSS代码 &#125;</span><br><span class="line">@media (min-width: 1200px) &#123; CSS代码 &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="栅格参数"><a href="#栅格参数" class="headerlink" title="栅格参数"></a>栅格参数</h3><ul>
+<li>通过下表可以详细查看 Bootstrap 的栅格系统是如何在多种屏幕设备上工作的</li>
+<li>class中同时设定<code>.col-xs-  .col-sm-  .col-md-  .col-lg-</code>可以根据不同设备大小改变列方式</li>
+</ul>
+<p>.|超小屏幕 手机<br>(&lt;768px)|小屏幕 平板<br>(≥768px)|中等屏幕 桌面显示器<br>(≥992px)|大屏幕 大桌面显示器<br>(≥1200px)<br>-|-|-|-<br>栅格系统行为|总是水平排列|开始是堆叠在一起的，当大于这些阈值时将变为水平排列C|同|同<br>.container 最大宽度|None （自动）|750px|970px|1170px<br>类前缀|.col-xs-|.col-sm-|.col-md-|.col-lg-<br>列（column）数|12|同|同|同<br>最大列（column）宽|自动|<del>62px|</del>81px|~97px<br>槽（gutter）宽|30px （每列左右均有 15px）|同|同|同<br>可嵌套|是|是|是|是<br>偏移（Offsets）|是|是|是|是<br>列排序|是|是|是|是</p>
+<h3 id="响应式列重置"><a href="#响应式列重置" class="headerlink" title="响应式列重置"></a>响应式列重置</h3><ul>
+<li>在某些阈值时，某些列可能会出现比别的列高的情况。为了克服这一问题，建议联合使用 <code>.clearfix</code> 和 响应式工具类</li>
+</ul>
+<h3 id="列偏移"><a href="#列偏移" class="headerlink" title="列偏移"></a>列偏移</h3><ul>
+<li>使用 <code>.col-md-offset-*</code> 类可以将列向右侧偏移。这些类实际是通过使用 * 选择器为当前元素增加了左侧的边距（margin）</li>
+<li>例如：<code>.col-md-offset-4</code> 类将 <code>.col-md-4</code> 元素向右侧偏移了4个列（column）的宽度</li>
+</ul>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/10/Web%E5%9F%BA%E7%A1%80-Bootstrap/">http://yoursite.com/2019/12/10/Web%E5%9F%BA%E7%A1%80-Bootstrap/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/10/Web%E7%BB%83%E4%B9%A0-%E5%90%84%E7%A7%8D%E7%BB%84%E4%BB%B6/" title="Web练习-各种组件"><span>< PreviousPost</span><br><span class="prevTitle">Web练习-各种组件</span></a><a class="nextSlogan" href="/2019/12/09/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/" title="Web基础-jQuery语言"><span>NextPost ></span><br><span class="nextTitle">Web基础-jQuery语言</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web基础-Bootstrap"><span class="toc-number">1.</span> <span class="toc-text">Web基础-Bootstrap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bootstrap概述"><span class="toc-number">1.1.</span> <span class="toc-text">Bootstrap概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Bootstrap"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是Bootstrap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bootstrap工作原理"><span class="toc-number">1.1.2.</span> <span class="toc-text">Bootstrap工作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Bootstrap"><span class="toc-number">1.2.</span> <span class="toc-text">使用Bootstrap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引入Bootstrap"><span class="toc-number">1.2.1.</span> <span class="toc-text">引入Bootstrap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bootstrap扩展使用"><span class="toc-number">1.2.2.</span> <span class="toc-text">Bootstrap扩展使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#视口-视觉窗口标签：mate"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">视口/视觉窗口标签：mate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常用扩展的文字图标库-Font-Awesome"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">常用扩展的文字图标库 Font Awesome</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于对低版本IE支持：mate"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">关于对低版本IE支持：mate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于解决兼容问题的扩展脚本"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">关于解决兼容问题的扩展脚本</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bootstrap的应用"><span class="toc-number">1.3.</span> <span class="toc-text">Bootstrap的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bootstrap主页"><span class="toc-number">1.3.1.</span> <span class="toc-text">Bootstrap主页</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bootstrap3在线文档"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Bootstrap3在线文档</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bootstrap-CSS"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Bootstrap CSS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bootstrap-布局组件"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">Bootstrap 布局组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bootstrap-插件-JavaScript-插件"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">Bootstrap 插件(JavaScript 插件)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bootstrap-定制"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">Bootstrap 定制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栅格系统"><span class="toc-number">1.3.2.</span> <span class="toc-text">栅格系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#媒体查询"><span class="toc-number">1.3.3.</span> <span class="toc-text">媒体查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栅格参数"><span class="toc-number">1.3.4.</span> <span class="toc-text">栅格参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应式列重置"><span class="toc-number">1.3.5.</span> <span class="toc-text">响应式列重置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列偏移"><span class="toc-number">1.3.6.</span> <span class="toc-text">列偏移</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
