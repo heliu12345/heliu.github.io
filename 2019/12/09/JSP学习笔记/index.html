@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>JSP学习笔记 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">JSP学习笔记</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Java"> Java</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Web"> Web</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="JSP学习笔记"><a href="#JSP学习笔记" class="headerlink" title="JSP学习笔记"></a>JSP学习笔记</h1><h2 id="JSP概述"><a href="#JSP概述" class="headerlink" title="JSP概述"></a>JSP概述</h2><h3 id="什么是JSP"><a href="#什么是JSP" class="headerlink" title="什么是JSP"></a>什么是JSP</h3><ul>
+<li>JSP是由SUN公司提供的一门动态Web资源开发技术</li>
+<li>JSP看起来像一个HTML，但和html不同的是，JSP中可以书写Java代码，可以通过Java代码获取动态的数据</li>
+<li>JSP其实本质上就是一个Servlet程序</li>
+</ul>
+<h3 id="JSP包含部分"><a href="#JSP包含部分" class="headerlink" title="JSP包含部分"></a>JSP包含部分</h3><p>&emsp;<strong>静态内容：</strong>HTML标记<br>&emsp;<strong>动态内容(JSP元素)：</strong>Jsp标记、脚本元素、注释等</p>
+<h3 id="JSP执行过程"><a href="#JSP执行过程" class="headerlink" title="JSP执行过程"></a>JSP执行过程</h3><ul>
+<li>JSP在第一次被访问时，会翻译成一个Servlet程序，在访问JSP后看到的网页，其实就是翻译后的Servlet程序输出的网页</li>
+<li>访问index.jsp –翻译–&gt; index_jsp.java(Servlet) –编译–&gt; index_jsp.class(运行) –结果–&gt; 输出一个网页到浏览器</li>
+<li>由于访问JSP需要在服务器端翻译、编译、运行，最终响应给浏览器一个html网页，而访问html会直接将html发送给浏览器解析，因此html运行效率比jsp高</li>
+</ul>
+<h2 id="JSP语法"><a href="#JSP语法" class="headerlink" title="JSP语法"></a>JSP语法</h2><h3 id="模板元素"><a href="#模板元素" class="headerlink" title="模板元素"></a>模板元素</h3><p>&emsp;除了JSP特有内容以外的其他内容都属于模板元素。模板元素在翻译后的servlet中，是直接被out.write()原样发送给浏览器，由浏览器负责解析并显示</p>
+<h3 id="JSP表达式"><a href="#JSP表达式" class="headerlink" title="JSP表达式"></a>JSP表达式</h3><ul>
+<li>JSP表达式书写格式：<code>&lt;%= 常量/变量/表达式 %&gt;</code></li>
+<li>作用: 在翻译后的Servlet中，计算表达式的值，将计算的结果输出到浏览器，由浏览器负责解析并显示</li>
+</ul>
+<h3 id="JSP脚本片段"><a href="#JSP脚本片段" class="headerlink" title="JSP脚本片段"></a>JSP脚本片段</h3><ul>
+<li>JSP脚本片段书写格式：<code>&lt;% 若干Java语句 %&gt;</code></li>
+<li>作用: 在翻译后的Servlet中，将脚本片段中的java语句复制粘贴到对应的位置执行</li>
+<li>有两种书写形式：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 循环输出<span class="number">5</span>行<span class="string">"hello jsp..."</span> --&gt;</span><br><span class="line">&lt;% </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">        out.write(<span class="string">"hello jsp...&lt;br/&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br><span class="line"><span class="comment">//上方是JSP中的代码，下方为翻译到Servlet中的代码</span></span><br><span class="line">out.write(<span class="string">"\t&lt;!-- 循环输出5行\"hello jsp...\" --&gt;\r\n"</span>);</span><br><span class="line">out.write(<span class="string">"\t"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">	out.write(<span class="string">"hello jsp...&lt;br/&gt;"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123; %&gt;</span><br><span class="line">	hello jsp~~~&lt;br/&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br><span class="line"><span class="comment">//上方是JSP中的代码，下方为翻译到Servlet中的代码</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123; </span><br><span class="line">  out.write(<span class="string">"\r\n"</span>);</span><br><span class="line">  out.write(<span class="string">"\t\thello jsp~~~&lt;br/&gt;\r\n"</span>);</span><br><span class="line">  out.write(<span class="string">"\t"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>写在某一个脚本片段中的Java代码可以是不完整的，但是最终的所有脚本片段中的内容加在一起，必须是完整符合Java语法的</p>
+<h3 id="JSP注释"><a href="#JSP注释" class="headerlink" title="JSP注释"></a>JSP注释</h3><ul>
+<li>JSP注释书写格式：<code>&lt;%-- 注释内容 --%&gt;</code></li>
+<li>作用: 普通注释作用</li>
+<li>关于JSP注释，在翻译时，直接将JSP注释丢弃，不参与翻译过程</li>
+<li>在JSP中可以书写JSP注释、java注释、html注释，注意他们在翻译时的区别(是否返回到浏览器)</li>
+</ul>
+<h3 id="JSP指令"><a href="#JSP指令" class="headerlink" title="JSP指令"></a>JSP指令</h3><ul>
+<li>JSP指令书写格式：<code>&lt;%@ 指令名称 若干属性声明... %&gt;</code></li>
+<li>作用: 用于指挥JSP解析引擎如何将一个JSP翻译成一个Servlet程序</li>
+<li>page指令：用于声明JSP文件的基本属性信息，如：jsp使用的开发语言,jsp使用的编码,jsp中需要引入哪些包等</li>
+<li>include指令：可以实现页面包含的效果，即页面的合并效果</li>
+<li>taglib指令：taglib指令是用于引入JSTL标签库或者其他标签库时用的，在引入之前还需要导入JSTL相关的jar包，参考本文 JSTL标签库</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span>%&gt;  <span class="comment">//用于指定jsp开发的语言</span></span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"java.util.Date"</span>%&gt;  <span class="comment">//用于导入包</span></span><br><span class="line">&lt;%@ page pageEncoding=<span class="string">"UTF-8"</span>%&gt;  <span class="comment">//指定jsp指定的字符集</span></span><br><span class="line"><span class="comment">//也可以合并一起书写</span></span><br><span class="line">&lt;%@ page language=<span class="string">"java"</span> pageEncoding=<span class="string">"UTF-8"</span> <span class="keyword">import</span>=<span class="string">"java.util.Date"</span>%&gt;</span><br><span class="line"><span class="comment">//将头部jsp引入到标签位置</span></span><br><span class="line">&lt;%<span class="meta">@include</span> file=<span class="string">"/_header.jsp"</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSP标签技术"><a href="#JSP标签技术" class="headerlink" title="JSP标签技术"></a>JSP标签技术</h2><p>&emsp;<strong>由于JSP页面中html代码和java代码非常混乱，JSP 2.0版本中，sun提出了JSP标签技术，推荐使用标签来代替JSP页面中java代码，并且推荐，JSP2.0以后不要在JSP页面中出现任何一行java代码</strong></p>
+<h3 id="EL表达式"><a href="#EL表达式" class="headerlink" title="EL表达式"></a>EL表达式</h3><ul>
+<li>EL表达式在JSP中可以非常方便的获取数据，可以代替JSP页面中的JSP表达式 <code>&lt;%=  %&gt;</code></li>
+<li>语法结构: <code>${ 表达式 }</code></li>
+<li>主要作用: 主要用于获取域中的数据<ul>
+<li>EL只能获取域中的数据，不能往域中添加数据或修改域中已有的数据</li>
+<li>EL只能获取域中的数据，不能遍历数据（比如数组或集合）</li>
+</ul>
+</li>
+<li>EL寻找变量，EL根据域的大小，按照从小到大去寻找：pageContext &lt; request &lt; session &lt; application</li>
+<li>EL的使用方式：<ul>
+<li>获取常量、表达式、变量的值（变量得先存入域中），例如：<code>${ Key }</code> 前提在域中设定了</li>
+<li>获取作用域中数组或集合中的元素，例如：${ List[0] } <br/>`</li>
+<li>获取作用域中map集合中的元素，例如：<code>${ Map.name }</code></li>
+<li>获取作用域中JavaBean对象的属性值，例如：<code>${ user.username }</code> 底层调用了user对象的getUsername()方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="JSTL标签库"><a href="#JSTL标签库" class="headerlink" title="JSTL标签库"></a>JSTL标签库</h3><ul>
+<li>JSTL标签库是为JavaWeb开发人员提供的一套标准通用的标签库</li>
+<li>JSTL标签库和EL配合使用可以取代JSP中大部分的Java代码</li>
+<li>使用前准备：<ol>
+<li>导入JSTL的开发包</li>
+<li>在使用JSTL标签库的JSP中引入JSTL</li>
+</ol>
+</li>
+</ul>
+<h3 id="lt-c-set-gt-lt-c-set-gt"><a href="#lt-c-set-gt-lt-c-set-gt" class="headerlink" title="&lt;c:set&gt;&lt;/c:set&gt;"></a><code>&lt;c:set&gt;&lt;/c:set&gt;</code></h3><p><strong>往四大作用域中添加一个域属性：</strong><br>&emsp;例如：<code>&lt;c:set var=&quot;name&quot; value=&quot;Tom&quot; scope=&quot;page&quot;/&gt;</code>，就是向page作用域添加一个name属性，其值为Tom</p>
+<p><strong>修改四大作用域中已有的属性：</strong><br>&emsp;如果重复添加相同的属性，值会发生覆盖，相当于修改，书写形式与上相同</p>
+<p><strong>修改作用域中Map集合中的属性：</strong><br>&emsp;例如：<code>&lt;c:set target=&quot;${map}&quot; property=&quot;name&quot; value=&quot;Tom&quot;/&gt;</code>，将作用域中Map的map对象的name属性该值为Tom</p>
+<p><strong>属性解释：</strong>  </p>
+<ul>
+<li>var – 指定存入作用域中的属性名称</li>
+<li>value – 指定存入作用域中属性的值</li>
+<li>scope – 指定将属性存入哪一个作用域中，取值：<ul>
+<li>page表示pageContext域</li>
+<li>request表示request域</li>
+<li>session表示session域</li>
+<li>application表示ServletContext域</li>
+</ul>
+</li>
+</ul>
+<h3 id="lt-c-if-gt-lt-c-if-gt"><a href="#lt-c-if-gt-lt-c-if-gt" class="headerlink" title="&lt;c:if&gt;&lt;/c:if&gt;"></a><code>&lt;c:if&gt;&lt;/c:if&gt;</code></h3><p><strong>构造if…else…语句：</strong>注意JSTL中没有提供else对应的标签，只有if，其值test属性用于指定判断的条件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:set <span class="keyword">var</span>=<span class="string">"num"</span>  value=<span class="string">"5"</span>/&gt;</span><br><span class="line">&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123; num &gt; 0 &amp;&amp; num &lt; 10 &#125;"</span>&gt;</span><br><span class="line">	已进入判断条件中</span><br><span class="line">&lt;/c:if&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-c-forEach-gt-lt-c-forEach-gt"><a href="#lt-c-forEach-gt-lt-c-forEach-gt" class="headerlink" title="&lt;c:forEach&gt;&lt;/c:forEach&gt;"></a><code>&lt;c:forEach&gt;&lt;/c:forEach&gt;</code></h3><p><strong>遍历域中数组或集合中的元素：</strong><br>&emsp;遍历域中数组或集合中的元素</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:forEach items=<span class="string">"$&#123;nameList&#125;"</span> <span class="keyword">var</span>=<span class="string">"name"</span>&gt;</span><br><span class="line">	$&#123; name &#125; &lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>遍历域中数组或集合中的元素：</strong><br>&emsp;遍历域中map集合中的元素</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:forEach items=<span class="string">"$&#123; map &#125;"</span> <span class="keyword">var</span>=<span class="string">"entry"</span>&gt;</span><br><span class="line">	$&#123; entry.key &#125; : $&#123; entry.value &#125; &lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>遍历域中数组或集合中的元素：</strong><br>&emsp;遍历0~100之间的整数，将是3的倍数的数值输出到浏览器中</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:forEach begin=<span class="string">"0"</span> end=<span class="string">"100"</span> <span class="keyword">var</span>=<span class="string">"i"</span> &gt; 　</span><br><span class="line">    $&#123; i%<span class="number">3</span>==<span class="number">0</span>? i : <span class="string">""</span> &#125; &lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>属性解释：</strong>  </p>
+<ul>
+<li>items: 指定需要遍历的集合或数组</li>
+<li>var: 指定用于接收遍历过程中的元素</li>
+<li>begin: 指定循环从哪儿开始</li>
+<li>end: 指定循环到哪儿结束</li>
+<li>step: 指定循环时的步长, 默认值是1</li>
+<li>varStatus: 用于表示循环遍历状态信息的对象, 常用属性有:<ul>
+<li>first属性: 表示当前遍历是否是第一次, 若是, 则返回true</li>
+<li>last属性: 表示当前遍历是否是最后一次, 若是, 则返回true</li>
+<li>count属性: 记录当前遍历是第几次</li>
+</ul>
+</li>
+</ul>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/09/JSP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">http://yoursite.com/2019/12/09/JSP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/09/Web%E5%9F%BA%E7%A1%80-jQuery%E8%AF%AD%E8%A8%80/" title="Web基础-jQuery语言"><span>< PreviousPost</span><br><span class="prevTitle">Web基础-jQuery语言</span></a><a class="nextSlogan" href="/2019/12/09/Web%E5%9F%BA%E7%A1%80-JavaScript%E8%AF%AD%E8%A8%80/" title="Web基础-JavaScript语言"><span>NextPost ></span><br><span class="nextTitle">Web基础-JavaScript语言</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JSP学习笔记"><span class="toc-number">1.</span> <span class="toc-text">JSP学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSP概述"><span class="toc-number">1.1.</span> <span class="toc-text">JSP概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是JSP"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是JSP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSP包含部分"><span class="toc-number">1.1.2.</span> <span class="toc-text">JSP包含部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSP执行过程"><span class="toc-number">1.1.3.</span> <span class="toc-text">JSP执行过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSP语法"><span class="toc-number">1.2.</span> <span class="toc-text">JSP语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模板元素"><span class="toc-number">1.2.1.</span> <span class="toc-text">模板元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSP表达式"><span class="toc-number">1.2.2.</span> <span class="toc-text">JSP表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSP脚本片段"><span class="toc-number">1.2.3.</span> <span class="toc-text">JSP脚本片段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSP注释"><span class="toc-number">1.2.4.</span> <span class="toc-text">JSP注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSP指令"><span class="toc-number">1.2.5.</span> <span class="toc-text">JSP指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSP标签技术"><span class="toc-number">1.3.</span> <span class="toc-text">JSP标签技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EL表达式"><span class="toc-number">1.3.1.</span> <span class="toc-text">EL表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSTL标签库"><span class="toc-number">1.3.2.</span> <span class="toc-text">JSTL标签库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-c-set-gt-lt-c-set-gt"><span class="toc-number">1.3.3.</span> <span class="toc-text">&lt;c:set&gt;&lt;/c:set&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-c-if-gt-lt-c-if-gt"><span class="toc-number">1.3.4.</span> <span class="toc-text">&lt;c:if&gt;&lt;/c:if&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-c-forEach-gt-lt-c-forEach-gt"><span class="toc-number">1.3.5.</span> <span class="toc-text">&lt;c:forEach&gt;&lt;/c:forEach&gt;</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

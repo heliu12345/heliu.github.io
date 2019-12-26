@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Spring-MVC · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Spring-MVC</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-26</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Java"> Java</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Web"> Web</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Spring"> Spring</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="SpringMVC"> SpringMVC</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Spring-Web-MVC"><a href="#Spring-Web-MVC" class="headerlink" title="Spring Web MVC"></a>Spring Web MVC</h1><h2 id="Spring-Web-MVC简介"><a href="#Spring-Web-MVC简介" class="headerlink" title="Spring Web MVC简介"></a>Spring Web MVC简介</h2><h3 id="MVC模式简介"><a href="#MVC模式简介" class="headerlink" title="MVC模式简介"></a>MVC模式简介</h3><p>MVC是经典的GUI用户界面设计模式，几乎所有的GUI都采用了MVC模式。Web界面开发时也普遍采用了MVC模式</p>
+<p><strong>M-Model 模型</strong><br>&emsp;<strong>模型(Model)</strong> 的职责是负责业务逻辑。包含两层：业务数据 和 业务处理逻辑。比如实体类、DAO、Service都属于模型层<br><strong>V-View 视图</strong><br>&emsp;<strong>视图(View)</strong> 的职责是负责显示界面 和 用户交互(手气用户信息)。属于视图的组件是不包含业务逻辑和控制逻辑的JSP<br><strong>C-Controller 控制器</strong><br>&emsp;<strong>控制器(Controller)</strong> 是模型层M 和 视图层V 之间的桥梁，用于控制流程。比如：在Servlet项目中的单一控制器 ActionServlet</p>
+<h3 id="什么是Spring-Web-MVC"><a href="#什么是Spring-Web-MVC" class="headerlink" title="什么是Spring Web MVC"></a>什么是Spring Web MVC</h3><p>&emsp;<strong>Spring Web MVC</strong> 是Spring框架一个非常重要的功能模块。实现了MVC结构，便于简单、快速开发MVC结构的Web程序。Spring Web MVC 提供的API封装了Web开发中常用的功能，简化了Web过程</p>
+<h3 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h3><p>&emsp;<strong>Spring Web MVC的核心组件：</strong>Spring Web MVC提供了M、V和C相关的主要实现组件，具体如下：</p>
+<ul>
+<li>DispatcherServlet：控制器，请求入口</li>
+<li>HandlerMapping：控制器，请求派发</li>
+<li>Controller：控制器，请求处理流程</li>
+<li>ModelAndView：模型，封装业务处理结果和视图</li>
+<li>ViewReolver：视图，视图显示处理器</li>
+</ul>
+<h3 id="MVC处理流程"><a href="#MVC处理流程" class="headerlink" title="MVC处理流程"></a>MVC处理流程</h3><ol>
+<li>浏览器向Spring发出请求，请求交给前端控制器 <code>DispatcherServlet</code> 处理(Web.xml配置指向)</li>
+<li>控制器通过 <code>HandlerMapping</code> 找到相应的 <code>Controller</code> 组件处理请求</li>
+<li>执行 <code>Controller</code> 组件约定方法处理请求，在约定方法调用模组组件完成业务处理。约定方法可以返回一个 <code>ModelAndView</code> 对象，封装了处理结果数据和视图名称信息</li>
+<li>控制器接收 <code>ModelAndView</code> 之后，调用 <code>ViewResolver</code> 组件，定位 View(JSP) 并传递数据信息，生成响应界面结果</li>
+</ol>
+<h2 id="MVC配置及组件"><a href="#MVC配置及组件" class="headerlink" title="MVC配置及组件"></a>MVC配置及组件</h2><h3 id="搭建Spring-Web-MVC环境"><a href="#搭建Spring-Web-MVC环境" class="headerlink" title="搭建Spring Web MVC环境"></a>搭建Spring Web MVC环境</h3><ol>
+<li>导入Jar包：Maven坐标 <code>spring-webmvc</code>；【IDEA】可以框架添加</li>
+<li>在 <code>src</code> 下添加Spring的XML配置文件</li>
+<li>在 <code>web.xml</code> 文件中添加配置，将对应请求转交给前端控制器<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 将*.do的请求都转到MyName --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>MyName<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- MyName指向前端控制器 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>MyName<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 配置Spring规则启动参数：contextConfigLocation=classpath:XX.xml --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:beans.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 设置当Web应用启动时，该Servlet同时启动 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>在指定的Spring的XML配置文件中指定bean（组件搜索 / bean标签配置），如使用注解映射增加标签<code>&lt;mvn:annotation-driven /&gt;</code> （详情看下文注解应用）</li>
+</ol>
+<blockquote>
+<p>一定注意，IDEA的自动填充看清楚，其命名空间不同，默认为<code>xmlns:mvc=&quot;http://www.springframework.org/schema/cache&quot;</code>，但应选择 <code>xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</code> MVC结尾的这个命名空间</p>
+</blockquote>
+<h3 id="Controller组件"><a href="#Controller组件" class="headerlink" title="Controller组件"></a>Controller组件</h3><p>&emsp;<strong>Controller组件：</strong>负责执行具体的业务处理，可调用DAO等组件，编写时需要实现 <code>Controller</code> 接口及约定方法（handleRequest）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> <span class="keyword">implements</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">handleRequest</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello servlet"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ModelAndView(<span class="string">"你好"</span>);<span class="comment">//返回ModelAndView，下节说明</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ModelAndView组件"><a href="#ModelAndView组件" class="headerlink" title="ModelAndView组件"></a>ModelAndView组件</h3><p>&emsp;<strong>ModelAndView组件：</strong>Controller组件约定的 handleRequest 方法执行后返回一个 ModelAndView 对象，该对象可封装模型数据和视图名响应信息</p>
+<p><strong>构造器：</strong></p>
+<blockquote>
+<p><code>ModelAndView(String viewName)</code><br><code>ModelAndView(String viewName, Map model)</code><br>viewName是JSP页面的名字；model的数据储存到request的attribute中</p>
+</blockquote>
+<h3 id="HandlerMapping组件"><a href="#HandlerMapping组件" class="headerlink" title="HandlerMapping组件"></a>HandlerMapping组件</h3><p>&emsp;<strong>HandlerMapping组件：</strong>通过HandlerMapping组件，DispatchServlet控制器可以将客户HTTP请求映射到 <code>Controller</code> 组件上，该顶级接口下的三种实现类：</p>
+<p><strong><code>SimpleUrlHandlerMapping</code></strong>：维护一个 <code>HTTP请求</code> 和 <code>Controller</code> 映射关系列表(map)，根据列表对应关系调用 Controller ，<strong>其定义如下（SpringXML文件中）</strong></p>
+<p><strong><code>RequestMappingHandlerMapping</code></strong></p>
+<p><strong><code>RequestMappingHandlerAdapter</code></strong>：在 Controller 类和方法上使用 <code>@RequestMapping</code> 注解指定对应的客户HTTP请求（后续注解会详解）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- SimpleUrlHandlerMapping配置方式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mappings"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/login.do"</span>&gt;</span>loginController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/reg.do"</span>&gt;</span>regController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- SimpleUrlHandlerMapping中的&lt;prop&gt;内容与以下BeanId匹配 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"loginController"</span> <span class="attr">class</span>=<span class="string">"org.example.web.LoginController"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"regController"</span> <span class="attr">class</span>=<span class="string">"org.example.web.RegController"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="ViewResolver组件"><a href="#ViewResolver组件" class="headerlink" title="ViewResolver组件"></a>ViewResolver组件</h3><p>&emsp;<strong>ViewResolver组件：</strong> 所有 Controller 组件都返回一个 ModelAndView 实例，封装了视图名。Spring中的视图以名字为标识，视图解析器 <code>ViewResolver</code> 通过名字来解析视图，该顶级接口下的四种实现类：</p>
+<p><strong><code>UrlBasedViewResolver</code></strong>：将视图名直接解析成对应的URL，不需要显示的映射定义。如果视图名与视图资源名字是一致的，就可使用该解析器，而无需进行映射</p>
+<p><strong><code>InternalResourceViewResolver</code></strong>：UrlBasedViewResolver 的子类，它支持 InternalResourceViewResolver (对Servlet和JSP的包装) ，以及子类 JstlView 和 TilesView 响应类型，<strong>其定义如下（SpringXML文件中）</strong></p>
+<p><strong><code>XmlViewResolver</code></strong>：支持用 xml 文件定义具体的响应视图文件</p>
+<p><strong><code>VelocityViewResolver</code> / <code>FreeMarkerViewResolver</code></strong>：UrlBasedViewResolver 的子类，它能支持 VelocityView 和 FreeMarkerView （VelocityViewResolver 及其 VelocityView 已经淘汰）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- InternalResourceViewResolver配置方式 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 定义好后，如视图名为 hello 通过该配置后映射到路径为：/WEB-INF/jsp/hello.jsp --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jspViewResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="基于注解配置的MVC应用"><a href="#基于注解配置的MVC应用" class="headerlink" title="基于注解配置的MVC应用"></a>基于注解配置的MVC应用</h2><h3 id="Controller注解"><a href="#Controller注解" class="headerlink" title="Controller注解"></a>Controller注解</h3><p><strong>推荐使用</strong> <code>@Controller</code> 注解声明 Controller 组件，这样可以使得 Controller 定义更加灵活，可以不用实现 Controller 接口，请求处理的方法也可以灵活定义</p>
+<p>为了使 <code>@Controller</code> 注解生效，需要在 Spring 的 XML 配置文件中开启组件扫描定义，并指定 Controller 组件所在包，代码如： <code>&lt;context:component-scan base-package=&quot;cn.tedu.web&quot; /&gt;</code></p>
+<h3 id="RequestMapping注解"><a href="#RequestMapping注解" class="headerlink" title="RequestMapping注解"></a>RequestMapping注解</h3><p>&emsp;<strong><code>@RequestMapping</code></strong> 可以用在 类定义 和 方法定义 上，该标注表明这个类或方法与哪一个客户请求对应</p>
+<p><strong>开启@RequestMapping注解</strong>，需要在 Spring 的 XML 配置文件中定义 <code>RequestMappingHandlerMapping</code>（类前注解需要） 和 <code>RequestMappingHandlerAdapter</code>（方法前注解需要）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Spring 3.1版本之前需要定义 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Spring 3.2版本开始可以使用下面这句语简化配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvn:annotation-driven</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">一定注意，IDEA的自动填充看清楚，其命名空间不同，</span></span><br><span class="line"><span class="comment">默认为`xmlns:mvc="http://www.springframework.org/schema/cache"`，</span></span><br><span class="line"><span class="comment">但应选择 `xmlns:mvc="http://www.springframework.org/schema/mvc"` </span></span><br><span class="line"><span class="comment">MVC结尾的这个命名空间</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="MVC请求应用"><a href="#MVC请求应用" class="headerlink" title="MVC请求应用"></a>MVC请求应用</h2><h3 id="接收请求参数"><a href="#接收请求参数" class="headerlink" title="接收请求参数"></a>接收请求参数</h3><p><strong>Spring MVC Web</strong>请求提交数据 到 控制器 有下面几种方法：<br>》》使用 <code>HttpServletRequest</code> 获取<br>》》使用 <code>@RequestParam</code> 注解<br>》》使用自动机制封装成 <code>Bean</code> 对象  </p>
+<p>一、使用 <code>HttpServletRequest</code> 获取：优点直接，缺点需要自己处理数据类型转换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/26/Spring-MVC/">http://yoursite.com/2019/12/26/Spring-MVC/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/26/Java%E8%87%AA%E5%B8%A6%E6%B3%A8%E8%A7%A3%E5%BA%93/" title="Java自带注解库"><span>< PreviousPost</span><br><span class="prevTitle">Java自带注解库</span></a><a class="nextSlogan" href="/2019/12/26/Spring%E6%A1%86%E6%9E%B6/" title="Spring框架"><span>NextPost ></span><br><span class="nextTitle">Spring框架</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-Web-MVC"><span class="toc-number">1.</span> <span class="toc-text">Spring Web MVC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Web-MVC简介"><span class="toc-number">1.1.</span> <span class="toc-text">Spring Web MVC简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MVC模式简介"><span class="toc-number">1.1.1.</span> <span class="toc-text">MVC模式简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Spring-Web-MVC"><span class="toc-number">1.1.2.</span> <span class="toc-text">什么是Spring Web MVC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#核心组件"><span class="toc-number">1.1.3.</span> <span class="toc-text">核心组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVC处理流程"><span class="toc-number">1.1.4.</span> <span class="toc-text">MVC处理流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVC配置及组件"><span class="toc-number">1.2.</span> <span class="toc-text">MVC配置及组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建Spring-Web-MVC环境"><span class="toc-number">1.2.1.</span> <span class="toc-text">搭建Spring Web MVC环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller组件"><span class="toc-number">1.2.2.</span> <span class="toc-text">Controller组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ModelAndView组件"><span class="toc-number">1.2.3.</span> <span class="toc-text">ModelAndView组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HandlerMapping组件"><span class="toc-number">1.2.4.</span> <span class="toc-text">HandlerMapping组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ViewResolver组件"><span class="toc-number">1.2.5.</span> <span class="toc-text">ViewResolver组件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于注解配置的MVC应用"><span class="toc-number">1.3.</span> <span class="toc-text">基于注解配置的MVC应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller注解"><span class="toc-number">1.3.1.</span> <span class="toc-text">Controller注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RequestMapping注解"><span class="toc-number">1.3.2.</span> <span class="toc-text">RequestMapping注解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVC请求应用"><span class="toc-number">1.4.</span> <span class="toc-text">MVC请求应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#接收请求参数"><span class="toc-number">1.4.1.</span> <span class="toc-text">接收请求参数</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

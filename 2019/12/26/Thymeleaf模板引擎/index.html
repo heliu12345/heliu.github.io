@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Thymeleaf模板引擎 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Thymeleaf模板引擎</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-26</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Web"> Web</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Thymeleaf模板引擎"><a href="#Thymeleaf模板引擎" class="headerlink" title="Thymeleaf模板引擎"></a>Thymeleaf模板引擎</h1><h2 id="什么是Thymeleaf"><a href="#什么是Thymeleaf" class="headerlink" title="什么是Thymeleaf"></a>什么是Thymeleaf</h2><p>&emsp;<strong>Thymeleaf</strong> 是一个HTML模板引擎</p>
+<p>&emsp;<strong>功能：</strong>是将一个HTML文件作为一个模板，并根据模板中的特定标记，对模板中的内容进行修改或替换，形成一个新的HTML</p>
+<h3 id="为什么使用Thymeleaf"><a href="#为什么使用Thymeleaf" class="headerlink" title="为什么使用Thymeleaf"></a>为什么使用Thymeleaf</h3><p>&emsp;因为 Thymeleaf 可以很好的分离前端与后端，减轻前端工程师压力，并且模板文件可以直接使用浏览器打开，嵌入 Thymeleaf 属性并不影响原 HTML 文件的结构</p>
+<h2 id="使用Thymeleaf"><a href="#使用Thymeleaf" class="headerlink" title="使用Thymeleaf"></a>使用Thymeleaf</h2><h3 id="引入Thymeleaf包"><a href="#引入Thymeleaf包" class="headerlink" title="引入Thymeleaf包"></a>引入Thymeleaf包</h3><p>&emsp;<strong>Maven Jar坐标：</strong> <code>thymeleaf</code><br>&emsp;【IDEA】：可以通过项目右键，添加框架支持，勾选Thymeleaf</p>
+<h3 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.创建 Thymeleaf 模板引擎</span></span><br><span class="line">TemplateEngine te = <span class="keyword">new</span> TemplateEngine();</span><br><span class="line"><span class="comment">//2.创建 和 配置 解析器对象</span></span><br><span class="line">ClassLoaderTemplateResolver r = <span class="keyword">new</span> ClassLoaderTemplateResolver();</span><br><span class="line">r.setCharacterEncoding(<span class="string">"utf-8"</span>);  <span class="comment">//设置字符集</span></span><br><span class="line">r.setSuffix(<span class="string">".html"</span>);  <span class="comment">//设置后缀，方便以后写文件名不写后缀，直接写名</span></span><br><span class="line"><span class="comment">//3.引擎和解析器关联</span></span><br><span class="line">te.setTemplateResolver(r);</span><br><span class="line"><span class="comment">//4.创建 和 使用 上下文对象</span></span><br><span class="line">Context context = <span class="keyword">new</span> Context();</span><br><span class="line">context.setVariable(<span class="string">"name"</span>, name);</span><br><span class="line"><span class="comment">//5.渲染页面：把页面的html和容器里面的数据合并到一起，得到一个新的html页面</span></span><br><span class="line">String html = te.process(<span class="string">"index"</span>, context);</span><br></pre></td></tr></table></figure>
+
+<h3 id="HTML模板"><a href="#HTML模板" class="headerlink" title="HTML模板"></a>HTML模板</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决idea thymeleaf 表达式模板报红波浪线--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h3><p><strong>说明：</strong>模板语法是写在标签内，作为属性来表现的</p>
+<p>th:text=”‘text’+${var}”<br>th:utext=${var}<br>th:href=”@{‘text’+${var}}”<br>th:src=”@{${var}}”<br>th:remove=”all”</p>
+<p>${Obj.key}  会自动调用Obj的getKey的方法获取到value</p>
+<h3 id="OGNL表达式"><a href="#OGNL表达式" class="headerlink" title="OGNL表达式"></a>OGNL表达式</h3><h2 id="运行原理"><a href="#运行原理" class="headerlink" title="运行原理"></a>运行原理</h2><h2 id="使用注意事项"><a href="#使用注意事项" class="headerlink" title="使用注意事项"></a>使用注意事项</h2><h3 id="博客项目"><a href="#博客项目" class="headerlink" title="博客项目"></a>博客项目</h3><p>主页内容的实现：<br>table –&gt; Entity<br>table.rows –&gt; entitys<br>xx – DAO – xx</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/26/Thymeleaf%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">http://yoursite.com/2019/12/26/Thymeleaf%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/26/Spring%E6%A1%86%E6%9E%B6/" title="Spring框架"><span>< PreviousPost</span><br><span class="prevTitle">Spring框架</span></a><a class="nextSlogan" href="/2019/12/26/Tomcat-Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Tomcat-Web服务器"><span>NextPost ></span><br><span class="nextTitle">Tomcat-Web服务器</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Thymeleaf模板引擎"><span class="toc-number">1.</span> <span class="toc-text">Thymeleaf模板引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是Thymeleaf"><span class="toc-number">1.1.</span> <span class="toc-text">什么是Thymeleaf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么使用Thymeleaf"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么使用Thymeleaf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Thymeleaf"><span class="toc-number">1.2.</span> <span class="toc-text">使用Thymeleaf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引入Thymeleaf包"><span class="toc-number">1.2.1.</span> <span class="toc-text">引入Thymeleaf包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java代码"><span class="toc-number">1.2.2.</span> <span class="toc-text">Java代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML模板"><span class="toc-number">1.2.3.</span> <span class="toc-text">HTML模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板语法"><span class="toc-number">1.2.4.</span> <span class="toc-text">模板语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OGNL表达式"><span class="toc-number">1.2.5.</span> <span class="toc-text">OGNL表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行原理"><span class="toc-number">1.3.</span> <span class="toc-text">运行原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用注意事项"><span class="toc-number">1.4.</span> <span class="toc-text">使用注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#博客项目"><span class="toc-number">1.4.1.</span> <span class="toc-text">博客项目</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

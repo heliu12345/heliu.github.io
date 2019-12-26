@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>JavaEE规范简介 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">JavaEE规范简介</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Java"> Java</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Web"> Web</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="JavaEE规范简介"><a href="#JavaEE规范简介" class="headerlink" title="JavaEE规范简介"></a>JavaEE规范简介</h1><h2 id="JavaEE"><a href="#JavaEE" class="headerlink" title="JavaEE"></a>JavaEE</h2><h3 id="什么是JavaEE"><a href="#什么是JavaEE" class="headerlink" title="什么是JavaEE"></a>什么是JavaEE</h3><p>&emsp;Java的大方向就是JavaEE，JavaEE不仅仅是socket编程，具体包括13种核心技术</p>
+<p>&emsp;JAVAEE平台由一整套服务（Services）、应用程序接口（APIs）和协议构成，它对开发基于Web的多层应用提供了功能支持，下面对JAVAEE中的13种技术规范进行简单的描述(限于篇幅，这里只进行简单的描述)</p>
+<h2 id="JavaEE的核心API与组件"><a href="#JavaEE的核心API与组件" class="headerlink" title="JavaEE的核心API与组件"></a>JavaEE的核心API与组件</h2><h3 id="JDBC-Java-Database-Connectivity"><a href="#JDBC-Java-Database-Connectivity" class="headerlink" title="JDBC(Java Database Connectivity)"></a>JDBC(Java Database Connectivity)</h3><p>JDBC API为访问不同的数据库提供了一种统一的途径，象ODBC一样，JDBC对开发者屏蔽了一些细节问题，另外，JDCB对数据库的访问也具有平台无关性。</p>
+<h3 id="JNDI-Java-Name-and-Directory-Interface"><a href="#JNDI-Java-Name-and-Directory-Interface" class="headerlink" title="JNDI(Java Name and Directory Interface)"></a>JNDI(Java Name and Directory Interface)</h3><p>JNDI API被用于执行名字和目录服务。它提供了一致的模型来存取和操作企业级的资源如DNS和LDAP，本地文件系统，或应用服务器中的对象。</p>
+<h3 id="EJB-Enterprise-JavaBean"><a href="#EJB-Enterprise-JavaBean" class="headerlink" title="EJB(Enterprise JavaBean)"></a>EJB(Enterprise JavaBean)</h3><p>JAVAEE技术之所以赢得媒体广泛重视的原因之一就是EJB。它们提供了一个框架来开发和实施分布式商务逻辑，由此很显著地简化了具有可伸缩性和高度复杂的企业级应用的开发。EJB规范定义了EJB组件在何时如何与它们的容器进行交互作用。容器负责提供公用的服务，例如目录服务、事务管理、安全性、资源缓冲池以及容错性。但这里值得注意的是，EJB并不是实现JAVAEE的唯一途径。正是由于JAVAEE的开放性，使得有的厂商能够以一种和EJB平行的方式来达到同样的目的。</p>
+<h3 id="RMI-Remote-Method-Invoke"><a href="#RMI-Remote-Method-Invoke" class="headerlink" title="RMI(Remote Method Invoke)"></a>RMI(Remote Method Invoke)</h3><p>正如其名字所表示的那样，RMI协议调用远程对象上方法。它使用了序列化方式在客户端和服务器端传递数据。RMI是一种被EJB使用的更底层的协议。</p>
+<h3 id="Java-IDL-CORBA"><a href="#Java-IDL-CORBA" class="headerlink" title="Java IDL/CORBA"></a>Java IDL/CORBA</h3><p>在Java IDL的支持下，开发人员可以将Java和CORBA集成在一起。他们可以创建Java对象并使之可在CORBA ORB中展开, 或者他们还可以创建Java类并作为和其它ORB一起展开的CORBA对象的客户。后一种方法提供了另外一种途径，通过它Java可以被用于将你的新的应用和旧的系统相集成。</p>
+<h3 id="JSP-Java-Server-Pages"><a href="#JSP-Java-Server-Pages" class="headerlink" title="JSP(Java Server Pages)"></a>JSP(Java Server Pages)</h3><p>JSP页面由HTML代码和嵌入其中的Java代码所组成。服务器在页面被客户端所请求以后对这些Java代码进行处理，然后将生成的HTML页面返回给客户端的浏览器。</p>
+<h3 id="Java-Servlet"><a href="#Java-Servlet" class="headerlink" title="Java Servlet"></a>Java Servlet</h3><p>Servlet是一种小型的Java程序，它扩展了Web服务器的功能。作为一种服务器端的应用，当被请求时开始执行，这和CGI Perl脚本很相似。Servlet提供的功能大多与JSP类似，不过实现的方式不同。JSP通常是大多数HTML代码中嵌入少量的Java代码，而servlets全部由Java写成并且生成HTML。</p>
+<h3 id="XML-Extensible-Markup-Language"><a href="#XML-Extensible-Markup-Language" class="headerlink" title="XML(Extensible Markup Language)"></a>XML(Extensible Markup Language)</h3><p>XML是一种可以用来定义其它标记语言的语言。它被用来在不同的商务过程中共享数据。 XML的发展和Java是相互独立的，但是，它和Java具有的相同目标正是平台独立性。通过将Java和XML的组合，您可以得到一个完美的具有平台独立性的解决方案。</p>
+<h3 id="JMS-Java-Message-Service"><a href="#JMS-Java-Message-Service" class="headerlink" title="JMS(Java Message Service)"></a>JMS(Java Message Service)</h3><p>JMS是用于和面向消息的中间件相互通信的应用程序接口(API)。它既支持点对点的域，有支持发布/订阅(publish/subscribe)类型的域，并且提供对下列类型的支持：经认可的消息传递,事务型消息的传递，一致性消息和具有持久性的订阅者支持。JMS还提供了另 一种方式来对您的应用与旧的后台系统相集成。</p>
+<h3 id="JTA-Java-Transaction-Architecture"><a href="#JTA-Java-Transaction-Architecture" class="headerlink" title="JTA(Java Transaction Architecture)"></a>JTA(Java Transaction Architecture)</h3><p>JTA定义了一种标准的API，应用系统由此可以访问各种事务监控。</p>
+<h3 id="JTS-Java-Transaction-Service"><a href="#JTS-Java-Transaction-Service" class="headerlink" title="JTS(Java Transaction Service)"></a>JTS(Java Transaction Service)</h3><p>JTS是CORBA OTS事务监控的基本的实现。JTS规定了事务管理器的实现方式。该事务管理器是在高层支持Java Transaction API (JTA)规范，并且在较底层实现OMG OTS specification的Java映像。JTS事务管理器为应用服务器、资源管理器、独立的应用以及通信资源管理器提供了事务服务。</p>
+<h3 id="JavaMail"><a href="#JavaMail" class="headerlink" title="JavaMail"></a>JavaMail</h3><p>JavaMail是用于存取邮件服务器的API，它提供了一套邮件服务器的抽象类。不仅支持SMTP服务器，也支持IMAP服务器。</p>
+<h3 id="JAF-JavaBeans-Activation-Framework"><a href="#JAF-JavaBeans-Activation-Framework" class="headerlink" title="JAF(JavaBeans Activation Framework)"></a>JAF(JavaBeans Activation Framework)</h3><p>JavaMail利用JAF来处理MIME编码的邮件附件。MIME的字节流可以被转换成Java对象，或者转换自Java对象。大多数应用都可以不需要直接使用JAF</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/09/JavaEE%E8%A7%84%E8%8C%83%E7%AE%80%E4%BB%8B/">http://yoursite.com/2019/12/09/JavaEE%E8%A7%84%E8%8C%83%E7%AE%80%E4%BB%8B/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/09/Web%E5%9F%BA%E7%A1%80-HTML%E8%AF%AD%E8%A8%80/" title="Web基础-HTML语言"><span>< PreviousPost</span><br><span class="prevTitle">Web基础-HTML语言</span></a><a class="nextSlogan" href="/2019/12/09/Java%E5%9F%BA%E7%A1%80-JavaSE(%E4%B8%8B)/" title="Java基础-JavaSE(下)"><span>NextPost ></span><br><span class="nextTitle">Java基础-JavaSE(下)</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaEE规范简介"><span class="toc-number">1.</span> <span class="toc-text">JavaEE规范简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaEE"><span class="toc-number">1.1.</span> <span class="toc-text">JavaEE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是JavaEE"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是JavaEE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaEE的核心API与组件"><span class="toc-number">1.2.</span> <span class="toc-text">JavaEE的核心API与组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC-Java-Database-Connectivity"><span class="toc-number">1.2.1.</span> <span class="toc-text">JDBC(Java Database Connectivity)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNDI-Java-Name-and-Directory-Interface"><span class="toc-number">1.2.2.</span> <span class="toc-text">JNDI(Java Name and Directory Interface)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EJB-Enterprise-JavaBean"><span class="toc-number">1.2.3.</span> <span class="toc-text">EJB(Enterprise JavaBean)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMI-Remote-Method-Invoke"><span class="toc-number">1.2.4.</span> <span class="toc-text">RMI(Remote Method Invoke)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-IDL-CORBA"><span class="toc-number">1.2.5.</span> <span class="toc-text">Java IDL/CORBA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSP-Java-Server-Pages"><span class="toc-number">1.2.6.</span> <span class="toc-text">JSP(Java Server Pages)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-Servlet"><span class="toc-number">1.2.7.</span> <span class="toc-text">Java Servlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML-Extensible-Markup-Language"><span class="toc-number">1.2.8.</span> <span class="toc-text">XML(Extensible Markup Language)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JMS-Java-Message-Service"><span class="toc-number">1.2.9.</span> <span class="toc-text">JMS(Java Message Service)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JTA-Java-Transaction-Architecture"><span class="toc-number">1.2.10.</span> <span class="toc-text">JTA(Java Transaction Architecture)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JTS-Java-Transaction-Service"><span class="toc-number">1.2.11.</span> <span class="toc-text">JTS(Java Transaction Service)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaMail"><span class="toc-number">1.2.12.</span> <span class="toc-text">JavaMail</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAF-JavaBeans-Activation-Framework"><span class="toc-number">1.2.13.</span> <span class="toc-text">JAF(JavaBeans Activation Framework)</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

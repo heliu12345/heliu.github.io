@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Tomcat-Web服务器 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Tomcat-Web服务器</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-26</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Web"> Web</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Tomcat"> Tomcat</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Tomcat-Web服务器"><a href="#Tomcat-Web服务器" class="headerlink" title="Tomcat-Web服务器"></a>Tomcat-Web服务器</h1><h2 id="Tomcat介绍"><a href="#Tomcat介绍" class="headerlink" title="Tomcat介绍"></a>Tomcat介绍</h2><h3 id="什么是Tomcat"><a href="#什么是Tomcat" class="headerlink" title="什么是Tomcat"></a>什么是Tomcat</h3><ul>
+<li>Tomcat服务器是一个免费的开放源代码的Web应用服务器，由 Apache、Sun 和其他一些公司及个人共同开发而成</li>
+<li>虽然 Tomcat 不能支持全部的 JavaEE 规范（仅支持Servlet 和 JSP 规范），但由于它小巧轻量、性能稳定，而且免费，因而深受 Java 爱好者的喜爱并得到了部分软件开发商的认可，是目前非常流行的 Web 应用服务器</li>
+<li>我们学习阶段就是使用 Tomcat 作为服务器</li>
+</ul>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><ul>
+<li>/bn：存放启动和关闭Tomcat的脚本文件</li>
+<li>/conf：存放各种配置文件，其中有<code>server.xml</code>(Tomcat主要配置文件)、<code>tomcat-users.xml</code>、<code>web.xml</code>等</li>
+<li>/lib：存放Tomcat服务器和所有WebApp程序需要访问的JAR文件</li>
+<li>/logs：存放Tomcat的日志文件</li>
+<li>/temp：存放Tomcat运行时产生的临时文件</li>
+<li>/webapps：当发布WebApp时，通常把Web应用程序的目录及文件放在这个目录下</li>
+<li>/work：Tomcat将JSP生成的Servlet源文件和字节码文件存到这个目录下</li>
+</ul>
+<h2 id="下载与配置"><a href="#下载与配置" class="headerlink" title="下载与配置"></a>下载与配置</h2><h3 id="Tomcat配置"><a href="#Tomcat配置" class="headerlink" title="Tomcat配置"></a>Tomcat配置</h3><ul>
+<li>下载tomcat，进入<a href="https://tomcat.apache.org/" target="_blank" rel="noopener">官网下载</a></li>
+<li>配置环境变量：<ul>
+<li>新增”CATALINA_BASE”：Tomcat根目录</li>
+<li>新增”CATALINA_HOME”：Tomcat根目录</li>
+<li>追加”Path”：”%CATALINA_HOME%\lib;%CATALINA_HOME%\bin”</li>
+<li>追加”ClassPath”：””</li>
+</ul>
+</li>
+<li>检验成果：启动<code>tomcat\bin\startup.bat</code>,浏览器打开<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></li>
+<li>可以在 <code>/conf/server.xml</code> 文件 <code>&lt;Connector&gt;</code> 中的 <code>port</code> 属性中修改默认端口号</li>
+</ul>
+<h3 id="Eclipse配置"><a href="#Eclipse配置" class="headerlink" title="Eclipse配置"></a>Eclipse配置</h3><ul>
+<li>配置Tomcat：<code>Preferences(偏好)--Server--RuntiemEnvironments--//--Add--对应Tomcat版本</code></li>
+<li>配置Servers：<code>Window--Show View--Web--Servers--对应版本Servers并双击指定服务器路径</code></li>
+<li>删除Server：删除Server，删除RuntiemEnvironments</li>
+</ul>
+<h3 id="IDEA配置"><a href="#IDEA配置" class="headerlink" title="IDEA配置"></a>IDEA配置</h3><ul>
+<li>打开运行环境：<code>Run--Edit Configurations...</code></li>
+<li>添加Tomcat Server，添加Tomcat</li>
+<li>然后在窗口中的<code>Deployment</code>选项卡中添加WebApp(自己的项目)</li>
+</ul>
+<h2 id="Web应用配置"><a href="#Web应用配置" class="headerlink" title="Web应用配置"></a>Web应用配置</h2><h3 id="什么是Web应用配置"><a href="#什么是Web应用配置" class="headerlink" title="什么是Web应用配置"></a>什么是Web应用配置</h3><ul>
+<li>真实路径和虚拟路径的映射关系</li>
+<li>web应用是真实的配置在自己计算机中的一个目录，如果让其他用户在浏览器中书写这个目录(web应用)的路径，不会直接按照路径去访问该目录，而是访问该路径对应映射的web应用目录</li>
+<li>为了能够使访问者访问到我们服务器上的应用目录，需要为其提供一个虚拟路径， 这个虚拟路径和我们服务器中的一个web应用的对照关系</li>
+<li>这种对照关系称之为映射关系</li>
+</ul>
+<h3 id="配置web应用的映射"><a href="#配置web应用的映射" class="headerlink" title="配置web应用的映射"></a>配置web应用的映射</h3><p><strong>第一种方式：</strong><br>&emsp;在 <code>conf/server.xml</code> 文件中 <code>&lt;Host&gt;</code> 标签内容中添加 <code>&lt;Context/&gt;</code> 子标签，该标签中添加两个属性：<code>path</code> 虚拟路径，<code>docBase</code>代表真实路径<br>示例：<code>&lt;Context path=&quot;/news1&quot; docBase=&quot;D:/news&quot; /&gt;</code></p>
+<p><strong>第二种方式：</strong><br>&emsp;在 <code>conf/Catalina/localhost</code> 目录中创建一个以虚拟路径命名的.xml文件，文件当中添加真实路径。书写内容如下：<code>&lt;Context docBase=&quot;D:/news&quot;/&gt;</code><br>&emsp;如果虚拟路径是多级的，通过使用”#”来分级，例如：<code>email#aa.xml</code>表示虚拟路径为 <code>email/aa</code><br>&emsp;第二种发布方式支持热部署。所谓热部署是指在服务器打开的状态下，发布最新的配置和代码可以立即生效。</p>
+<p><strong>第三种方式：</strong><br>&emsp;在<code>webapps</code> 目录中添加以虚拟路径命名的一个目录，这个目录的名称就是虚拟路径，而这个目录就是真实的web应用<br>&emsp;第三种发布方式也支持热部署。</p>
+<h3 id="缺省web应用"><a href="#缺省web应用" class="headerlink" title="缺省web应用"></a>缺省web应用</h3><p>&emsp;一个虚拟主机中可以设置一个缺省web应用。所谓缺省web应用设置不必书写web应用的虚拟路径就能访问到一个web应用<br>&emsp;将虚拟路径删除，这个根路径就称为缺省虚拟路径。一个缺省虚拟路径只能对应一个web应用</p>
+<p><strong>第一种方式：</strong><br>&emsp;类似配置web应用映射的第一种方式，将 <code>path</code> 的值设为空，例如：<code>path=&quot;&quot;</code></p>
+<p><strong>第二种方式：</strong><br>&emsp;类似配置web应用映射的第二种方式，但创建的文件为 <code>ROOT.xml</code>，文件名称必须大写，文件中添加真是路径。书写方式相同</p>
+<p><strong>第三种方式：</strong><br>&emsp;在<code>webapps</code> 目录中添加以<code>ROOT</code>命名的一个目录，目录名称必须大写，这个目录就是真实的web应用</p>
+<p><strong><code>缺省web应用优先级：</code></strong> 第一种 &gt; 第二种 &gt; 第三种</p>
+<h2 id="Web服务器主机配置"><a href="#Web服务器主机配置" class="headerlink" title="Web服务器主机配置"></a>Web服务器主机配置</h2><h3 id="虚拟主机配置"><a href="#虚拟主机配置" class="headerlink" title="虚拟主机配置"></a>虚拟主机配置</h3><p>一个服务器中可以配置多台虚拟主机<br>一个虚拟主机就是一个网站，访问一个网站需要一个域名</p>
+<p>配置虚拟主机的过程：</p>
+<ul>
+<li>修改<code>conf/server.xml</code>文件，在其中<code>&lt;Engine&gt;</code>标签下添加一个<code>&lt;Host&gt;</code>子标签</li>
+<li>例如：<code>&lt;Host name=&quot;www.baidu.com&quot;  appBase=&quot;baidu&quot;&gt;&lt;/Host&gt;</code></li>
+<li><code>name</code>为虚拟主机的名称，称之为域名；<code>appBase</code>为虚拟主机管理的目录</li>
+<li>访问一个域名，其实会将域名转换为一个ip地址。这个转换的过程是由互联网站DNS服务器完成的</li>
+<li><code>&lt;Engine&gt;</code>标签身上的 <code>defaultHost</code> 属性表示缺省虚拟主机，这个属性中可以保存任意一个已经存在的虚拟主机名称，在使用不明确的域名访问服务器的时候，就会采用缺省虚拟主机提供服务</li>
+<li><code>&lt;Host&gt;</code>标签身上有些属性，其中两个必须属性：<ul>
+<li><code>appBase：</code> web应用程序文件存放的位置，相对路径为CATALINA_HOMEM</li>
+<li><code>name：</code> virtual host的名称</li>
+</ul>
+</li>
+</ul>
+<h2 id="Tomcat注意事项"><a href="#Tomcat注意事项" class="headerlink" title="Tomcat注意事项"></a>Tomcat注意事项</h2><h3 id="Web中文乱码问题"><a href="#Web中文乱码问题" class="headerlink" title="Web中文乱码问题"></a>Web中文乱码问题</h3><ol>
+<li>Tomcat8.0以前的版本存在Get请求中文乱码问题，需要在服务器server.xml中的<code>&lt;Connector connectionTimeout=&quot;20000&quot; port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; redirectPort=&quot;8443&quot;/&gt;</code>标签内添加属性<code>URIEncoding=&quot;UTF-8&quot;</code></li>
+<li>Post请求中文乱码问题，需要在获取请求数据前，输入代码<code>request.setCharacterEncoding(&quot;UTF-8&quot;);</code></li>
+</ol>
+<h3 id="日志文件乱码问题"><a href="#日志文件乱码问题" class="headerlink" title="日志文件乱码问题"></a>日志文件乱码问题</h3><p>在IDEA中会出现Tomcat日志中文乱码问题，如更改Tomcat编码，进入conf/logging.properties文件，更改设置为<code>java.util.logging.ConsoleHandler.encoding = GBK</code><br>但<strong>不建议</strong>这种操作，建议在IDEA端，将Tomcat的启动命令添加UTF-8，统一使用UTF-8显示</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/26/Tomcat-Web%E6%9C%8D%E5%8A%A1%E5%99%A8/">http://yoursite.com/2019/12/26/Tomcat-Web%E6%9C%8D%E5%8A%A1%E5%99%A8/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/26/Thymeleaf%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/" title="Thymeleaf模板引擎"><span>< PreviousPost</span><br><span class="prevTitle">Thymeleaf模板引擎</span></a><a class="nextSlogan" href="/2019/12/26/Servlet%E5%8F%8A%E5%85%B6%E8%A7%84%E8%8C%83/" title="Servlet及其规范"><span>NextPost ></span><br><span class="nextTitle">Servlet及其规范</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat-Web服务器"><span class="toc-number">1.</span> <span class="toc-text">Tomcat-Web服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat介绍"><span class="toc-number">1.1.</span> <span class="toc-text">Tomcat介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Tomcat"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是Tomcat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目录结构"><span class="toc-number">1.1.2.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载与配置"><span class="toc-number">1.2.</span> <span class="toc-text">下载与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat配置"><span class="toc-number">1.2.1.</span> <span class="toc-text">Tomcat配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse配置"><span class="toc-number">1.2.2.</span> <span class="toc-text">Eclipse配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDEA配置"><span class="toc-number">1.2.3.</span> <span class="toc-text">IDEA配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web应用配置"><span class="toc-number">1.3.</span> <span class="toc-text">Web应用配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Web应用配置"><span class="toc-number">1.3.1.</span> <span class="toc-text">什么是Web应用配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置web应用的映射"><span class="toc-number">1.3.2.</span> <span class="toc-text">配置web应用的映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺省web应用"><span class="toc-number">1.3.3.</span> <span class="toc-text">缺省web应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web服务器主机配置"><span class="toc-number">1.4.</span> <span class="toc-text">Web服务器主机配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟主机配置"><span class="toc-number">1.4.1.</span> <span class="toc-text">虚拟主机配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat注意事项"><span class="toc-number">1.5.</span> <span class="toc-text">Tomcat注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web中文乱码问题"><span class="toc-number">1.5.1.</span> <span class="toc-text">Web中文乱码问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志文件乱码问题"><span class="toc-number">1.5.2.</span> <span class="toc-text">日志文件乱码问题</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

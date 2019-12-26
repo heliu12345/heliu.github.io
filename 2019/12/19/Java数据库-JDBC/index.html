@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Java数据库-JDBC · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Java数据库-JDBC</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-12-19</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="Java"> Java</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="SQL"> SQL</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" target="_blank" rel="noopener" date-tags="数据库"> 数据库</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Java数据库-JDBC"><a href="#Java数据库-JDBC" class="headerlink" title="Java数据库-JDBC"></a>Java数据库-JDBC</h1><h2 id="JDBC简介"><a href="#JDBC简介" class="headerlink" title="JDBC简介"></a>JDBC简介</h2><h3 id="JDBC简介-1"><a href="#JDBC简介-1" class="headerlink" title="JDBC简介"></a>JDBC简介</h3><ul>
+<li>Java Database Connectivity：Java访问数据库的解决方案</li>
+<li>JDBC是SUN公司做的关于Java与数据库的接口</li>
+<li>具体实现是由各大数据库公司来制作，做出jar包称为连接数据库的驱动</li>
+<li>向对应数据库官网下载该jar包，导入到项目中</li>
+</ul>
+<h3 id="JDBC实现的接口"><a href="#JDBC实现的接口" class="headerlink" title="JDBC实现的接口"></a>JDBC实现的接口</h3><table>
+<thead>
+<tr>
+<th>实现功能</th>
+<th>对应接口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>驱动管理</td>
+<td>DriverManager</td>
+</tr>
+<tr>
+<td>连接接口</td>
+<td>Connection<br>DatabaseMetaData</td>
+</tr>
+<tr>
+<td>语句对象接口</td>
+<td>Statement<br>PreparedStatement<br>CallableStatement</td>
+</tr>
+<tr>
+<td>结果集接口</td>
+<td>ResultSet<br>ResultSetMetaData</td>
+</tr>
+</tbody></table>
+<h3 id="MySQL与Oracle实现"><a href="#MySQL与Oracle实现" class="headerlink" title="MySQL与Oracle实现"></a>MySQL与Oracle实现</h3><p><strong>Oracle实现</strong></p>
+<ul>
+<li>ojdbc6.jar / ojdbc14.jar</li>
+<li>Class.forName(“oracle.jdbc.OracleDriver”)</li>
+</ul>
+<p><strong>MySQL实现</strong></p>
+<ul>
+<li>mysql-connector-java-5.1.8-bin.jar</li>
+<li>Maven可搜索jar包<code>mysql-connector-java</code></li>
+<li>Class.forName(“com.mysql.cj.jdbc.Driver”)</li>
+</ul>
+<h2 id="连接使用JDBC"><a href="#连接使用JDBC" class="headerlink" title="连接使用JDBC"></a>连接使用JDBC</h2><h3 id="传统使用步骤"><a href="#传统使用步骤" class="headerlink" title="传统使用步骤"></a>传统使用步骤</h3><ul>
+<li>一般情况下我们在整个连接中都需要try,catch，其中1~5步在try中，第6步在finally中</li>
+<li>错误类型为SQLException，finally中close()或者使用java新语法try()定义三者</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.注册驱动</span></span><br><span class="line">Drive drive = <span class="keyword">new</span> com.mysql.jdbc.Drive;	<span class="comment">//最新com.mysql.cj.jdbc.Driver</span></span><br><span class="line">DriveManager.registerDriver(drive);</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.获取连接</span></span><br><span class="line">String url = <span class="string">"jdbc:mysql://localhost:3306/database"</span>;</span><br><span class="line">String user = <span class="string">"root"</span>;</span><br><span class="line">String password = <span class="string">"psd"</span>;</span><br><span class="line">Connection conn = DriverManager.getConnection(url,user,password);	</span><br><span class="line"><span class="comment">//url连接最新版需要在地址后面增加`?serverTimezone=GMT%2B8`表示系统时区</span></span><br><span class="line"><span class="comment">//定义写入字符集`?useUnicode=true&amp;characterEncoding=UTF-8`</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//3.获取数据库操作对象</span></span><br><span class="line">Statement stmt = conn.createStatement();</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.执行SQL语句[DQL]</span></span><br><span class="line">String sql = <span class="string">"select * from table were a = 1"</span>;</span><br><span class="line">ResultSet rs = stmt.excuteQuery(sql);</span><br><span class="line"><span class="comment">//执行SQL语句[DML]</span></span><br><span class="line">String sql = <span class="string">"insert into table values(1,2,3)"</span>;</span><br><span class="line"><span class="keyword">int</span> count = stmt.executeUpdate(sql);</span><br><span class="line"><span class="comment">//执行SQL语句</span></span><br><span class="line"><span class="keyword">boolean</span> flag = stmt.excute(sql);</span><br><span class="line"><span class="comment">//SQL语句结尾不用加分号，注意空格干扰语义</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//5.处理查询结果</span></span><br><span class="line"><span class="keyword">while</span>(rs.next())&#123;</span><br><span class="line">    String a1 = rs.getString(<span class="number">1</span>);		<span class="comment">//以列的下标，JDBC下标都以1开始</span></span><br><span class="line">    String a2 = rs.getString(<span class="string">"col2"</span>);	<span class="comment">//以列的名称</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//next方法如果当前行有数据返回true，否则false。getXXX()取得字段内容</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//6.释放资源</span></span><br><span class="line"><span class="comment">//先关闭ResultSet，后关闭Statement，最后关闭Connection</span></span><br><span class="line"><span class="comment">//三个关闭分别try,catch，在try中都先判断是否为空</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (rs!=<span class="keyword">null</span>) rs.close();</span><br><span class="line">    <span class="keyword">if</span> (ps!=<span class="keyword">null</span>) ps.close();</span><br><span class="line">    <span class="keyword">if</span> (conn!=<span class="keyword">null</span>) conn.close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (SQLException e) &#123;                </span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="常用使用方法"><a href="#常用使用方法" class="headerlink" title="常用使用方法"></a>常用使用方法</h3><ul>
+<li>第一步可以通过mysql写的静态代码块进行注册驱动：<br><code>Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</code></li>
+<li>第一步在MySQL的5.1.6及以后的jar包中自动进行注册驱动，可以不用写</li>
+<li>关于url的书写写法：<ul>
+<li>Oracle写法：<code>jdbc:oracle:thin:@localhost:1521:sid</code></li>
+<li>SQLServer写法：<code>jdbc:microsoft:sqlserver://localhost:1433; DatabaseName=sid</code></li>
+<li>MySQL写法：<code>jdbc:mysql://localhost:3306/sid</code></li>
+<li>Mysql的url地址的简写形式：<code>jdbc:mysql:///sid</code></li>
+<li>url定义时区：<code>?serverTimezone=GMT%2B8</code></li>
+<li>url定义字符集：<code>?useUnicode=true&amp;characterEncoding=UTF-8</code></li>
+</ul>
+</li>
+<li>第一、二步中的参数可以读取properties配置文件获取</li>
+<li>第三、四步中为了防止SQL注入可以更改预编译SQL语句</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">"select * from table where user=? and password=?"</span>;</span><br><span class="line">PreparedStatement ps = conn.prepareStatement(sql);</span><br><span class="line">ps.setString(<span class="number">1</span>,username);    <span class="comment">//设置第一个?，JDBC下标都以1开始</span></span><br><span class="line">ps.setString(<span class="number">2</span>,userpwd);    <span class="comment">//设置第二个?</span></span><br><span class="line">ResultSet rs = stmt.excuteQuery();</span><br></pre></td></tr></table></figure>
+<h3 id="最终使用"><a href="#最终使用" class="headerlink" title="最终使用"></a>最终使用</h3><ol>
+<li>驱动自动注册，不再注册</li>
+<li>通过properties文件获取连接器</li>
+<li>根据需求，有参数的SQL语句用预编译的数据库操作对象，无参可以用普通的</li>
+<li>执行语句并处理结果</li>
+<li>一定记得关闭数据库连接，可以通过jdk1.7特性，在try小括弧中定义</li>
+</ol>
+<h3 id="自用工具类-创建JDBCUtils"><a href="#自用工具类-创建JDBCUtils" class="headerlink" title="自用工具类-创建JDBCUtils"></a>自用工具类-创建JDBCUtils</h3><p>由于数据库的连接与关闭代码比较类似，所以我们常自己书写一个工具类去实现操作，减少代码冗余<br>工具类常定义为一个静态类，以下是一个工具类的案例，实现了通过配置文件，获取连接对象与关闭连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCUtils</span> </span>&#123;</span><br><span class="line">    <span class="comment">//工具类不能够产生对象，只能通过类名.的方式调用方法。</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">JDBCUtils</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//通过配置文件获取数据</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Properties prop = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        prop = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            File file = new File(JDBCUtils.class.getClassLoader().getResource("conf.properties").getPath());</span><br><span class="line">            FileInputStream fis = <span class="keyword">new</span> FileInputStream(file);</span><br><span class="line">            <span class="comment">//FileInputStream fis=JDBCUtils.class.getClassLoader().getResourceAsStream("conf.properties");</span></span><br><span class="line">            prop.load(fis);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//PUBLIC返回连接对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException, SQLException </span>&#123;</span><br><span class="line">        Class.forName(prop.getProperty(<span class="string">"driver"</span>));</span><br><span class="line">        <span class="keyword">return</span> DriverManager.getConnection(</span><br><span class="line">                prop.getProperty(<span class="string">"url"</span>),</span><br><span class="line">                prop.getProperty(<span class="string">"user"</span>),</span><br><span class="line">                prop.getProperty(<span class="string">"password"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//PUBLIC关闭资源方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">(Connection conn, Statement stat, ResultSet rs)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(rs != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                rs.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">                rs = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(stat != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                stat.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">                stat = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(conn != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                conn.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">                conn = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="更多数据操作"><a href="#更多数据操作" class="headerlink" title="更多数据操作"></a>更多数据操作</h2><h3 id="数据库元数据"><a href="#数据库元数据" class="headerlink" title="数据库元数据"></a>数据库元数据</h3><ul>
+<li>通过数据库连接对象的<code>getMetaData()</code>方法返回数据库元数据对象</li>
+<li>数据库名称：<code>String dbmd.getDatabaseProductName()</code></li>
+<li>数据库驱动版本：<code>String dbmd.getDriverVersion()</code></li>
+<li>数据库用户名：<code>String dbmd.getUserName()</code></li>
+<li>其他各种方法</li>
+</ul>
+<h3 id="表元数据"><a href="#表元数据" class="headerlink" title="表元数据"></a>表元数据</h3><ul>
+<li>通过结果集的<code>getMetaData()</code>方法返回结果集表元数据对象</li>
+<li>表中字段的总数：<code>int rsmd.getColumnCount()</code></li>
+<li>表中第i个字段的名称：<code>String rsmd.getColumnName(i)</code></li>
+<li>表中第i个字段的类型：<code>String rsmd.getColumnTypeName(i)</code></li>
+<li>注意SQL中以1开始</li>
+<li>其他各种方法</li>
+</ul>
+<h3 id="获取自增主键值"><a href="#获取自增主键值" class="headerlink" title="获取自增主键值"></a>获取自增主键值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//PreparedStatement对象获取自增是通过创建时，第二个参数指明可以获取自增键</span></span><br><span class="line">PreparedStatement preparedStatement = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);</span><br><span class="line"><span class="comment">//PreparedStatement对象获取自增的第二种方法，第二个参数传入GeneratedKeys的字段名列表，字符串数组</span></span><br><span class="line">PreparedStatement preparedStatement = con.prepareStatement(sql,<span class="keyword">new</span> String[]&#123;<span class="string">"id"</span>&#125;);</span><br><span class="line"><span class="comment">//Statement对象获取自动是通过执行语句时，第二个参数指明可以获取自增键</span></span><br><span class="line">statement.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);</span><br><span class="line"><span class="comment">//获取自增键结果集</span></span><br><span class="line">ResultSet rs = preparedStatement/statement.getGeneratedKeys();</span><br><span class="line"><span class="comment">//游标下移，获取数据</span></span><br><span class="line">rs.next();</span><br><span class="line"><span class="keyword">int</span> id = rs.getInt(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="批量更新"><a href="#批量更新" class="headerlink" title="批量更新"></a>批量更新</h2><h3 id="批量更新的引入"><a href="#批量更新的引入" class="headerlink" title="批量更新的引入"></a>批量更新的引入</h3><ul>
+<li>批处理：发送到数据库作为一个单元执行的一组更新语句</li>
+<li>批处理降低了应用程序和数据库之间的网络调用</li>
+<li>相比单个SQL语句的处理，批处理更为有效</li>
+</ul>
+<h3 id="批量更新API"><a href="#批量更新API" class="headerlink" title="批量更新API"></a>批量更新API</h3><ul>
+<li>添加SQL语句到数据库操作对象中<ul>
+<li><code>Statement.addBatch(String sql)</code></li>
+<li><code>PreparedStatement.addBatch()</code></li>
+</ul>
+</li>
+<li>把对象中语句列表中的所有SQL语句发送给数据库进行处理<ul>
+<li><code>executeBatch()</code></li>
+</ul>
+</li>
+<li>清空当前SQL语句列表<ul>
+<li><code>clearBatch()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="使用批量更新注意"><a href="#使用批量更新注意" class="headerlink" title="使用批量更新注意"></a>使用批量更新注意</h3><ul>
+<li>防止OutOfMemory错误<ul>
+<li>如果操作对象中待处理的SQL语句过多，可能会产生内存溢出错误</li>
+<li>一定要及时处理SQL语句列表</li>
+</ul>
+</li>
+</ul>
+<h2 id="连接池技术"><a href="#连接池技术" class="headerlink" title="连接池技术"></a>连接池技术</h2><h3 id="连接池的引入"><a href="#连接池的引入" class="headerlink" title="连接池的引入"></a>连接池的引入</h3><ul>
+<li>数据库连接的建立及关闭资源消耗巨大</li>
+<li>传统访问数据库的方式：一次数据库访问对应一个物理连接，每次操作数据库都要打开、关闭该物理连接</li>
+<li>数据库连接池(Connection Pool)：系统初始运行时，主动建立足够的连接，组成一个池。每次应用程序请求数据库连接时，无需重新打开连接，而是从池中取出已有的连接，使用完后，不再关闭，而是归还</li>
+<li>如果一时间并发量很大，则连接池中会创建很多的连接，等待高并发过后，大量连接无人使用，则这些连接会闲置。此时连接池会在指定的时间内自动销毁一半的连接，直到恢复至初始连接数量</li>
+<li>动态检查：定时检查连接池，一旦发现数量小于最小连接数，则补充响应的新连接，保证连接池正常运转</li>
+<li>静态检查：空闲连接不足时，系统才检测是否达到最小连接数</li>
+</ul>
+<h3 id="连接池参数"><a href="#连接池参数" class="headerlink" title="连接池参数"></a>连接池参数</h3><ol>
+<li>初始连接数</li>
+<li>最大连接数</li>
+<li>最小连接数</li>
+<li>每次增加的连接数</li>
+<li>超时时间</li>
+<li>最大空闲连接</li>
+<li>最小空闲连接</li>
+</ol>
+<h3 id="DBCP连接池"><a href="#DBCP连接池" class="headerlink" title="DBCP连接池"></a>DBCP连接池</h3><p>导入DBCP连接池jar包<br>Commons-dbcp.jar：连接池的实现<br>Commons-pool.jar：连接池实现的依赖库<br>Maven可搜索坐标<code>commons-dbcp</code><br>DBCP连接池使用方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建数据库连接池对象</span></span><br><span class="line">BasicDataSource dataSource=<span class="keyword">new</span> BasicDataSource();</span><br><span class="line"><span class="comment">//为连接池注册驱动(MySQL新版本自动注册，可忽略)</span></span><br><span class="line">dataSource.setDriverClassName(driveClassName);</span><br><span class="line"><span class="comment">//设置数据库连接信息</span></span><br><span class="line">dataSource.setUrl(<span class="string">"jdbc:mysql://localhost:3306/db"</span>);</span><br><span class="line">dataSource.setUrl(<span class="string">"root"</span>);</span><br><span class="line">dataSource.setUrl(<span class="string">""</span>);</span><br><span class="line"><span class="comment">//设置初始连接数量</span></span><br><span class="line">ds.setInitialSize(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//设置最大链接数量</span></span><br><span class="line">ds.setMaxActive(<span class="number">5</span>);</span><br><span class="line"><span class="comment">//连接连接池对象</span></span><br><span class="line">Connection conn=ds.getConnection();</span><br></pre></td></tr></table></figure>
+<h3 id="C3P0连接池"><a href="#C3P0连接池" class="headerlink" title="C3P0连接池"></a>C3P0连接池</h3><p>导入C3P0连接池jar包<br>c3p0-0.9.1.2.jar<br>C3P0连接池使用方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建数据库连接池</span></span><br><span class="line">ComboPooledDataSource cpds = <span class="keyword">new</span> ComboPooledDataSource();</span><br><span class="line"><span class="comment">//两种方式指定c3p0连接池的配置：</span></span><br><span class="line"><span class="comment">//1.手动赋值(不推荐) 2.配置src根目录下`c3p0-config.xml`文件</span></span><br><span class="line"><span class="comment">//c3p0自动读取src目录下的配置文件无需操作</span></span><br><span class="line"><span class="comment">//手动赋值操作演示(不推荐)</span></span><br><span class="line">cpds.setDriverClass(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">cpds.setJdbcUrl(<span class="string">"jdbc:mysql:///database"</span>);</span><br><span class="line">cpds.setUser(<span class="string">"root"</span>);</span><br><span class="line">cpds.setPassword(<span class="string">"root"</span>);</span><br><span class="line"><span class="comment">//手动赋值演示完毕</span></span><br><span class="line">Connection conn=cpds.getConnection();</span><br></pre></td></tr></table></figure>
+
+<p>关于c3p0-config.xml文件配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">c3p0-config</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">default-config</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClass"</span>&gt;</span></span><br><span class="line">			com.mysql.jdbc.Driver</span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcUrl"</span>&gt;</span></span><br><span class="line">			jdbc:mysql:///database</span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span>&gt;</span></span><br><span class="line">			root</span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">			root</span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">default-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">c3p0-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="DAO数据访问对象"><a href="#DAO数据访问对象" class="headerlink" title="DAO数据访问对象"></a>DAO数据访问对象</h2><h3 id="DAO介绍"><a href="#DAO介绍" class="headerlink" title="DAO介绍"></a>DAO介绍</h3><ul>
+<li>DAO(Data Access Object)数据访问对象</li>
+<li>建立在数据库和业务层之间，封装所有对数据库的访问</li>
+<li>目的：数据访问逻辑和业务逻辑分开</li>
+<li>建立一个接口(DAO)，接口中定义了程序中会用到的所有事务的方法</li>
+<li>建立接口的实现类，实现接口对应的方法，和数据库直接交互</li>
+<li>在应用程序中，当需要和数据源交互时则使用DAO接口，不涉及任何数据库的具体操作</li>
+</ul>
+<h3 id="DAO封装对数据的访问"><a href="#DAO封装对数据的访问" class="headerlink" title="DAO封装对数据的访问"></a>DAO封装对数据的访问</h3><ul>
+<li>构成通常包括：一个DAO工厂类、一个DAO接口、一个实现DAO接口的具体类、数据传递对象(实体对象或值对象)</li>
+<li>DAO层需要定义对数据库中表的访问</li>
+<li>对象关系映射：表和类对应、表中的字段和类属性对应、记录和对象对应</li>
+</ul>
+<h2 id="JDBC实现事务处理"><a href="#JDBC实现事务处理" class="headerlink" title="JDBC实现事务处理"></a>JDBC实现事务处理</h2><h3 id="JDBC事务语句"><a href="#JDBC事务语句" class="headerlink" title="JDBC事务语句"></a>JDBC事务语句</h3><ul>
+<li>获取当前事务的提交方式：<code>Connection.getAutoCommit()</code>，默认为true</li>
+<li>设置事务的提交属性：<code>Connection.setAutoCommit(boolean)</code>，true自动自交，false取消自动提交</li>
+<li>提交事务：<code>Connection.commit()</code></li>
+<li>回滚事务：<code>Connection.rollback()</code>，一般放在catch中，当遇到错误回滚</li>
+</ul>
+<h3 id="JDBC事务实现"><a href="#JDBC事务实现" class="headerlink" title="JDBC事务实现"></a>JDBC事务实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Connection conn = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    conn = DriverManager.getConnection(<span class="string">"."</span>, <span class="string">""</span>, <span class="string">""</span>);</span><br><span class="line">    <span class="keyword">boolean</span> autoCommit = conn.getAutoCommit();<span class="comment">//获取自动提交状态</span></span><br><span class="line">    conn.setAutoCommit(<span class="keyword">false</span>);<span class="comment">//设定自动提交</span></span><br><span class="line">    <span class="comment">//...执行SQL语句</span></span><br><span class="line">    conn.commit();<span class="comment">//提交事务</span></span><br><span class="line">    conn.setAutoCommit(autoCommit);<span class="comment">//还原自动提交状态</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">    <span class="keyword">if</span> (conn == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            conn.rollback();<span class="comment">//当发生错误，回滚事务</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="设置隔离级别"><a href="#设置隔离级别" class="headerlink" title="设置隔离级别"></a>设置隔离级别</h3><p>JDBC中通过Connection提供的方法设置事务隔离级别</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Connection. setTransactionIsolation(<span class="keyword">int</span> level)</span><br><span class="line"><span class="comment">//可选参数</span></span><br><span class="line">Connection.TRANSACTION_READ_UNCOMMITTED		<span class="comment">//1（读未提交数据）</span></span><br><span class="line">Connection.TRANSACTION_READ_COMMITTED		<span class="comment">//2（读已提交数据）</span></span><br><span class="line">Connection.TRANSACTION_REPEATABLE_READ		<span class="comment">//4（可重复读）</span></span><br><span class="line">Connection.TRANSACTION_SERIALIZABLE			<span class="comment">//8（串行化）</span></span><br><span class="line">Connection.TRANSACTION_NONE					<span class="comment">//0（不使用事务）</span></span><br></pre></td></tr></table></figure></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2019/12/19/Java%E6%95%B0%E6%8D%AE%E5%BA%93-JDBC/">http://yoursite.com/2019/12/19/Java%E6%95%B0%E6%8D%AE%E5%BA%93-JDBC/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/26/Servlet%E5%8F%8A%E5%85%B6%E8%A7%84%E8%8C%83/" title="Servlet及其规范"><span>< PreviousPost</span><br><span class="prevTitle">Servlet及其规范</span></a><a class="nextSlogan" href="/2019/12/11/HashMap%E5%92%8CHashSet%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HashMap和HashSet的区别"><span>NextPost ></span><br><span class="nextTitle">HashMap和HashSet的区别</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java数据库-JDBC"><span class="toc-number">1.</span> <span class="toc-text">Java数据库-JDBC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC简介"><span class="toc-number">1.1.</span> <span class="toc-text">JDBC简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC简介-1"><span class="toc-number">1.1.1.</span> <span class="toc-text">JDBC简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC实现的接口"><span class="toc-number">1.1.2.</span> <span class="toc-text">JDBC实现的接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL与Oracle实现"><span class="toc-number">1.1.3.</span> <span class="toc-text">MySQL与Oracle实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接使用JDBC"><span class="toc-number">1.2.</span> <span class="toc-text">连接使用JDBC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#传统使用步骤"><span class="toc-number">1.2.1.</span> <span class="toc-text">传统使用步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用使用方法"><span class="toc-number">1.2.2.</span> <span class="toc-text">常用使用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最终使用"><span class="toc-number">1.2.3.</span> <span class="toc-text">最终使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自用工具类-创建JDBCUtils"><span class="toc-number">1.2.4.</span> <span class="toc-text">自用工具类-创建JDBCUtils</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多数据操作"><span class="toc-number">1.3.</span> <span class="toc-text">更多数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库元数据"><span class="toc-number">1.3.1.</span> <span class="toc-text">数据库元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表元数据"><span class="toc-number">1.3.2.</span> <span class="toc-text">表元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取自增主键值"><span class="toc-number">1.3.3.</span> <span class="toc-text">获取自增主键值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#批量更新"><span class="toc-number">1.4.</span> <span class="toc-text">批量更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#批量更新的引入"><span class="toc-number">1.4.1.</span> <span class="toc-text">批量更新的引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#批量更新API"><span class="toc-number">1.4.2.</span> <span class="toc-text">批量更新API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用批量更新注意"><span class="toc-number">1.4.3.</span> <span class="toc-text">使用批量更新注意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接池技术"><span class="toc-number">1.5.</span> <span class="toc-text">连接池技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接池的引入"><span class="toc-number">1.5.1.</span> <span class="toc-text">连接池的引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接池参数"><span class="toc-number">1.5.2.</span> <span class="toc-text">连接池参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DBCP连接池"><span class="toc-number">1.5.3.</span> <span class="toc-text">DBCP连接池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C3P0连接池"><span class="toc-number">1.5.4.</span> <span class="toc-text">C3P0连接池</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DAO数据访问对象"><span class="toc-number">1.6.</span> <span class="toc-text">DAO数据访问对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DAO介绍"><span class="toc-number">1.6.1.</span> <span class="toc-text">DAO介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DAO封装对数据的访问"><span class="toc-number">1.6.2.</span> <span class="toc-text">DAO封装对数据的访问</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC实现事务处理"><span class="toc-number">1.7.</span> <span class="toc-text">JDBC实现事务处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC事务语句"><span class="toc-number">1.7.1.</span> <span class="toc-text">JDBC事务语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC事务实现"><span class="toc-number">1.7.2.</span> <span class="toc-text">JDBC事务实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置隔离级别"><span class="toc-number">1.7.3.</span> <span class="toc-text">设置隔离级别</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
