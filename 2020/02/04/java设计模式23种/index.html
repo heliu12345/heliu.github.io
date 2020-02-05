@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="whitedofu"><meta name="renderer" content="webkit"><meta name="copyright" content="whitedofu"><meta name="keywords" content="我的博客"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>java设计模式23种 · whitdofu Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/a.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">whitdofu</div><div class="profile-signature">万物皆对象</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/whitdofu" target="_black">friendA</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">whitdofu Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">java设计模式23种</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-02-04</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
+<p>title: java设计模式23种<br>date: 2019-12-11 19:48:04<br>tags: </p>
+<ul>
+<li>Java<br>categories: 结构算法</li>
+</ul>
+<hr>
+<h2 id="Java设计模式23种"><a href="#Java设计模式23种" class="headerlink" title="Java设计模式23种"></a>Java设计模式23种</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>设计模式（Design Pattern）是前辈们对代码开发经验的总结，是解决特定问题的一系列套路<br>1995 年，GoF（Gang of Four，四人组/四人帮）合作出版了《设计模式：可复用面向对象软件的基础》一书，共收录了 23 种设计模式，从此树立了软件设计模式领域的里程碑，人称 GoF设计模式     </li>
+</ul>
+<h3 id="七大原则"><a href="#七大原则" class="headerlink" title="七大原则"></a>七大原则</h3><h5 id="单一职责原则-SRP"><a href="#单一职责原则-SRP" class="headerlink" title="单一职责原则 ( SRP )"></a>单一职责原则 ( SRP )</h5><ul>
+<li>英文全称是Single Responsibility Principle，定义是一个类，应该只有一个引起它变化的原因。类变化的原因就是职责，如果一个类承担的职责过多，就等于把这些职责耦合在一起了。一个职责的变化可能会削弱或者抑制这个类完成其他职责的能力。这种耦合会导致脆弱的设计，当发生变化时，设计会遭受到意想不到的破坏。而如果想要避免这种现象的发生，就要尽可能的遵守单一职责原则。此原则的核心就是解耦和增强内聚性。  <h5 id="开闭原则-OCP"><a href="#开闭原则-OCP" class="headerlink" title="开闭原则 ( OCP )"></a>开闭原则 ( OCP )</h5></li>
+<li>开闭原则的意思是：对扩展开放，对修改关闭。在程序需要进行拓展的时候，不能去修改原有的代码，应实现一个热插拔的效果，使程序的扩展性提高，易于维护和升级。想要达到这样的效果，需要使用接口和抽象类  </li>
+</ul>
+<h5 id="里氏替换原则-LSP"><a href="#里氏替换原则-LSP" class="headerlink" title="里氏替换原则 ( LSP )"></a>里氏替换原则 ( LSP )</h5><ul>
+<li>里氏代换原则是面向对象设计的基本原则之一。 里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。LSP 是继承复用的基石，只有当派生类可以替换掉基类，且软件单位的功能不受到影响时，基类才能真正被复用，而派生类也能够在基类的基础上增加新的行为。里氏代换原则是对开闭原则的补充。实现开闭原则的关键步骤就是抽象化，而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范  </li>
+</ul>
+<h5 id="依赖倒置原则-DIP"><a href="#依赖倒置原则-DIP" class="headerlink" title="依赖倒置原则 ( DIP )"></a>依赖倒置原则 ( DIP )</h5><ul>
+<li>这个原则是开闭原则的基础，具体内容：面向接口编程，依赖于抽象而不依赖于具体。写代码时用到具体类时，不与具体类交互，而与具体类的上层接口交互  </li>
+</ul>
+<h5 id="接口隔离原则-ISP"><a href="#接口隔离原则-ISP" class="headerlink" title="接口隔离原则 ( ISP )"></a>接口隔离原则 ( ISP )</h5><ul>
+<li>这个原则的意思是：每个接口中不存在子类用不到却必须实现的方法，使用多个隔离的接口，比使用单个接口要好。它还有另外一个意思是：降低类之间的耦合度。由此可见，其实设计模式就是从大型软件架构出发、便于升级和维护的软件设计思想，它强调降低依赖，降低耦合  </li>
+</ul>
+<h5 id="最少知道原则-迪米特原则"><a href="#最少知道原则-迪米特原则" class="headerlink" title="最少知道原则(迪米特原则)"></a>最少知道原则(迪米特原则)</h5><ul>
+<li>最少知道原则是指：一个实体应当尽量少地与其他实体之间发生相互作用，使得系统功能模块相对独立，当被依赖的类变化时，才能最小的影响该类  </li>
+</ul>
+<h5 id="合成-聚合复用（CARP）"><a href="#合成-聚合复用（CARP）" class="headerlink" title="合成/聚合复用（CARP）"></a>合成/聚合复用（CARP）</h5><ul>
+<li>合成复用原则是指：尽量使用合成/聚合的方式，而不是使用继承。  </li>
+</ul>
+<blockquote>
+<p>聚合和合成是指类似一个类依赖另一个类为自己的成员变量<br>聚合：聚合关系中，部分的生命周期可以超越整体。如：班级与学生，班级销毁，学生还可以去其他地方学习<br>合成：合成关系中，部分和整体的生命周期是一样的。如：人体与各器官，人体销毁，各器官的存在就没有任何意义   </p>
+</blockquote>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p><strong>总体来说设计模式分为三大类：</strong></p>
+<ul>
+<li><p>创建型模式： 共五种，这些设计模式提供了一种在创建对象的同时隐藏创建逻辑的方式，而不是使用 new 运算符直接实例化对象。这使得程序在判断针对某个给定实例需要创建哪些对象时更加灵活  </p>
+<ul>
+<li>工厂模式（Factory Pattern）  </li>
+<li>抽象工厂模式（Abstract Factory Pattern）</li>
+<li>单例模式（Singleton Pattern）</li>
+<li>建造者模式（Builder Pattern）</li>
+<li>原型模式（Prototype Pattern）</li>
+</ul>
+</li>
+<li><p>结构型模式： 共七种，这些设计模式关注类和对象的组合。继承的概念被用来组合接口和定义组合对象获得新功能的方式  </p>
+<ul>
+<li>代理模式（Proxy Pattern）</li>
+<li>适配器模式（Adapter Pattern）</li>
+<li>桥接模式（Bridge Pattern）</li>
+<li>组合模式（Composite Pattern）</li>
+<li>装饰器模式（Decorator Pattern）</li>
+<li>门面模式(外观模式)（Facade Pattern）</li>
+<li>享元模式（Flyweight Pattern）</li>
+</ul>
+</li>
+<li><p>行为型模式： 共十一种，　这些设计模式特别关注对象之间的通信  </p>
+<ul>
+<li>责任链模式（Chain of Responsibility Pattern）</li>
+<li>命令模式（Command Pattern）</li>
+<li>解释器模式（Interpreter Pattern）</li>
+<li>迭代器模式（Iterator Pattern）</li>
+<li>调节者模式(中介者模式)（Mediator Pattern）</li>
+<li>备忘录模式（Memento Pattern）</li>
+<li>观察者模式（Observer Pattern）</li>
+<li>状态模式（State Pattern）</li>
+<li>策略模式（Strategy Pattern）</li>
+<li>模板模式（Template Pattern）</li>
+<li>访问者模式（Visitor Pattern）</li>
+</ul>
+</li>
+<li><p>其实其他分类：<code>并发型模式</code> 和 <code>线程池模式</code> 和 <code>空对象模式（Null Object Pattern）</code> 和 <code>过滤器模式（Filter、Criteria Pattern）</code></p>
+</li>
+</ul>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">whitedofu</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2020/02/04/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F23%E7%A7%8D/">http://yoursite.com/2020/02/04/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F23%E7%A7%8D/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2019/12/26/Java%E8%87%AA%E5%B8%A6%E6%B3%A8%E8%A7%A3%E5%BA%93/" title="Java自带注解库"><span>NextPost ></span><br><span class="nextTitle">Java自带注解库</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java设计模式23种"><span class="toc-number">1.</span> <span class="toc-text">Java设计模式23种</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七大原则"><span class="toc-number">1.2.</span> <span class="toc-text">七大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单一职责原则-SRP"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">单一职责原则 ( SRP )</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#开闭原则-OCP"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">开闭原则 ( OCP )</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#里氏替换原则-LSP"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">里氏替换原则 ( LSP )</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#依赖倒置原则-DIP"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">依赖倒置原则 ( DIP )</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#接口隔离原则-ISP"><span class="toc-number">1.2.0.5.</span> <span class="toc-text">接口隔离原则 ( ISP )</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最少知道原则-迪米特原则"><span class="toc-number">1.2.0.6.</span> <span class="toc-text">最少知道原则(迪米特原则)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#合成-聚合复用（CARP）"><span class="toc-number">1.2.0.7.</span> <span class="toc-text">合成/聚合复用（CARP）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">1.3.</span> <span class="toc-text">分类</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

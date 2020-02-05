@@ -106,23 +106,21 @@
 <h3 id="定义类："><a href="#定义类：" class="headerlink" title="定义类："></a>定义类：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;修饰词&gt; class 类名&#123;</span><br><span class="line">    &lt;成员变量;&gt;</span><br><span class="line">    &lt;成员方法/类函数&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>方法的签名：就是方法名+参数列表；SendMsg(“Hello”);</p>
-</li>
-<li><p>方法重载Overload：<strong>方法名</strong>相同，<strong>参数列</strong>表必须不同(个数、类型)，但<font color="red"><strong>与修饰词、返回值无关</strong></font>，重载选择是编译器编译时决定的</p>
-</li>
-<li><p>构造函数：(可以重载)无返回值,名字和类名相同 一般用于初始化成员变量的值<br><code>&lt;访问修饰符&gt; 类名 (&lt;参数列表&gt;){构造方法体}</code></p>
+<li>方法的签名：就是方法名+参数列表；SendMsg(“Hello”);</li>
+<li>方法重载Overload：<strong>方法名</strong>相同，<strong>参数列</strong>表必须不同(个数、类型)，但<font color="red"><strong>与修饰词、返回值无关</strong></font>，重载选择是编译器编译时决定的</li>
+<li>构造函数：(可以重载)无返回值,名字和类名相同 一般用于初始化成员变量的值<br><code>&lt;访问修饰符&gt; 类名 (&lt;参数列表&gt;){构造方法体}</code>   </li>
+</ul>
 <blockquote>
 <p>没写构造函数，编译时会自动添加一个无参的构造函数。但是注意如果写了构造函数，编译时就<font color="red"><strong>不会再自动添加</strong></font>无参的构造函数！！</p>
 </blockquote>
-</li>
-<li><p>this：代表自己本身这个对象，可用于：成员变量 成员函数 构造函数</p>
-<blockquote>
-<p>用this调用构造函数必须放在第一句,且只能放在构造函数中<br>如果子类变量与父类变量重名，this优先本类变量，如果子类没有重名变量，this指向父类变量</p>
-</blockquote>
-</li>
+<ul>
+<li>this：代表自己本身这个对象，可用于：成员变量 成员函数 构造函数    </li>
 </ul>
 <blockquote>
-<p>注意内存分配问题，对象的引用与实体，堆栈问题</p>
+<p>用this调用构造函数必须放在第一句,且只能放在构造函数中<br>如果子类变量与父类变量重名，this优先本类变量，如果子类没有重名变量，this指向父类变量  </p>
+</blockquote>
+<blockquote>
+<p>1)构造方法中指该构造器所创建的新对象；<br>  2)  方法中指调用该方法的对象；<br>  3)  在类本身的方法或构造器中引用该类的实例变量（全局变量）和方法<br> 4) this关键字还有一个重大的作用就是返回类的引用<br>注意内存分配问题，对象的引用与实体，堆栈问题</p>
 </blockquote>
 <h3 id="实例化对象"><a href="#实例化对象" class="headerlink" title="实例化对象"></a>实例化对象</h3><p>类 –&gt; 对象<br><code>&lt;类名&gt; &lt;对象名&gt; = new &lt;类名&gt;(构造函数参数);</code></p>
 <h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h3 id="继承的基础概念"><a href="#继承的基础概念" class="headerlink" title="继承的基础概念"></a>继承的基础概念</h3><ul>
