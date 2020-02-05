@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-04T12:54:12.521Z</updated>
+  <updated>2020-02-05T07:29:05.288Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机网络基础</title>
+    <link href="http://yoursite.com/2020/02/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2020/02/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/</id>
+    <published>2020-02-05T07:29:05.276Z</published>
+    <updated>2020-02-05T07:29:05.288Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>title: 计算机网络基础<br>date: 2019-12-09 19:33:03<br>tags: </p><ul><li>计算机知识<br>categories: 网络基础</li></ul><hr><h2 id="计算机网络基础"><a href="#计算机网络基础" class="headerlink" title="计算机网络基础"></a>计算机网络基础</h2><h4 id="计算机网络体系结构"><a href="#计算机网络体系结构" class="headerlink" title="计算机网络体系结构"></a>计算机网络体系结构</h4><ul><li>最早的计算机网络体系结构源于IBM在1974年宣布的系统网络体系结构SNA (Systems Network Architecture)，这个著名的网络标准就是一种层次化网络体系结构。不久后，其他一些公司也相继推出自己公司的具有不同名称的体系结构。不同的网络体系结构出现后，采用不同的网络体系结构的产品就很难互相连通(通信)。然而，全球经济的发展使得处在不同网络体系结构的用户迫切要求能够互相交换信息，为此，国际标准化组织ISO成立了专门的机构研究该问题，并于1977年提出了一个试图使各种计算机在世界范围内互联成网的标准框架，即著名的 开放系统互连基本参考模型OSI/RM (Open System Interconnection Reference Model)。正如在本篇的姊妹篇《计算机网络体系结构综述（上）》提到的那样，OSI七层体系结构具有概念清楚、理论完整的特点，是一个理论上的国际标准，但却不是事实上的国际标准；而具有简单易用特点的TCP/IP 四层体系结构则是事实上的标准。 需要指出的是，五层体系结构虽然综合了 OSI 和 TCP/IP 的优点，但其只是为了学术学习研究而提出的，没有具体的实际意义。三者结构示意图如下所示：<br><img src="/20200205144648623/20200205030442245.png" alt="">   </li><li>在OSI七层参考模型的体系结构中，各层次要解决的问题及其功能简述如下图所示：<br><img src="/20200205144648623/%E5%9C%A8OSI%E4%B8%83%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%AD%EF%BC%8C%E5%90%84%E5%B1%82%E6%AC%A1%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD%E7%AE%80%E8%BF%B0%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA%EF%BC%9A.png" alt="">  </li><li>OSI网络体系结构的PDU数据封装示意图：<br><img src="/20200205144648623/20200205144648623/20200205030442245.png.png" alt=""> </li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;title: 计算机网络基础&lt;br&gt;date: 2019-12-09 19:33:03&lt;br&gt;tags: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算机知识&lt;br&gt;categories: 网络基础&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;计算机网络基础&quot;&gt;&lt;a hre
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>java设计模式23种</title>
@@ -346,9 +374,9 @@
     
       <category term="Web" scheme="http://yoursite.com/tags/Web/"/>
     
-      <category term="HTML" scheme="http://yoursite.com/tags/HTML/"/>
-    
       <category term="JQ" scheme="http://yoursite.com/tags/JQ/"/>
+    
+      <category term="HTML" scheme="http://yoursite.com/tags/HTML/"/>
     
   </entry>
   
@@ -528,32 +556,6 @@
       
       
         &lt;h1 id=&quot;Java练习-随机读写-顺序读写&quot;&gt;&lt;a href=&quot;#Java练习-随机读写-顺序读写&quot; class=&quot;headerlink&quot; title=&quot;Java练习-随机读写/顺序读写&quot;&gt;&lt;/a&gt;Java练习-随机读写/顺序读写&lt;/h1&gt;&lt;h2 id=&quot;随机读写复制文件&quot;
-      
-    
-    </summary>
-    
-    
-      <category term="项目练习" scheme="http://yoursite.com/categories/%E9%A1%B9%E7%9B%AE%E7%BB%83%E4%B9%A0/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java实践-飞机大战</title>
-    <link href="http://yoursite.com/2019/12/09/Java%E5%AE%9E%E8%B7%B5-%E9%A3%9E%E6%9C%BA%E5%A4%A7%E6%88%98/"/>
-    <id>http://yoursite.com/2019/12/09/Java%E5%AE%9E%E8%B7%B5-%E9%A3%9E%E6%9C%BA%E5%A4%A7%E6%88%98/</id>
-    <published>2019-12-09T11:56:46.000Z</published>
-    <updated>2019-12-09T11:56:04.943Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Java实践-飞机大战"><a href="#Java实践-飞机大战" class="headerlink" title="Java实践-飞机大战"></a>Java实践-飞机大战</h1><h2 id="待更新"><a href="#待更新" class="headerlink" title="待更新"></a>待更新</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Java实践-飞机大战&quot;&gt;&lt;a href=&quot;#Java实践-飞机大战&quot; class=&quot;headerlink&quot; title=&quot;Java实践-飞机大战&quot;&gt;&lt;/a&gt;Java实践-飞机大战&lt;/h1&gt;&lt;h2 id=&quot;待更新&quot;&gt;&lt;a href=&quot;#待更新&quot; class=&quot;he
       
     
     </summary>
